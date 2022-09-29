@@ -5,6 +5,9 @@
 # No build directory
 build/*
 
+# Ignore Gradle build output directory
+build
+
 # No gradle hidden stuff
 .gradle/*
 
@@ -202,7 +205,8 @@ fabric.properties
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
+
 
 # Thumbnails
 ._*
