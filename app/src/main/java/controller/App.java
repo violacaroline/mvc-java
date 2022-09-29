@@ -10,11 +10,11 @@ public class App {
    * @param args command line arguments.
    */
   public static void main(String[] args) {
-    // adapt to start the application in your way
-    model.Simple m = new model.Simple();
-    Simple c = new Simple();
-    view.Simple v = new view.Simple();
+    // Adapt to start the application in your way
+    model.Item item = new model.Item();
+    Member member = new Member("Caroline", "c@c.com", "0702018918", "r1a2n3d4o5m");
+    view.UserInterface ui = new view.UserInterface();
 
-    c.doSomethingSimple(m, v);
+    member.doSomethingSimple(item, ui);
   }
 }
