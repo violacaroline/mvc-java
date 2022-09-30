@@ -1,12 +1,15 @@
 package view;
 
+import controller.StuffLendingSystem;
 import java.util.Scanner;
+import model.Member;
 
 /**
  * Class representing a user interface.
  */
 public class UserInterface {
   Scanner scan = new Scanner(System.in, "utf-8");
+  controller.StuffLendingSystem stuffLendingsystem = new StuffLendingSystem();
 
   /**
    * Display and await main menu options.
@@ -63,6 +66,83 @@ public class UserInterface {
     int option = scan.nextInt();
 
     return option;
+  }
+
+  /**
+   * Display create member prompts.
+   *
+   * @return - The array of answers.
+   */
+  public String[] promptCreateMember() {
+    String[] answerArray = new String[3];
+
+    System.out.println("Type members name:");
+    answerArray[0] = scan.next();
+    System.out.println("Type members email:");
+    answerArray[1] = scan.next();
+    System.out.println("Type members phone:");
+    answerArray[2] = scan.next();
+
+    return answerArray;
+  }
+
+  /**
+   * Display view member prompts.
+   *
+   * @return - The member's id.
+   */
+  public String promptViewMember() {
+    System.out.println("Type the member ID:");
+    String memberId = scan.next();
+
+    return memberId;
+  }
+
+  /**
+   * Display delete member prompts.
+   *
+   * @return - The member's id.
+   */
+  public String promptDeleteMember() {
+    System.out.println("Type the member ID:");
+    String memberId = scan.next();
+
+    return memberId;
+  }
+
+  /**
+   * Show single member.
+   *
+   * @param memberId - The members ID
+   */
+  public void showSingleMember(String memberId, Member[] members) {
+    for (Member member : members) {
+      if (member.getId().equals(memberId)) {
+        System.out.println("Name: " + member.getName() + "\nEmail: " + member.getEmail() + "\nPhone: " + member.getPhone()
+          + "\nID: " + member.getId());
+      }
+    }
+  }
+
+  /**
+   * Display a "simple information" list of members.
+   */
+  public void showMembersSimpleInfo(Member[] members) {
+    for (Member member : members) {
+      System.out.println("Name: " + member.getName() + "\nEmail: " + member.getEmail() + "\nPhone: " + member.getPhone()
+          + "\nID: " + member.getId());
+    }
+  }
+
+  /**
+   * Display a "full information" list of members.
+   */
+  public void showMembersFullInfo(Member[] members) {
+    System.out.println("The length" + members.length);
+    for (Member member : members) {
+      System.out.println("Name: " + member.getName() + "\nEmail: " + member.getEmail() + "\nPhone: " + member.getPhone()
+          + "\nID: " + member.getId());
+    }
   }
 
   /**

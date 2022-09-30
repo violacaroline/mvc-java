@@ -8,36 +8,46 @@ import model.Member;
  * Represents a stuff lending system.
  */
 public class StuffLendingSystem {
-  // private ArrayList<Member> members = new ArrayList<>();
+  private ArrayList<Member> members = new ArrayList<>();
 
   /**
    * Creates a StuffLendingSystem instance.
-   *
-   *
    */
   public StuffLendingSystem() {
-    // setMembers(members);
+    
   }
 
-  // /**
-  // * Gets the members.
-  // *
-  // * @return - The existing members.
-  // */
-  // public Member[] getMembers() {
-  // Member[] showMembers = this.members.toArray(new Member[0]);
+  /**
+   * Gets the members.
+   *
+   * @return - The existing members.
+   */
+  public Member[] getMembers() {
+    Member[] showMembers = new Member[this.members.size()];
 
-  // return showMembers;
-  // }
+    showMembers = this.members.toArray(showMembers);
 
-  // /**
-  // * Sets the members.
-  // *
-  // * @param members - The existing members.
-  // */
-  // public void setMembers(ArrayList<Member> members) {
-  // this.members = members;
-  // }
+    return showMembers;
+  }
+
+  /**
+   * Adds new member.
+   *
+   * @param member - The new member.
+   */
+  public void addMember(Member member) {
+    this.members.add(member);
+  }
+
+  /**
+   * Creates a member.
+   *
+   * @return - The new member.
+   */
+  public Member createMember(String name, String email, String phone) {
+    Member member = new Member(name, email, phone, createMemberId());
+    return member;
+  }
 
   /**
    * Creates a unique member ID.
@@ -58,12 +68,16 @@ public class StuffLendingSystem {
   }
 
   /**
-   * Returns a very important message.
+   * Delete member.
    *
-   * @return the message.
+   * @param memberId - The member to delete.
    */
-  public String printMember(Member member) {
-    return "Name: " + member.getName() + "\nEmail: " + member.getEmail()
-        + "\nID: " + member.getId();
+  public void deleteMember(String memberId) {
+    for (int i = 0; i < this.members.size(); i++) {
+      if (this.members.get(i).getId().equals(memberId)) {
+        System.out.println("Member with id " + memberId + " is deleted");
+        this.members.remove(i);
+      }
+    }
   }
 }

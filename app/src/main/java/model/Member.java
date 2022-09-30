@@ -1,7 +1,5 @@
 package model;
 
-import controller.StuffLendingSystem;
-
 /**
  * Class representing a member.
  */
