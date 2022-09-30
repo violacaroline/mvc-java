@@ -1,6 +1,5 @@
 package view;
 
-import controller.StuffLendingSystem;
 import java.util.Scanner;
 import model.Member;
 
@@ -9,7 +8,6 @@ import model.Member;
  */
 public class UserInterface {
   Scanner scan = new Scanner(System.in, "utf-8");
-  controller.StuffLendingSystem stuffLendingsystem = new StuffLendingSystem();
 
   /**
    * Display and await main menu options.
@@ -87,23 +85,11 @@ public class UserInterface {
   }
 
   /**
-   * Display view member prompts.
+   * Display member ID prompt.
    *
    * @return - The member's id.
    */
-  public String promptViewMember() {
-    System.out.println("Type the member ID:");
-    String memberId = scan.next();
-
-    return memberId;
-  }
-
-  /**
-   * Display delete member prompts.
-   *
-   * @return - The member's id.
-   */
-  public String promptDeleteMember() {
+  public String promptMemberId() {
     System.out.println("Type the member ID:");
     String memberId = scan.next();
 
@@ -118,8 +104,9 @@ public class UserInterface {
   public void showSingleMember(String memberId, Member[] members) {
     for (Member member : members) {
       if (member.getId().equals(memberId)) {
-        System.out.println("Name: " + member.getName() + "\nEmail: " + member.getEmail() + "\nPhone: " + member.getPhone()
-          + "\nID: " + member.getId());
+        System.out
+            .println("Name: " + member.getName() + "\nEmail: " + member.getEmail() + "\nPhone: " + member.getPhone()
+                + "\nID: " + member.getId());
       }
     }
   }

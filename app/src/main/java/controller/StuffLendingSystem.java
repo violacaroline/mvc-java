@@ -75,7 +75,6 @@ public class StuffLendingSystem {
   public void deleteMember(String memberId) {
     for (int i = 0; i < this.members.size(); i++) {
       if (this.members.get(i).getId().equals(memberId)) {
-        System.out.println("Member with id " + memberId + " is deleted");
         this.members.remove(i);
       }
     }
