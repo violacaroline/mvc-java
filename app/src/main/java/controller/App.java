@@ -74,7 +74,7 @@ public class App {
               switch (optionItemMenu) {
                 case 1:
                   System.out.println("Create item here");
-
+                  stuffLendingsystem.registerItemToMember(ui.promptMemberId(), ui.promptCreateItem());
                   break;
                 case 2:
                   System.out.println("Delete item here");

@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 /**
  * Class representing a member.
  */
@@ -8,6 +10,8 @@ public class Member {
   private String email;
   private String phone;
   private String id;
+  private ArrayList<Item> items = new ArrayList<>();
+
 
   /**
    * Instanciates a new member object.
@@ -91,5 +95,36 @@ public class Member {
    */
   public void setId(String id) {
     this.id = id;
+  }
+
+  /**
+   * Creates a new item.
+   */
+  public void createItem(String category, String name, String description, int costPerDay, int dayCreated) {
+    Item item = new Item(category, name, description, costPerDay, dayCreated);
+
+    this.addItem(item);
+  }
+
+  /**
+   * Adds new item to member's list of items.
+   *
+   * @param item - The new item.
+   */
+  public void addItem(Item item) {
+    this.items.add(item);
+  }
+
+  /**
+   * Gets the items.
+   *
+   * @return - The existing items.
+   */
+  public Item[] getItems() {
+    Item[] showItems = new Item[this.items.size()];
+
+    showItems = this.items.toArray(showItems);
+
+    return showItems;
   }
 }

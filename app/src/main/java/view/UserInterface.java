@@ -67,6 +67,18 @@ public class UserInterface {
   }
 
   /**
+   * Display member ID prompt.
+   *
+   * @return - The member's id.
+   */
+  public String promptMemberId() {
+    System.out.println("Type the member ID:");
+    String memberId = scan.next();
+
+    return memberId;
+  }
+
+  /**
    * Display create member prompts.
    *
    * @return - The array of answers.
@@ -85,25 +97,13 @@ public class UserInterface {
   }
 
   /**
-   * Display member ID prompt.
-   *
-   * @return - The member's id.
-   */
-  public String promptMemberId() {
-    System.out.println("Type the member ID:");
-    String memberId = scan.next();
-
-    return memberId;
-  }
-
-  /**
    * Display edit member prompts.
    *
    * @param memberId - The members ID.
    * @param members  - List of members to iterate.
    */
   public void promptEditMember(String memberId, Member[] members) {
-    
+
     // OBS - I AM REALLY EDITING THE MODEL FROM THE VIEW!!!!
     for (Member member : members) {
       if (member.getId().equals(memberId)) {
@@ -135,6 +135,25 @@ public class UserInterface {
       }
     }
   }
+
+  /**
+   * Display create item prompts.
+   *
+   * @return - The array of answers.
+   */
+  public String[] promptCreateItem() {
+    String[] answerArray = new String[3];
+
+    System.out.println("Type item category: tool / vehicle / game /toy / sport / other");
+    answerArray[0] = scan.next();
+    System.out.println("Type item name:");
+    answerArray[1] = scan.next();
+    System.out.println("Type item description:");
+    answerArray[2] = scan.next();
+
+    return answerArray;
+  }
+
 
   /**
    * Show single member.

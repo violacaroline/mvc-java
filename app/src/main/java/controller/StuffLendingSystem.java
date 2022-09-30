@@ -10,6 +10,7 @@ import model.Member;
 public class StuffLendingSystem {
   private ArrayList<Member> members = new ArrayList<>();
 
+
   /**
    * Creates a StuffLendingSystem instance.
    */
@@ -76,6 +77,19 @@ public class StuffLendingSystem {
     for (int i = 0; i < this.members.size(); i++) {
       if (this.members.get(i).getId().equals(memberId)) {
         this.members.remove(i);
+      }
+    }
+  }
+
+  /**
+   * Registers an item to a member.
+   *
+   * @param memberId - The member to delete.
+   */
+  public void registerItemToMember(String memberId, String[] answerArray) {
+    for (int i = 0; i < this.members.size(); i++) {
+      if (this.members.get(i).getId().equals(memberId)) {
+        this.members.get(i).createItem(answerArray[0], answerArray[1], answerArray[2], 100, 6);
       }
     }
   }
