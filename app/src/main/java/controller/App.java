@@ -43,14 +43,13 @@ public class App {
                   ui.showMessage("Member was deleted");
                   break;
                 case 3:
-                  System.out.println("Edit a member here");
+                  ui.promptEditMember(ui.promptMemberId(), stuffLendingsystem.getMembers());
+                  ui.showMessage("Member was edited");
                   break;
                 case 4:
-                  System.out.println("View a member here");
                   ui.showSingleMember(ui.promptMemberId(), stuffLendingsystem.getMembers());
                   break;
                 case 5:
-                  System.out.println("List members simple here");
                   ui.showMembersSimpleInfo(stuffLendingsystem.getMembers());
                   break;
                 case 6:

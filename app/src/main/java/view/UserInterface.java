@@ -97,9 +97,50 @@ public class UserInterface {
   }
 
   /**
+   * Display edit member prompts.
+   *
+   * @param memberId - The members ID.
+   * @param members  - List of members to iterate.
+   */
+  public void promptEditMember(String memberId, Member[] members) {
+    
+    // OBS - I AM REALLY EDITING THE MODEL FROM THE VIEW!!!!
+    for (Member member : members) {
+      if (member.getId().equals(memberId)) {
+        System.out.println("What do you want to edit? name / email / phone");
+        String whatToEdit = scan.next();
+
+        switch (whatToEdit) {
+          case "name":
+            System.out.println("Type new name: ");
+            String newName = scan.next();
+            member.setName(newName);
+            break;
+          case "email":
+            System.out.println("Type new email: ");
+            String newEmail = scan.next();
+            member.setEmail(newEmail);
+            break;
+          case "phone":
+            System.out.println("Type new phone: ");
+            String newPhone = scan.next();
+            member.setPhone(newPhone);
+            break;
+          default:
+            System.out.println("Option is invalid");
+            break;
+        }
+      } else {
+        System.out.println("Could not find member...");
+      }
+    }
+  }
+
+  /**
    * Show single member.
    *
-   * @param memberId - The members ID
+   * @param memberId - The members ID.
+   * @param members  - List of members to iterate.
    */
   public void showSingleMember(String memberId, Member[] members) {
     for (Member member : members) {
