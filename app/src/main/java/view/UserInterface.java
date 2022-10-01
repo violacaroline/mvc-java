@@ -235,7 +235,7 @@ public class UserInterface {
       if (member.getId().equals(memberId)) {
         System.out
             .println("Name: " + member.getName() + "\nEmail: " + member.getEmail() + "\nID: " + member.getId()
-                + "\nAmount of credit: " + member.getCredit());
+                + "\nAmount of credit: " + member.getCredit() + "\nAmount of items: " + member.getItems().length);
       }
     }
   }
@@ -248,7 +248,7 @@ public class UserInterface {
   public void showMembersSimpleInfo(Member[] members) {
     for (Member member : members) {
       System.out.println("Name: " + member.getName() + "\nEmail: " + member.getEmail() + "\nID: " + member.getId()
-          + "Amount of credit: " + member.getCredit()
+          + "\nAmount of credit: " + member.getCredit()
           + "\nAmount of items: " + member.getItems().length);
     }
   }
