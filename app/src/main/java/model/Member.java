@@ -11,6 +11,7 @@ public class Member {
   private String phone;
   private String id;
   private int dayCreated;
+  private int credit;
   private ArrayList<Item> items = new ArrayList<>();
 
 
@@ -117,6 +118,30 @@ public class Member {
     this.dayCreated = dayCreated;
   }
 
+  public int getCredit() {
+    return credit;
+  }
+
+  public void setCredit(int credit) {
+    this.credit = credit;
+  }
+
+  /**
+   * Increment the members credit.
+   */
+  public void incrementCredit() {
+    this.credit = this.getCredit() + 100;
+  }
+
+  /**
+   * Decrement the members credit.
+   *
+   * @param cost - The value to deduct.
+   */
+  public void decrementCredit(int cost) {
+    this.credit = this.getCredit() - cost;
+  }
+
   /**
    * Creates a new item.
    */
@@ -124,6 +149,7 @@ public class Member {
     Item item = new Item(category, name, description, costPerDay, dayCreated);
 
     this.addItem(item);
+    this.incrementCredit();
   }
 
   /**
