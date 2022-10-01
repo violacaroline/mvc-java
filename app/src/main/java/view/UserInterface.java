@@ -19,7 +19,7 @@ public class UserInterface {
     System.out.println("Menu Options:");
     System.out.println("1. See member menu");
     System.out.println("2. See item menu");
-    System.out.println("3. Exit");
+    System.out.println("3. Quit");
     System.out.println("Type Option:");
 
     int option = scan.nextInt();
@@ -40,7 +40,7 @@ public class UserInterface {
     System.out.println("4. View member");
     System.out.println("5. List all members (Simple view: Name, Email, Credits, No of Items)");
     System.out.println("6. List all members (Full view: Name, Email, Info on all owned items");
-    System.out.println("7. Exit");
+    System.out.println("7. Go Back");
     System.out.println("Type Option:");
 
     int option = scan.nextInt();
@@ -59,7 +59,7 @@ public class UserInterface {
     System.out.println("2. Delete item");
     System.out.println("3. Edit item");
     System.out.println("4. View item");
-    System.out.println("5. Exit");
+    System.out.println("5. Go Back");
     System.out.println("Type Option:");
 
     int option = scan.nextInt();
@@ -145,14 +145,67 @@ public class UserInterface {
   public String[] promptCreateItem() {
     String[] answerArray = new String[3];
 
-    System.out.println("Type item category: tool / vehicle / game /toy / sport / other");
+    System.out.println("Type item category: tool / vehicle / game / toy / sport / other");
     answerArray[0] = scan.next();
     System.out.println("Type item name:");
     answerArray[1] = scan.next();
+    scan.nextLine(); // REALLY UGLY SOLUTION - WHAT THE FUCK IS THIS NEXTLINE PROBLEM? ANNOYING.. FIX THIS SHIT
     System.out.println("Type item description:");
-    answerArray[2] = scan.next();
+    answerArray[2] = scan.nextLine();
 
     return answerArray;
+  }
+
+  /**
+   * Display edit item prompts.
+   *
+   * @param memberId - The members ID.
+   * @param members  - List of members to iterate.
+   */
+  public void promptEditItem(String memberId, Member[] members) {
+
+    // OBS - I AM REALLY EDITING THE MODEL FROM THE VIEW!!!!
+    for (Member member : members) {
+      if (member.getId().equals(memberId)) {
+        System.out.println("Type name of item that you want to edit: ");
+        String itemName = scan.next();
+        for (Item item : member.getItems()) {
+          if (item.getName().equals(itemName)) {
+            System.out.println("What do you want to edit? category / name / description / cost");
+            String whatToEdit = scan.next();
+
+            switch (whatToEdit) {
+              case "category":
+                System.out.println("Type new item category: tool / vehicle / game / toy / sport / other");
+                String newCategory = scan.next();
+                item.setCategory(newCategory);
+                break;
+              case "name":
+                System.out.println("Type new name: ");
+                String newName = scan.next();
+                item.setName(newName);
+                break;
+              case "description":
+                System.out.println("Type new description: ");
+                scan.nextLine(); // UGLYYYYYY, HEEEEELP
+                String newDescription = scan.nextLine();
+                item.setDescription(newDescription);
+                break;
+              case "cost":
+                System.out.println("Type new cost: ");
+                int newCost = scan.nextInt();
+                item.setCostPerDay(newCost);
+                break;
+              default:
+                System.out.println("Option is invalid");
+                break;
+            }
+          }
+        }
+      } else {
+        System.out.println("Could not find item...");
+      }
+    }
   }
 
   /**

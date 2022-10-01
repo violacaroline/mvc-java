@@ -13,7 +13,7 @@ public class App {
    */
   public static void main(String[] args) {
     try {
-      controller.StuffLendingSystem stuffLendingsystem = new StuffLendingSystem();
+      controller.StuffLendingSystem stuffLendingSystem = new StuffLendingSystem();
       view.UserInterface ui = new view.UserInterface();
 
       int optionMainMenu = 0;
@@ -31,30 +31,31 @@ public class App {
                 case 1:
                   String[] answerArray = ui.promptCreateMember();
 
-                  Member member = stuffLendingsystem.createMember(answerArray[0], answerArray[1], answerArray[2]);
+                  Member member = stuffLendingSystem.createMember(answerArray[0], answerArray[1], answerArray[2]);
 
-                  stuffLendingsystem.addMember(member);
+                  stuffLendingSystem.addMember(member);
 
                   ui.showMessage("Member was created");
                   break;
                 case 2:
-                  stuffLendingsystem.deleteMember(ui.promptMemberId());
+                  stuffLendingSystem.deleteMember(ui.promptMemberId());
 
                   ui.showMessage("Member was deleted");
                   break;
                 case 3:
-                  ui.promptEditMember(ui.promptMemberId(), stuffLendingsystem.getMembers());
+                  ui.promptEditMember(ui.promptMemberId(), stuffLendingSystem.getMembers());
+
                   ui.showMessage("Member was edited");
                   break;
                 case 4:
-                  ui.showSingleMember(ui.promptMemberId(), stuffLendingsystem.getMembers());
+                  ui.showSingleMember(ui.promptMemberId(), stuffLendingSystem.getMembers());
                   break;
                 case 5:
-                  ui.showMembersSimpleInfo(stuffLendingsystem.getMembers());
+                  ui.showMembersSimpleInfo(stuffLendingSystem.getMembers());
                   break;
                 case 6:
                   System.out.println("List members full here");
-
+                  ui.showMembersFullInfo(stuffLendingSystem.getMembers());
                   break;
                 case 7:
                   System.out.println("Going back...");
@@ -73,18 +74,18 @@ public class App {
 
               switch (optionItemMenu) {
                 case 1:
-                  stuffLendingsystem.registerItemToMember(ui.promptMemberId(), ui.promptCreateItem());
+                  stuffLendingSystem.registerItemToMember(ui.promptMemberId(), ui.promptCreateItem());
                   break;
                 case 2:
-                  stuffLendingsystem.deleteItemFromMember(ui.promptMemberId(), ui.promptGetItemName());
+                  stuffLendingSystem.deleteItemFromMember(ui.promptMemberId(), ui.promptGetItemName());
                   break;
                 case 3:
                   System.out.println("Edit item here");
-
+                  ui.promptEditItem(ui.promptMemberId(), stuffLendingSystem.getMembers());
                   break;
                 case 4:
                   System.out.println("View item here");
-                  ui.showSingleItem(ui.promptMemberId(), stuffLendingsystem.getMembers(), ui.promptGetItemName());
+                  ui.showSingleItem(ui.promptMemberId(), stuffLendingSystem.getMembers(), ui.promptGetItemName());
                   break;
                 case 5:
                   System.out.println("Going back...");
@@ -98,7 +99,7 @@ public class App {
             } while (optionItemMenu != 5);
             break;
           case 3:
-            System.out.println("Exiting...");
+            System.out.println("Quitting...");
             break;
           default:
             System.out.println("Option is invalid");
@@ -106,7 +107,7 @@ public class App {
         }
       } while (optionMainMenu != 3);
     } catch (Exception error) {
-      System.out.println("Something went wrong, please restart app. Error message: " + error.getMessage());
+      System.out.println("Something went wrong, please restart app.");
     }
   }
 }
