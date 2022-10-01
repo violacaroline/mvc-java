@@ -1,6 +1,7 @@
 package view;
 
 import java.util.Scanner;
+import model.Item;
 import model.Member;
 
 /**
@@ -154,6 +155,17 @@ public class UserInterface {
     return answerArray;
   }
 
+  /**
+   * Display get item name prompt.
+   *
+   * @return - The item's name.
+   */
+  public String promptGetItemName() {
+    System.out.println("Type items name:");
+    String itemName = scan.next();
+
+    return itemName;
+  }
 
   /**
    * Show single member.
@@ -173,6 +185,8 @@ public class UserInterface {
 
   /**
    * Display a "simple information" list of members.
+   *
+   * @param members - List of members to iterate.
    */
   public void showMembersSimpleInfo(Member[] members) {
     for (Member member : members) {
@@ -183,12 +197,35 @@ public class UserInterface {
 
   /**
    * Display a "full information" list of members.
+   *
+   * @param members - List of members to iterate.
    */
   public void showMembersFullInfo(Member[] members) {
-    System.out.println("The length" + members.length);
     for (Member member : members) {
       System.out.println("Name: " + member.getName() + "\nEmail: " + member.getEmail() + "\nPhone: " + member.getPhone()
           + "\nID: " + member.getId());
+    }
+  }
+
+  /**
+   * Display an item.
+   *
+   * @param itemName - The items name.
+   * @param memberId - The ID of the member owning the item.
+   * @param members  - List of members to iterate.
+   */
+  public void showSingleItem(String memberId, Member[] members, String itemName) {
+    for (Member member : members) {
+      if (member.getId().equals(memberId)) {
+        for (Item item : member.getItems()) {
+          if (item.getName().equals(itemName)) {
+            System.out
+                .println("Name: " + item.getName() + "\nCategory: " + item.getCategory() + "\nDescription: "
+                    + item.getDescription()
+                    + "\nCost: " + item.getCostPerDay() + "\nCreated day: " + item.getDayCreated());
+          }
+        }
+      }
     }
   }
 

@@ -73,12 +73,10 @@ public class App {
 
               switch (optionItemMenu) {
                 case 1:
-                  System.out.println("Create item here");
                   stuffLendingsystem.registerItemToMember(ui.promptMemberId(), ui.promptCreateItem());
                   break;
                 case 2:
-                  System.out.println("Delete item here");
-
+                  stuffLendingsystem.deleteItemFromMember(ui.promptMemberId(), ui.promptGetItemName());
                   break;
                 case 3:
                   System.out.println("Edit item here");
@@ -86,7 +84,7 @@ public class App {
                   break;
                 case 4:
                   System.out.println("View item here");
-
+                  ui.showSingleItem(ui.promptMemberId(), stuffLendingsystem.getMembers(), ui.promptGetItemName());
                   break;
                 case 5:
                   System.out.println("Going back...");

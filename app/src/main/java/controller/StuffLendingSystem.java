@@ -93,4 +93,17 @@ public class StuffLendingSystem {
       }
     }
   }
+
+  /**
+   * Deletes an item from a member.
+   *
+   * @param memberId - The member to delete.
+   */
+  public void deleteItemFromMember(String memberId, String itemName) {
+    for (int i = 0; i < this.members.size(); i++) {
+      if (this.members.get(i).getId().equals(memberId)) {
+        this.members.get(i).deleteitem(itemName);
+      }
+    }
+  }
 }

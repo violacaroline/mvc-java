@@ -127,4 +127,17 @@ public class Member {
 
     return showItems;
   }
+
+  /**
+   * Delete item.
+   *
+   * @param itemName - The item to delete.
+   */
+  public void deleteitem(String itemName) {
+    for (int i = 0; i < this.items.size(); i++) {
+      if (this.items.get(i).getName().equals(itemName)) {
+        this.items.remove(i);
+      }
+    }
+  }
 }
