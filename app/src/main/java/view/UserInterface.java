@@ -143,7 +143,7 @@ public class UserInterface {
    * @return - The array of answers.
    */
   public String[] promptCreateItem() {
-    String[] answerArray = new String[3];
+    String[] answerArray = new String[4];
 
     System.out.println("Type item category: tool / vehicle / game / toy / sport / other");
     answerArray[0] = scan.next();
@@ -152,6 +152,8 @@ public class UserInterface {
     scan.nextLine(); // REALLY UGLY SOLUTION - WHAT THE FUCK IS THIS NEXTLINE PROBLEM? ANNOYING.. FIX THIS SHIT
     System.out.println("Type item description:");
     answerArray[2] = scan.nextLine();
+    System.out.println("Type item cost:");
+    answerArray[3] = scan.next();
 
     return answerArray;
   }

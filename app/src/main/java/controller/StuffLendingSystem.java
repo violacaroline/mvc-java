@@ -10,12 +10,11 @@ import model.Member;
 public class StuffLendingSystem {
   private ArrayList<Member> members = new ArrayList<>();
 
-
   /**
    * Creates a StuffLendingSystem instance.
    */
   public StuffLendingSystem() {
-    
+
   }
 
   /**
@@ -89,7 +88,8 @@ public class StuffLendingSystem {
   public void registerItemToMember(String memberId, String[] answerArray, int dayCreated) {
     for (int i = 0; i < this.members.size(); i++) {
       if (this.members.get(i).getId().equals(memberId)) {
-        this.members.get(i).createItem(answerArray[0], answerArray[1], answerArray[2], 100, dayCreated);
+        this.members.get(i).createItem(answerArray[0], answerArray[1], answerArray[2], Integer.parseInt(answerArray[3]),
+            dayCreated);
       }
     }
   }
