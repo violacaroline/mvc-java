@@ -10,17 +10,19 @@ public class Member {
   private String email;
   private String phone;
   private String id;
+  private int dayCreated;
   private ArrayList<Item> items = new ArrayList<>();
 
 
   /**
    * Instanciates a new member object.
    */
-  public Member(String name, String email, String phone, String id) {
+  public Member(String name, String email, String phone, String id, int dayCreated) {
     setName(name);
     setEmail(email);
     setPhone(phone);
     setId(id);
+    setDayCreated(dayCreated);
   }
 
   /**
@@ -95,6 +97,24 @@ public class Member {
    */
   public void setId(String id) {
     this.id = id;
+  }
+
+  /**
+   * Gets an member's day created.
+   *
+   * @return - The member's day created.
+   */
+  public int getDayCreated() {
+    return dayCreated;
+  }
+
+  /**
+   * Sets the member's day created.
+   *
+   * @param dayCreated - The member's day created.
+   */
+  public void setDayCreated(int dayCreated) {
+    this.dayCreated = dayCreated;
   }
 
   /**

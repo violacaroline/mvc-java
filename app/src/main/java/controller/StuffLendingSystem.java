@@ -44,8 +44,8 @@ public class StuffLendingSystem {
    *
    * @return - The new member.
    */
-  public Member createMember(String name, String email, String phone) {
-    Member member = new Member(name, email, phone, createMemberId());
+  public Member createMember(String name, String email, String phone, int dayCreated) {
+    Member member = new Member(name, email, phone, createMemberId(), dayCreated);
     return member;
   }
 

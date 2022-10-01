@@ -37,7 +37,8 @@ public class App {
                 case 1:
                   String[] answerArray = ui.promptCreateMember();
 
-                  Member member = stuffLendingSystem.createMember(answerArray[0], answerArray[1], answerArray[2]);
+                  Member member = stuffLendingSystem.createMember(answerArray[0], answerArray[1], answerArray[2],
+                      time.getCounter());
 
                   stuffLendingSystem.addMember(member);
 

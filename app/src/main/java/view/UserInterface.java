@@ -149,7 +149,8 @@ public class UserInterface {
     answerArray[0] = scan.next();
     System.out.println("Type item name:");
     answerArray[1] = scan.next();
-    scan.nextLine(); // REALLY UGLY SOLUTION - WHAT THE FUCK IS THIS NEXTLINE PROBLEM? ANNOYING.. FIX THIS SHIT
+    // REALLY UGLY SOLUTION - WHAT THE FUCK IS THIS NEXTLINE PROBLEM? ANNOYING.. FIX THIS SHIT
+    scan.nextLine(); 
     System.out.println("Type item description:");
     answerArray[2] = scan.nextLine();
     System.out.println("Type item cost:");
@@ -232,8 +233,7 @@ public class UserInterface {
     for (Member member : members) {
       if (member.getId().equals(memberId)) {
         System.out
-            .println("Name: " + member.getName() + "\nEmail: " + member.getEmail() + "\nPhone: " + member.getPhone()
-                + "\nID: " + member.getId());
+            .println("Name: " + member.getName() + "\nEmail: " + member.getEmail() + "\nID: " + member.getId());
       }
     }
   }
@@ -245,8 +245,8 @@ public class UserInterface {
    */
   public void showMembersSimpleInfo(Member[] members) {
     for (Member member : members) {
-      System.out.println("Name: " + member.getName() + "\nEmail: " + member.getEmail() + "\nPhone: " + member.getPhone()
-          + "\nID: " + member.getId());
+      System.out.println("Name: " + member.getName() + "\nEmail: " + member.getEmail() + "\nID: " + member.getId()
+          + "\nAmount of items: " + member.getItems().length);
     }
   }
 
@@ -257,8 +257,7 @@ public class UserInterface {
    */
   public void showMembersFullInfo(Member[] members) {
     for (Member member : members) {
-      System.out.println("Name: " + member.getName() + "\nEmail: " + member.getEmail() + "\nPhone: " + member.getPhone()
-          + "\nID: " + member.getId());
+      System.out.println("Name: " + member.getName() + "\nEmail: " + member.getEmail() + "\nID: " + member.getId());
     }
   }
 
