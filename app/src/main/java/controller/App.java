@@ -15,6 +15,9 @@ public class App {
     try {
       controller.StuffLendingSystem stuffLendingSystem = new StuffLendingSystem();
       view.UserInterface ui = new view.UserInterface();
+      model.Time time = new model.Time(0);
+
+      time.incrementDayCounter();
 
       int optionMainMenu = 0;
       int optionMemberMenu = 0;
@@ -22,11 +25,14 @@ public class App {
 
       do {
         optionMainMenu = ui.mainMenu();
+        time.incrementDayCounter();
 
         switch (optionMainMenu) {
           case 1:
             do {
               optionMemberMenu = ui.memberMenu();
+              time.incrementDayCounter();
+
               switch (optionMemberMenu) {
                 case 1:
                   String[] answerArray = ui.promptCreateMember();
@@ -71,10 +77,12 @@ public class App {
           case 2:
             do {
               optionItemMenu = ui.itemMenu();
+              time.incrementDayCounter();
 
               switch (optionItemMenu) {
                 case 1:
-                  stuffLendingSystem.registerItemToMember(ui.promptMemberId(), ui.promptCreateItem());
+                  stuffLendingSystem.registerItemToMember(ui.promptMemberId(), ui.promptCreateItem(),
+                      time.getCounter());
                   break;
                 case 2:
                   stuffLendingSystem.deleteItemFromMember(ui.promptMemberId(), ui.promptGetItemName());
@@ -106,6 +114,8 @@ public class App {
             break;
         }
       } while (optionMainMenu != 3);
+    } catch (RuntimeException runtimeError) {
+      throw runtimeError;
     } catch (Exception error) {
       System.out.println("Something went wrong, please restart app.");
     }

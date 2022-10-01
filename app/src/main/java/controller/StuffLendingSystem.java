@@ -86,10 +86,10 @@ public class StuffLendingSystem {
    *
    * @param memberId - The member to delete.
    */
-  public void registerItemToMember(String memberId, String[] answerArray) {
+  public void registerItemToMember(String memberId, String[] answerArray, int dayCreated) {
     for (int i = 0; i < this.members.size(); i++) {
       if (this.members.get(i).getId().equals(memberId)) {
-        this.members.get(i).createItem(answerArray[0], answerArray[1], answerArray[2], 100, 6);
+        this.members.get(i).createItem(answerArray[0], answerArray[1], answerArray[2], 100, dayCreated);
       }
     }
   }
