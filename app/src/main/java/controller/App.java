@@ -37,10 +37,7 @@ public class App {
                 case 1:
                   String[] answerArray = ui.promptCreateMember();
 
-                  Member member = stuffLendingSystem.createMember(answerArray[0], answerArray[1], answerArray[2],
-                      time.getCounter());
-
-                  stuffLendingSystem.addMember(member);
+                  stuffLendingSystem.createMember(answerArray[0], answerArray[1], answerArray[2], time.getCounter());
 
                   ui.showMessage("Member was created");
                   break;
@@ -61,16 +58,13 @@ public class App {
                   ui.showMembersSimpleInfo(stuffLendingSystem.getMembers());
                   break;
                 case 6:
-                  System.out.println("List members full here");
                   ui.showMembersFullInfo(stuffLendingSystem.getMembers());
                   break;
                 case 7:
-                  System.out.println("Going back...");
-
+                  ui.showMessage("Going back...");
                   break;
                 default:
-                  System.out.println("Option is invalid");
-
+                  ui.showMessage("Option is invalid");
                   break;
               }
             } while (optionMemberMenu != 7);
@@ -93,28 +87,30 @@ public class App {
                   ui.promptEditItem(ui.promptMemberId(), stuffLendingSystem.getMembers());
                   break;
                 case 4:
-                  System.out.println("View item here");
                   ui.showSingleItem(ui.promptMemberId(), stuffLendingSystem.getMembers(), ui.promptGetItemName());
                   break;
                 case 5:
-                  System.out.println("Going back...");
+                  ui.showMessage("Going back...");
 
                   break;
                 default:
-                  System.out.println("Option is invalid");
+                  ui.showMessage("Option is invalid");
 
                   break;
               }
             } while (optionItemMenu != 5);
             break;
           case 3:
+            stuffLendingSystem.createLendingContract(ui.promptLoanAnItem());
+            break;
+          case 4:
             System.out.println("Quitting...");
             break;
           default:
             System.out.println("Option is invalid");
             break;
         }
-      } while (optionMainMenu != 3);
+      } while (optionMainMenu != 4);
     } catch (RuntimeException runtimeError) {
       throw runtimeError;
     } catch (Exception error) {

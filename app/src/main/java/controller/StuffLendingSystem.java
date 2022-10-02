@@ -2,6 +2,8 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.Random;
+import model.Item;
+import model.LendingContract;
 import model.Member;
 
 /**
@@ -41,12 +43,11 @@ public class StuffLendingSystem {
 
   /**
    * Creates a member.
-   *
-   * @return - The new member.
    */
-  public Member createMember(String name, String email, String phone, int dayCreated) {
+  public void createMember(String name, String email, String phone, int dayCreated) {
     Member member = new Member(name, email, phone, createMemberId(), dayCreated);
-    return member;
+
+    this.addMember(member);
   }
 
   /**
@@ -83,7 +84,9 @@ public class StuffLendingSystem {
   /**
    * Registers an item to a member.
    *
-   * @param memberId - The member to delete.
+   * @param memberId    - The member to delete.
+   * @param answerArray - An array of answers.
+   * @param dayCreated  - The day an item was created.
    */
   public void registerItemToMember(String memberId, String[] answerArray, int dayCreated) {
     for (int i = 0; i < this.members.size(); i++) {
@@ -103,6 +106,41 @@ public class StuffLendingSystem {
     for (int i = 0; i < this.members.size(); i++) {
       if (this.members.get(i).getId().equals(memberId)) {
         this.members.get(i).deleteitem(itemName);
+      }
+    }
+  }
+
+  /**
+   * Create new lending contract.
+   *
+   */
+  public void createLendingContract(String[] answerArray) {
+    for (int i = 0; i < this.members.size(); i++) {
+      if (this.members.get(i).getId().equals(answerArray[1])) {
+        for (Item item : this.members.get(i).getItems()) {
+          if (item.getName().equals(answerArray[2])) {
+            this.deductMemberCredit(answerArray[0], item, answerArray[4], answerArray[3]);
+            LendingContract lendingContract = new LendingContract(Integer.parseInt(answerArray[3]),
+                +Integer.parseInt(answerArray[4]), item);
+            item.addLendingContract(lendingContract);
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * Deduct member's credit.
+   *
+   * @param memberId - The member to deduct.
+   * @param endDay   - The day when contract ends.
+   * @param startDay - The day when contract starts.
+   */
+  public void deductMemberCredit(String memberId, Item item, String endDay, String startDay) {
+    for (Member member : this.members) {
+      if (member.getId().equals(memberId)) {
+        member.decrementCredit(item.getCostPerDay() * (Integer.parseInt(endDay)
+            - Integer.parseInt(startDay)));
       }
     }
   }

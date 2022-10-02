@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 /**
  * Class representing an Item.
  */
@@ -9,6 +11,8 @@ public class Item {
   private String description;
   private int costPerDay;
   private int dayCreated;
+  private ArrayList<LendingContract> lendingContracts = new ArrayList<>();
+
 
   /**
    * Instanciates a new item object.
@@ -109,5 +113,27 @@ public class Item {
    */
   public void setDayCreated(int dayCreated) {
     this.dayCreated = dayCreated;
+  }
+
+  /**
+   * Add contract to item.
+   *
+   * @param lendingContract - The lending contract.
+   */
+  public void addLendingContract(LendingContract lendingContract) {
+    this.lendingContracts.add(lendingContract);
+  }
+
+  /**
+   * Get lending contracts.
+   *
+   * @return - The lending contracts.
+   */
+  public LendingContract[] getLendingContracts() {
+    LendingContract[] showLendingContracts = new LendingContract[this.lendingContracts.size()];
+
+    showLendingContracts = this.lendingContracts.toArray(showLendingContracts);
+
+    return showLendingContracts;
   }
 }

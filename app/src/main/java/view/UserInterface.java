@@ -2,6 +2,7 @@ package view;
 
 import java.util.Scanner;
 import model.Item;
+import model.LendingContract;
 import model.Member;
 
 /**
@@ -19,7 +20,8 @@ public class UserInterface {
     System.out.println("Menu Options:");
     System.out.println("1. See member menu");
     System.out.println("2. See item menu");
-    System.out.println("3. Quit");
+    System.out.println("3. Loan an item");
+    System.out.println("4. Quit");
     System.out.println("Type Option:");
 
     int option = scan.nextInt();
@@ -28,7 +30,7 @@ public class UserInterface {
   }
 
   /**
-   * Display and await main menu options.
+   * Display and await member menu options.
    *
    * @return - The chosen option.
    */
@@ -49,7 +51,7 @@ public class UserInterface {
   }
 
   /**
-   * Display and await main menu options.
+   * Display and await item menu options.
    *
    * @return - The chosen option.
    */
@@ -88,7 +90,8 @@ public class UserInterface {
     String[] answerArray = new String[3];
 
     System.out.println("Type members name:");
-    answerArray[0] = scan.next();
+    scan.nextLine(); // UGLYYYYYY, HEEEEELP
+    answerArray[0] = scan.nextLine();
     System.out.println("Type members email:");
     answerArray[1] = scan.next();
     System.out.println("Type members phone:");
@@ -114,7 +117,8 @@ public class UserInterface {
         switch (whatToEdit) {
           case "name":
             System.out.println("Type new name: ");
-            String newName = scan.next();
+            scan.nextLine(); // UGLYYYYYY, HEEEEELP
+            String newName = scan.nextLine();
             member.setName(newName);
             break;
           case "email":
@@ -225,6 +229,27 @@ public class UserInterface {
   }
 
   /**
+   * Display loan an item prompts.
+   *
+   * @return - The array of answers.
+   */
+  public String[] promptLoanAnItem() {
+    String[] answerArray = new String[5];
+
+    System.out.println("Please state your member ID: ");
+    answerArray[0] = scan.next();
+    System.out.println("Please state member ID of the owner of the item: ");
+    answerArray[1] = scan.next();
+    answerArray[2] = this.promptGetItemName();
+    System.out.println("From what day do you want to loan the item? ");
+    answerArray[3] = scan.next();
+    System.out.println("To what day do you want to loan the item? ");
+    answerArray[4] = scan.next();
+
+    return answerArray;
+  }
+
+  /**
    * Show single member.
    *
    * @param memberId - The members ID.
@@ -261,6 +286,14 @@ public class UserInterface {
   public void showMembersFullInfo(Member[] members) {
     for (Member member : members) {
       System.out.println("Name: " + member.getName() + "\nEmail: " + member.getEmail() + "\nID: " + member.getId());
+      if (member.getItems().length > 0) {
+        System.out.println("ITEMS: ");
+        for (Item item : member.getItems()) {
+          System.out.println("Name: " + item.getName() + "\nDescription: " + item.getDescription()
+              + "\nCategory: " + item.getCategory() + "\nCost per day: "
+              + item.getCostPerDay() + "\nCreated day: " + item.getDayCreated());
+        }
+      }
     }
   }
 
@@ -280,6 +313,13 @@ public class UserInterface {
                 .println("Name: " + item.getName() + "\nCategory: " + item.getCategory() + "\nDescription: "
                     + item.getDescription()
                     + "\nCost: " + item.getCostPerDay() + "\nCreated day: " + item.getDayCreated());
+            if (item.getLendingContracts().length > 0) {
+              System.out.println("CONTRACTS:");
+              for (LendingContract lendingContract : item.getLendingContracts()) {
+                System.out.println("Start day: " + lendingContract.getStartDay() + "\nEnd day: "
+                    + lendingContract.getEndDay() + "\nItem name: " + item.getName());
+              }
+            }
           }
         }
       }
