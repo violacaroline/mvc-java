@@ -119,10 +119,7 @@ public class StuffLendingSystem {
       if (this.members.get(i).getId().equals(answerArray[1])) {
         for (Item item : this.members.get(i).getItems()) {
           if (item.getName().equals(answerArray[2])) {
-            this.deductMemberCredit(answerArray[0], item, answerArray[4], answerArray[3]);
-            LendingContract lendingContract = new LendingContract(Integer.parseInt(answerArray[3]),
-                +Integer.parseInt(answerArray[4]), item);
-            item.addLendingContract(lendingContract);
+            checkMemberCredit(answerArray[0], item, answerArray[4], answerArray[3]);
           }
         }
       }
@@ -141,6 +138,31 @@ public class StuffLendingSystem {
       if (member.getId().equals(memberId)) {
         member.decrementCredit(item.getCostPerDay() * (Integer.parseInt(endDay)
             - Integer.parseInt(startDay)));
+      }
+    }
+  }
+
+  /**
+   * Check member's credit.
+   *
+   * @param memberId - The member to check.
+   * @param endDay   - The day when contract ends.
+   * @param startDay - The day when contract starts.
+   */
+  public void checkMemberCredit(String memberId, Item item, String endDay, String startDay) {
+    for (Member member : this.members) {
+      if (member.getId().equals(memberId)) {
+        // Check credit
+        if (member.getCredit() > item.getCostPerDay() * (Integer.parseInt(endDay)
+            - Integer.parseInt(startDay))) {
+          this.deductMemberCredit(memberId, item, endDay, startDay);
+          // TODO: REFACTOR THIS METHOD - IT CHECKS CREDIT AND ALSO CREATES CONTRACT
+          LendingContract lendingContract = new LendingContract(Integer.parseInt(startDay),
+              +Integer.parseInt(endDay), item);
+          item.addLendingContract(lendingContract);
+        } else {
+          System.out.println("You do not have sufficient funds");
+        }
       }
     }
   }
