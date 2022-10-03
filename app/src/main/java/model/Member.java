@@ -14,7 +14,6 @@ public class Member {
   private int credit;
   private ArrayList<Item> items = new ArrayList<>();
 
-
   /**
    * Instanciates a new member object.
    */
@@ -118,19 +117,31 @@ public class Member {
     this.dayCreated = dayCreated;
   }
 
+  /**
+   * Gets the member's credit.
+   *
+   * @return - The credit.
+   */
   public int getCredit() {
     return credit;
   }
 
+  /**
+   * Sets the member's credit.
+   *
+   * @param credit - The value to set.
+   */
   public void setCredit(int credit) {
     this.credit = credit;
   }
 
   /**
    * Increment the members credit.
+   *
+   * @param value - The value to increment credit with.
    */
-  public void incrementCredit() {
-    this.credit = this.getCredit() + 100;
+  public void incrementCredit(int value) {
+    this.credit = this.getCredit() + value;
   }
 
   /**
@@ -145,11 +156,13 @@ public class Member {
   /**
    * Creates a new item.
    */
-  public void createItem(String category, String name, String description, int costPerDay, int dayCreated) {
-    Item item = new Item(category, name, description, costPerDay, dayCreated);
+  public void createItem(String category, String name, String description,
+      int costPerDay, int dayCreated, Member owner) {
+  
+    Item item = new Item(category, name, description, costPerDay, dayCreated, owner);
 
     this.addItem(item);
-    this.incrementCredit();
+    this.incrementCredit(100);
   }
 
   /**

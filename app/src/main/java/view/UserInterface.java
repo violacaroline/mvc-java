@@ -260,7 +260,8 @@ public class UserInterface {
       if (member.getId().equals(memberId)) {
         System.out
             .println("Name: " + member.getName() + "\nEmail: " + member.getEmail() + "\nID: " + member.getId()
-                + "\nAmount of credit: " + member.getCredit() + "\nAmount of items: " + member.getItems().length);
+                + "\nAmount of credit: " + member.getCredit() + "\nAmount of items: " + member.getItems().length
+                + "\nCreated day: " + member.getDayCreated());
       }
     }
   }
@@ -285,7 +286,9 @@ public class UserInterface {
    */
   public void showMembersFullInfo(Member[] members) {
     for (Member member : members) {
-      System.out.println("Name: " + member.getName() + "\nEmail: " + member.getEmail() + "\nID: " + member.getId());
+      System.out.println(
+          "Name: " + member.getName() + "\nEmail: " + member.getEmail() + "\nID: " + member.getId() + "\nCreated day: "
+              + member.getDayCreated() + "\nTotal credit: " + member.getCredit());
       if (member.getItems().length > 0) {
         System.out.println("ITEMS: ");
         for (Item item : member.getItems()) {

@@ -91,8 +91,8 @@ public class StuffLendingSystem {
   public void registerItemToMember(String memberId, String[] answerArray, int dayCreated) {
     for (int i = 0; i < this.members.size(); i++) {
       if (this.members.get(i).getId().equals(memberId)) {
-        this.members.get(i).createItem(answerArray[0], answerArray[1], answerArray[2], Integer.parseInt(answerArray[3]),
-            dayCreated);
+        this.members.get(i).createItem(answerArray[0], answerArray[1], answerArray[2],
+            Integer.parseInt(answerArray[3]), dayCreated, this.members.get(i));
       }
     }
   }
@@ -111,59 +111,87 @@ public class StuffLendingSystem {
   }
 
   /**
-   * Create new lending contract.
+   * Establishes a new lending contract between two members.
    *
+   * @param answerArray - The array of answers.
+   *
+   * @return - True if a lending contract was successfully established.
    */
-  public void createLendingContract(String[] answerArray) {
+  public boolean establishLendingContract(String[] answerArray) {
+    boolean isContractEstablished = false;
+
     for (int i = 0; i < this.members.size(); i++) {
       if (this.members.get(i).getId().equals(answerArray[1])) {
         for (Item item : this.members.get(i).getItems()) {
           if (item.getName().equals(answerArray[2])) {
-            checkMemberCredit(answerArray[0], item, answerArray[4], answerArray[3]);
+            isContractEstablished = checkCreditCreateContract(answerArray[0], item, answerArray[4], answerArray[3]);
           }
         }
       }
     }
+
+    return isContractEstablished;
   }
 
   /**
    * Deduct member's credit.
    *
-   * @param memberId - The member to deduct.
-   * @param endDay   - The day when contract ends.
-   * @param startDay - The day when contract starts.
+   * @param deductMemberId - The ID of the member to deduct.
+   * @param endDay         - The day when contract ends.
+   * @param startDay       - The day when contract starts.
    */
-  public void deductMemberCredit(String memberId, Item item, String endDay, String startDay) {
+  public void transferCredit(String deductMemberId, Item item, String endDay, String startDay) {
     for (Member member : this.members) {
-      if (member.getId().equals(memberId)) {
-        member.decrementCredit(item.getCostPerDay() * (Integer.parseInt(endDay)
-            - Integer.parseInt(startDay)));
+      if (member.getId().equals(deductMemberId)) {
+        int costOfItem = item.getCostPerDay() * (Integer.parseInt(endDay)
+            - Integer.parseInt(startDay));
+
+        System.out.println("The member to be deducted: " + member.getName());
+        System.out.println("The member to be paid: " + item.getOwner().getName());
+
+        member.decrementCredit(costOfItem);
+        item.getOwner().incrementCredit(costOfItem);
       }
     }
   }
 
   /**
-   * Check member's credit.
+   * Check member's credit, create contract if sufficient funds.
    *
    * @param memberId - The member to check.
    * @param endDay   - The day when contract ends.
    * @param startDay - The day when contract starts.
+   *
+   * @return - True if contract was created.
    */
-  public void checkMemberCredit(String memberId, Item item, String endDay, String startDay) {
+  public boolean checkCreditCreateContract(String memberId, Item item, String endDay, String startDay) {
+    boolean isContractCreated = false;
+
     for (Member member : this.members) {
       if (member.getId().equals(memberId)) {
         // Check credit
         if (member.getCredit() > item.getCostPerDay() * (Integer.parseInt(endDay)
             - Integer.parseInt(startDay))) {
-          this.deductMemberCredit(memberId, item, endDay, startDay);
-          // TODO: REFACTOR THIS METHOD - IT CHECKS CREDIT AND ALSO CREATES CONTRACT
-          LendingContract lendingContract = new LendingContract(Integer.parseInt(startDay),
-              +Integer.parseInt(endDay), item);
-          item.addLendingContract(lendingContract);
-        } else {
-          System.out.println("You do not have sufficient funds");
+          this.transferCredit(memberId, item, endDay, startDay);
+          this.createLendingContract(startDay, endDay, item);
+          isContractCreated = true;
         }
       }
     }
+
+    return isContractCreated;
+  }
+
+  /**
+   * Create new contract.
+   *
+   * @param startDay - The day when contract starts.
+   * @param endDay   - The day when contract ends.
+   * @param item     - The item it covers.
+   */
+  public void createLendingContract(String startDay, String endDay, Item item) {
+    LendingContract lendingContract = new LendingContract(Integer.parseInt(startDay),
+        +Integer.parseInt(endDay), item);
+    item.addLendingContract(lendingContract);
   }
 }

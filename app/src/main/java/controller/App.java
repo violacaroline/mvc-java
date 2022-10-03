@@ -1,7 +1,5 @@
 package controller;
 
-import model.Member;
-
 /**
  * Responsible for staring the application.
  */
@@ -83,7 +81,6 @@ public class App {
                   stuffLendingSystem.deleteItemFromMember(ui.promptMemberId(), ui.promptGetItemName());
                   break;
                 case 3:
-                  System.out.println("Edit item here");
                   ui.promptEditItem(ui.promptMemberId(), stuffLendingSystem.getMembers());
                   break;
                 case 4:
@@ -101,7 +98,10 @@ public class App {
             } while (optionItemMenu != 5);
             break;
           case 3:
-            stuffLendingSystem.createLendingContract(ui.promptLoanAnItem());
+            boolean contractEstablished = stuffLendingSystem.establishLendingContract(ui.promptLoanAnItem());
+            if (!contractEstablished) {
+              ui.showMessage("You do not have sufficient funds.");
+            }
             break;
           case 4:
             System.out.println("Quitting...");

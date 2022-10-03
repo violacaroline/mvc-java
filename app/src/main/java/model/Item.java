@@ -11,18 +11,19 @@ public class Item {
   private String description;
   private int costPerDay;
   private int dayCreated;
+  private Member owner;
   private ArrayList<LendingContract> lendingContracts = new ArrayList<>();
-
 
   /**
    * Instanciates a new item object.
    */
-  public Item(String category, String name, String description, int costPerDay, int dayCreated) {
+  public Item(String category, String name, String description, int costPerDay, int dayCreated, Member owner) {
     setCategory(category);
     setName(name);
     setDescription(description);
     setCostPerDay(costPerDay);
     setDayCreated(dayCreated);
+    setOwner(owner);
   }
 
   /**
@@ -113,6 +114,26 @@ public class Item {
    */
   public void setDayCreated(int dayCreated) {
     this.dayCreated = dayCreated;
+  }
+
+  /**
+   * Gets the owner of the item.
+   *
+   * @return - The owner.
+   */
+  public Member getOwner() {
+    Member deepCopyOwner = new Member(this.owner.getName(), this.owner.getEmail(), this.owner.getPhone(),
+        this.owner.getId(), this.owner.getDayCreated());
+    return deepCopyOwner;
+  }
+
+  /**
+   * Sets the owner of the item.
+   *
+   * @param owner - The owner.
+   */
+  public void setOwner(Member owner) {
+    this.owner = new Member(owner.getName(), owner.getEmail(), owner.getPhone(), owner.getId(), owner.getDayCreated());
   }
 
   /**

@@ -64,7 +64,7 @@ public class LendingContract {
    */
   public Item getItem() {
     Item deepCopyItem = new Item(this.item.getCategory(), this.item.getName(), this.item.getDescription(),
-        +this.item.getCostPerDay(), this.item.getDayCreated());
+        +this.item.getCostPerDay(), this.item.getDayCreated(), this.item.getOwner());
 
     return deepCopyItem;
   }
@@ -76,6 +76,6 @@ public class LendingContract {
    */
   public void setItem(Item item) {
     this.item = new Item(item.getCategory(), item.getName(), item.getDescription(),
-        +item.getCostPerDay(), item.getDayCreated());
+        +item.getCostPerDay(), item.getDayCreated(), item.getOwner());
   }
 }

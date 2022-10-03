@@ -60,6 +60,6 @@ public class Time {
 
     // timer.scheduleAtFixedRate(timerTask, delay, period);
 
-    System.out.println("The time: " + this.getCounter());
+    System.out.println();
   }
 }
