@@ -135,7 +135,10 @@ public class Item {
    * @param owner - The owner.
    */
   public void setOwner(Member owner) {
-    // this.owner = new Member(owner.getName(), owner.getEmail(), owner.getPhone(), owner.getId(), owner.getDayCreated());
+    /* this.owner = new Member(owner.getName(), owner.getEmail(), 
+    owner.getPhone(), owner.getId(), owner.getDayCreated()); */
+
+    /* EXPOSING MUTABLE OBJECT - I WANT TO CHANGE AN ATTRIBUTE ON IT THOUGH??? */
     this.owner = owner;
   }
 

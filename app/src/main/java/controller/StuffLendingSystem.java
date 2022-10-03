@@ -167,14 +167,23 @@ public class StuffLendingSystem {
   public boolean checkCreditCreateContract(String memberId, Item item, String endDay, String startDay) {
     boolean isContractCreated = false;
 
-    for (Member member : this.members) {
-      if (member.getId().equals(memberId)) {
-        // Check credit
-        if (member.getCredit() > item.getCostPerDay() * (Integer.parseInt(endDay)
-            - Integer.parseInt(startDay))) {
-          this.transferCredit(memberId, item, endDay, startDay);
+    /* Only create a contract if there is not already one */
+    if (isItemReserved(item.getLendingContracts(), startDay, endDay)) {
+      System.out.println("Item is reserved");
+    } else {
+      for (Member member : this.members) {
+        if (member.getId().equals(item.getOwner().getId())) {
+          /* If it is the owning member create contract, don't deduct credit */
           this.createLendingContract(startDay, endDay, item);
           isContractCreated = true;
+        } else if (member.getId().equals(memberId)) {
+          /* If it is another member Check and transfer credit */
+          if (member.getCredit() > item.getCostPerDay() * (Integer.parseInt(endDay)
+              - Integer.parseInt(startDay))) {
+            this.transferCredit(memberId, item, endDay, startDay);
+            this.createLendingContract(startDay, endDay, item);
+            isContractCreated = true;
+          }
         }
       }
     }
@@ -193,5 +202,36 @@ public class StuffLendingSystem {
     LendingContract lendingContract = new LendingContract(Integer.parseInt(startDay),
         +Integer.parseInt(endDay), item);
     item.addLendingContract(lendingContract);
+  }
+
+  // /**
+  // * Check contract length.
+  // *
+  // * @param lendingContract - The lending contract to check.
+  // * @return - The length of the contract.
+  // */
+  // public int checkContractLength(LendingContract lendingContract) {
+  // return lendingContract.getEndDay() - lendingContract.getStartDay();
+  // }
+
+  /**
+   * Check if item is available.
+   *
+   * @param lendingContracts - The lending contracts to iterate.
+   * @param desiredStartDay  - The day FROM when the item would need to be free.
+   * @param desiredEndDay    - The day TO when the item would need to be free.
+   * @return - True if item is reserved.
+   */
+  public boolean isItemReserved(LendingContract[] lendingContracts, String desiredStartDay, String desiredEndDay) {
+    boolean isReserved = false;
+
+    for (LendingContract lendingContract : lendingContracts) {
+      if (Integer.parseInt(desiredStartDay) >= lendingContract.getStartDay()
+          && Integer.parseInt(desiredStartDay) <= lendingContract.getEndDay()) {
+        isReserved = true;
+      }
+    }
+
+    return isReserved;
   }
 }

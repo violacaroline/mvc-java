@@ -75,7 +75,7 @@ public class UserInterface {
    * @return - The member's id.
    */
   public String promptMemberId() {
-    System.out.println("Type the member ID:");
+    System.out.println("Type your member ID:");
     String memberId = scan.next();
 
     return memberId;
