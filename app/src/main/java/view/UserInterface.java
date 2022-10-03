@@ -282,9 +282,10 @@ public class UserInterface {
   /**
    * Display a "full information" list of members.
    *
-   * @param members - List of members to iterate.
+   * @param members     - List of members to iterate.
+   * @param currentTime - The current time.
    */
-  public void showMembersFullInfo(Member[] members) {
+  public void showMembersFullInfo(Member[] members, int currentTime) {
     for (Member member : members) {
       System.out.println(
           "Name: " + member.getName() + "\nEmail: " + member.getEmail() + "\nID: " + member.getId() + "\nCreated day: "
@@ -295,6 +296,12 @@ public class UserInterface {
           System.out.println("Name: " + item.getName() + "\nDescription: " + item.getDescription()
               + "\nCategory: " + item.getCategory() + "\nCost per day: "
               + item.getCostPerDay() + "\nCreated day: " + item.getDayCreated());
+          for (LendingContract lendingContract : item.getLendingContracts()) {
+            if (currentTime >= lendingContract.getStartDay() && currentTime <= lendingContract.getEndDay()) {
+              System.out.println("Currently lent to: " + lendingContract.getCurrentlyLentTo().getName()
+                  + "\nFrom day: " + lendingContract.getStartDay() + "\nTo day: " + lendingContract.getEndDay());
+            }
+          }
         }
       }
     }

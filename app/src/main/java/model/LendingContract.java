@@ -7,6 +7,7 @@ public class LendingContract {
   private int startDay;
   private int endDay;
   private Item item;
+  private Member currentlyLentTo;
 
   /**
    * Instansiates a new lending contract object.
@@ -15,10 +16,11 @@ public class LendingContract {
    * @param endDay   - The day TO which it is valid.
    * @param item     - The item that it covers.
    */
-  public LendingContract(int startDay, int endDay, Item item) {
+  public LendingContract(int startDay, int endDay, Item item, Member currentlyLentTo) {
     setStartDay(startDay);
     setEndDay(endDay);
     setItem(item);
+    setCurrentlyLentTo(currentlyLentTo);
   }
 
   /**
@@ -77,5 +79,26 @@ public class LendingContract {
   public void setItem(Item item) {
     this.item = new Item(item.getCategory(), item.getName(), item.getDescription(),
         +item.getCostPerDay(), item.getDayCreated(), item.getOwner());
+  }
+
+  /**
+   * Gets the member currently loaning the item.
+   *
+   * @return - The member item is lent to.
+   */
+  public Member getCurrentlyLentTo() {
+    Member deepCopyMember = new Member(this.currentlyLentTo.getName(), this.currentlyLentTo.getEmail(),
+        this.currentlyLentTo.getPhone(), this.currentlyLentTo.getId(), this.currentlyLentTo.getDayCreated());
+    return deepCopyMember;
+  }
+
+  /**
+   * Sets the member currently loaning the item.
+   *
+   * @param currentlyLentTo - The member item is lent to.
+   */
+  public void setCurrentlyLentTo(Member currentlyLentTo) {
+    this.currentlyLentTo = new Member(currentlyLentTo.getName(), currentlyLentTo.getEmail(),
+        currentlyLentTo.getPhone(), currentlyLentTo.getId(), currentlyLentTo.getDayCreated());
   }
 }

@@ -33,21 +33,13 @@ public class App {
 
               switch (optionMemberMenu) {
                 case 1:
-                  String[] answerArray = ui.promptCreateMember();
-
-                  stuffLendingSystem.createMember(answerArray[0], answerArray[1], answerArray[2], time.getCounter());
-
-                  ui.showMessage("Member was created");
+                  stuffLendingSystem.createMember(ui.promptCreateMember(), time.getCounter());
                   break;
                 case 2:
                   stuffLendingSystem.deleteMember(ui.promptMemberId());
-
-                  ui.showMessage("Member was deleted");
                   break;
                 case 3:
                   ui.promptEditMember(ui.promptMemberId(), stuffLendingSystem.getMembers());
-
-                  ui.showMessage("Member was edited");
                   break;
                 case 4:
                   ui.showSingleMember(ui.promptMemberId(), stuffLendingSystem.getMembers());
@@ -56,7 +48,7 @@ public class App {
                   ui.showMembersSimpleInfo(stuffLendingSystem.getMembers());
                   break;
                 case 6:
-                  ui.showMembersFullInfo(stuffLendingSystem.getMembers());
+                  ui.showMembersFullInfo(stuffLendingSystem.getMembers(), time.getCounter());
                   break;
                 case 7:
                   ui.showMessage("Going back...");
@@ -98,9 +90,10 @@ public class App {
             } while (optionItemMenu != 5);
             break;
           case 3:
+            ui.showMessage("Current time: " + time.getCounter());
             boolean contractEstablished = stuffLendingSystem.establishLendingContract(ui.promptLoanAnItem());
             if (!contractEstablished) {
-              ui.showMessage("You do not have sufficient funds.");
+              ui.showMessage("The contract was denied.");
             }
             break;
           case 4:

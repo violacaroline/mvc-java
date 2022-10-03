@@ -43,9 +43,12 @@ public class StuffLendingSystem {
 
   /**
    * Creates a member.
+   *
+   * @param answerArray - The array of answers.
+   * @param dayCreated  - The current time/day.
    */
-  public void createMember(String name, String email, String phone, int dayCreated) {
-    Member member = new Member(name, email, phone, createMemberId(), dayCreated);
+  public void createMember(String[] answerArray, int dayCreated) {
+    Member member = new Member(answerArray[0], answerArray[1], answerArray[2], createMemberId(), dayCreated);
 
     this.addMember(member);
   }
@@ -168,20 +171,18 @@ public class StuffLendingSystem {
     boolean isContractCreated = false;
 
     /* Only create a contract if there is not already one */
-    if (isItemReserved(item.getLendingContracts(), startDay, endDay)) {
-      System.out.println("Item is reserved");
-    } else {
+    if (!isItemReserved(item.getLendingContracts(), startDay, endDay)) {
       for (Member member : this.members) {
         if (member.getId().equals(item.getOwner().getId())) {
           /* If it is the owning member create contract, don't deduct credit */
-          this.createLendingContract(startDay, endDay, item);
+          this.createLendingContract(startDay, endDay, item, member);
           isContractCreated = true;
         } else if (member.getId().equals(memberId)) {
           /* If it is another member Check and transfer credit */
           if (member.getCredit() > item.getCostPerDay() * (Integer.parseInt(endDay)
               - Integer.parseInt(startDay))) {
             this.transferCredit(memberId, item, endDay, startDay);
-            this.createLendingContract(startDay, endDay, item);
+            this.createLendingContract(startDay, endDay, item, member);
             isContractCreated = true;
           }
         }
@@ -198,21 +199,11 @@ public class StuffLendingSystem {
    * @param endDay   - The day when contract ends.
    * @param item     - The item it covers.
    */
-  public void createLendingContract(String startDay, String endDay, Item item) {
+  public void createLendingContract(String startDay, String endDay, Item item, Member currentlyLoaningItem) {
     LendingContract lendingContract = new LendingContract(Integer.parseInt(startDay),
-        +Integer.parseInt(endDay), item);
+        +Integer.parseInt(endDay), item, currentlyLoaningItem);
     item.addLendingContract(lendingContract);
   }
-
-  // /**
-  // * Check contract length.
-  // *
-  // * @param lendingContract - The lending contract to check.
-  // * @return - The length of the contract.
-  // */
-  // public int checkContractLength(LendingContract lendingContract) {
-  // return lendingContract.getEndDay() - lendingContract.getStartDay();
-  // }
 
   /**
    * Check if item is available.
