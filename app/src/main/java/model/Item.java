@@ -122,9 +122,11 @@ public class Item {
    * @return - The owner.
    */
   public Member getOwner() {
-    Member deepCopyOwner = new Member(this.owner.getName(), this.owner.getEmail(), this.owner.getPhone(),
-        this.owner.getId(), this.owner.getDayCreated());
-    return deepCopyOwner;
+    // Member deepCopyOwner = new Member(this.owner.getName(), this.owner.getEmail(), this.owner.getPhone(),
+    //     this.owner.getId(), this.owner.getDayCreated());
+    // return deepCopyOwner;
+    
+    return this.owner;
   }
 
   /**
@@ -133,7 +135,8 @@ public class Item {
    * @param owner - The owner.
    */
   public void setOwner(Member owner) {
-    this.owner = new Member(owner.getName(), owner.getEmail(), owner.getPhone(), owner.getId(), owner.getDayCreated());
+    // this.owner = new Member(owner.getName(), owner.getEmail(), owner.getPhone(), owner.getId(), owner.getDayCreated());
+    this.owner = owner;
   }
 
   /**
