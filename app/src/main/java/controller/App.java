@@ -33,16 +33,19 @@ public class App {
 
               switch (optionMemberMenu) {
                 case 1:
-                  stuffLendingSystem.createMember(ui.promptCreateMember(), time.getCounter());
+                  stuffLendingSystem.createMember(ui.promptCreateMember(stuffLendingSystem.getMembers()),
+                      time.getCounter());
                   break;
                 case 2:
-                  stuffLendingSystem.deleteMember(ui.promptMemberId());
+                  stuffLendingSystem.deleteMember(ui.promptMemberId(stuffLendingSystem.getMembers()));
                   break;
                 case 3:
-                  ui.promptEditMember(ui.promptMemberId(), stuffLendingSystem.getMembers());
+                  ui.promptEditMember(ui.promptMemberId(stuffLendingSystem.getMembers()),
+                      stuffLendingSystem.getMembers());
                   break;
                 case 4:
-                  ui.showSingleMember(ui.promptMemberId(), stuffLendingSystem.getMembers());
+                  ui.showSingleMember(ui.promptMemberId(stuffLendingSystem.getMembers()),
+                      stuffLendingSystem.getMembers());
                   break;
                 case 5:
                   ui.showMembersSimpleInfo(stuffLendingSystem.getMembers());
@@ -66,17 +69,22 @@ public class App {
 
               switch (optionItemMenu) {
                 case 1:
-                  stuffLendingSystem.registerItemToMember(ui.promptMemberId(), ui.promptCreateItem(),
+                  /* VIEW DEPENDS ON CONTROLLER HERE? FOR TAKING THE MEMBERS AS A PARAMETER? */
+                  stuffLendingSystem.registerItemToMember(ui.promptMemberId(stuffLendingSystem.getMembers()),
+                      ui.promptCreateItem(),
                       time.getCounter());
                   break;
                 case 2:
-                  stuffLendingSystem.deleteItemFromMember(ui.promptMemberId(), ui.promptGetItemName());
+                  stuffLendingSystem.deleteItemFromMember(ui.promptMemberId(stuffLendingSystem.getMembers()),
+                      ui.promptGetItemName());
                   break;
                 case 3:
-                  ui.promptEditItem(ui.promptMemberId(), stuffLendingSystem.getMembers());
+                  ui.promptEditItem(ui.promptMemberId(stuffLendingSystem.getMembers()),
+                      stuffLendingSystem.getMembers());
                   break;
                 case 4:
-                  ui.showSingleItem(ui.promptMemberId(), stuffLendingSystem.getMembers(), ui.promptGetItemName());
+                  ui.showSingleItem(ui.promptMemberId(stuffLendingSystem.getMembers()), stuffLendingSystem.getMembers(),
+                      ui.promptGetItemName());
                   break;
                 case 5:
                   ui.showMessage("Going back...");

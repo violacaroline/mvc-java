@@ -4,12 +4,14 @@ import java.util.Scanner;
 import model.Item;
 import model.LendingContract;
 import model.Member;
+import model.MemberValidator;
 
 /**
  * Class representing a user interface.
  */
 public class UserInterface {
   Scanner scan = new Scanner(System.in, "utf-8");
+  MemberValidator memberValidator = new MemberValidator();
 
   /**
    * Display and await main menu options.
@@ -72,11 +74,22 @@ public class UserInterface {
   /**
    * Display member ID prompt.
    *
+   * @param members - List of members to iterate.
    * @return - The member's id.
    */
-  public String promptMemberId() {
-    System.out.println("Type your member ID:");
-    String memberId = scan.next();
+  public String promptMemberId(Member[] members) {
+    String memberId;
+    boolean memberExists = false;
+    do {
+      System.out.println("Type your member ID:");
+      memberId = scan.next().toUpperCase();
+
+      memberExists = memberValidator.validateMemberId(members, memberId);
+
+      if (!memberExists) {
+        System.out.println("TRY AGAIN, not a valid member ID");
+      }
+    } while (!memberExists);
 
     return memberId;
   }
@@ -84,18 +97,39 @@ public class UserInterface {
   /**
    * Display create member prompts.
    *
+   * @param members - List of members to iterate.
    * @return - The array of answers.
    */
-  public String[] promptCreateMember() {
+  public String[] promptCreateMember(Member[] members) {
     String[] answerArray = new String[3];
-
+    
     System.out.println("Type members name:");
-    scan.nextLine(); // UGLYYYYYY, HEEEEELP
+    scan.nextLine();
     answerArray[0] = scan.nextLine();
-    System.out.println("Type members email:");
-    answerArray[1] = scan.next();
-    System.out.println("Type members phone:");
-    answerArray[2] = scan.next();
+
+    boolean emailExists;
+    boolean phoneExists;
+    do {
+      System.out.println("Type members email:");
+      answerArray[1] = scan.next();
+
+      emailExists = memberValidator.validateMemberEmail(members, answerArray[1]);
+
+      if (emailExists) {
+        System.out.println("TRY AGAIN, email already taken");
+      }
+    } while (emailExists);
+
+    do {
+      System.out.println("Type members phone:");
+      answerArray[2] = scan.next();
+
+      phoneExists = memberValidator.validateMemberPhone(members, answerArray[2]);
+
+      if (phoneExists) {
+        System.out.println("TRY AGAIN, phone already taken");
+      }
+    } while (phoneExists);
 
     return answerArray;
   }
@@ -288,7 +322,8 @@ public class UserInterface {
   public void showMembersFullInfo(Member[] members, int currentTime) {
     for (Member member : members) {
       System.out.println(
-          "Name: " + member.getName() + "\nEmail: " + member.getEmail() + "\nID: " + member.getId() + "\nCreated day: "
+          "Name: " + member.getName() + "\nEmail: " + member.getEmail() + "\nPhone: "
+              + member.getPhone() + "\nID: " + member.getId() + "\nCreated day: "
               + member.getDayCreated() + "\nTotal credit: " + member.getCredit());
       if (member.getItems().length > 0) {
         System.out.println("ITEMS: ");
