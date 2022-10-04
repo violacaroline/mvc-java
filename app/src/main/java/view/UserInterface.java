@@ -102,7 +102,7 @@ public class UserInterface {
    */
   public String[] promptCreateMember(Member[] members) {
     String[] answerArray = new String[3];
-    
+
     System.out.println("Type members name:");
     scan.nextLine();
     answerArray[0] = scan.nextLine();
@@ -111,7 +111,8 @@ public class UserInterface {
     boolean phoneExists;
     do {
       System.out.println("Type members email:");
-      answerArray[1] = scan.next();
+      scan.nextLine();
+      answerArray[1] = scan.nextLine();
 
       emailExists = memberValidator.validateMemberEmail(members, answerArray[1]);
 
@@ -122,7 +123,8 @@ public class UserInterface {
 
     do {
       System.out.println("Type members phone:");
-      answerArray[2] = scan.next();
+      scan.nextLine();
+      answerArray[2] = scan.nextLine();
 
       phoneExists = memberValidator.validateMemberPhone(members, answerArray[2]);
 
@@ -139,40 +141,39 @@ public class UserInterface {
    *
    * @param memberId - The members ID.
    * @param members  - List of members to iterate.
+   * @return - The array of answers.
    */
-  public void promptEditMember(String memberId, Member[] members) {
+  public String[] promptEditMember(String memberId, Member[] members) {
+    String[] answerArray = new String[3];
 
-    // OBS - I AM REALLY EDITING THE MODEL FROM THE VIEW!!!!
-    for (Member member : members) {
-      if (member.getId().equals(memberId)) {
-        System.out.println("What do you want to edit? name / email / phone");
-        String whatToEdit = scan.next();
+    answerArray[0] = memberId;
+    System.out.println("What do you want to edit? name / email / phone");
+    answerArray[1] = scan.next().toLowerCase();
 
-        switch (whatToEdit) {
-          case "name":
-            System.out.println("Type new name: ");
-            scan.nextLine(); // UGLYYYYYY, HEEEEELP
-            String newName = scan.nextLine();
-            member.setName(newName);
-            break;
-          case "email":
-            System.out.println("Type new email: ");
-            String newEmail = scan.next();
-            member.setEmail(newEmail);
-            break;
-          case "phone":
-            System.out.println("Type new phone: ");
-            String newPhone = scan.next();
-            member.setPhone(newPhone);
-            break;
-          default:
-            System.out.println("Option is invalid");
-            break;
-        }
-      } else {
-        System.out.println("Could not find member...");
+    System.out.println("Type its new value: ");
+    answerArray[2] = scan.next().toLowerCase();
+
+    if (answerArray[1].equals("email") || answerArray[1].equals("phone")) {
+      switch (answerArray[1]) {
+        case "email":
+          while (memberValidator.validateMemberEmail(members, answerArray[2])) {
+            System.out.println("TRY AGAIN, email already exists: ");
+            answerArray[2] = scan.next().toLowerCase();
+          }
+          break;
+        case "phone":
+          while (memberValidator.validateMemberPhone(members, answerArray[2])) {
+            System.out.println("TRY AGAIN, phone already exists: ");
+            answerArray[2] = scan.next().toLowerCase();
+          }
+          break;
+
+        default:
+          break;
       }
     }
+
+    return answerArray;
   }
 
   /**
@@ -187,10 +188,8 @@ public class UserInterface {
     answerArray[0] = scan.next();
     System.out.println("Type item name:");
     answerArray[1] = scan.next();
-    // REALLY UGLY SOLUTION - WHAT THE FUCK IS THIS NEXTLINE PROBLEM? ANNOYING.. FIX
-    // THIS SHIT
-    scan.nextLine();
     System.out.println("Type item description:");
+    scan.nextLine();
     answerArray[2] = scan.nextLine();
     System.out.println("Type item cost:");
     answerArray[3] = scan.next();
@@ -203,51 +202,23 @@ public class UserInterface {
    *
    * @param memberId - The members ID.
    * @param members  - List of members to iterate.
+   * @return - An array of answers.
    */
-  public void promptEditItem(String memberId, Member[] members) {
+  public String[] promptEditItem(String memberId, Member[] members) {
+    String[] answerArray = new String[4];
 
-    // OBS - I AM REALLY EDITING THE MODEL FROM THE VIEW!!!!
-    for (Member member : members) {
-      if (member.getId().equals(memberId)) {
-        System.out.println("Type name of item that you want to edit: ");
-        String itemName = scan.next();
-        for (Item item : member.getItems()) {
-          if (item.getName().equals(itemName)) {
-            System.out.println("What do you want to edit? category / name / description / cost");
-            String whatToEdit = scan.next();
+    answerArray[0] = memberId;
 
-            switch (whatToEdit) {
-              case "category":
-                System.out.println("Type new item category: tool / vehicle / game / toy / sport / other");
-                String newCategory = scan.next();
-                item.setCategory(newCategory);
-                break;
-              case "name":
-                System.out.println("Type new name: ");
-                String newName = scan.next();
-                item.setName(newName);
-                break;
-              case "description":
-                System.out.println("Type new description: ");
-                scan.nextLine(); // UGLYYYYYY, HEEEEELP
-                String newDescription = scan.nextLine();
-                item.setDescription(newDescription);
-                break;
-              case "cost":
-                System.out.println("Type new cost: ");
-                int newCost = scan.nextInt();
-                item.setCostPerDay(newCost);
-                break;
-              default:
-                System.out.println("Option is invalid");
-                break;
-            }
-          }
-        }
-      } else {
-        System.out.println("Could not find item...");
-      }
-    }
+    System.out.println("Type name of item: ");
+    answerArray[1] = scan.next().toLowerCase();
+
+    System.out.println("What do you want to edit? category / name / description / cost");
+    answerArray[2] = scan.next().toLowerCase();
+
+    System.out.println("Type new value: ");
+    answerArray[3] = scan.next().toLowerCase();
+
+    return answerArray;
   }
 
   /**
@@ -265,15 +236,42 @@ public class UserInterface {
   /**
    * Display loan an item prompts.
    *
+   * @param members - List of members to iterate.
    * @return - The array of answers.
    */
-  public String[] promptLoanAnItem() {
+  public String[] promptLoanAnItem(Member[] members) {
     String[] answerArray = new String[5];
 
-    System.out.println("Please state your member ID: ");
-    answerArray[0] = scan.next();
-    System.out.println("Please state member ID of the owner of the item: ");
-    answerArray[1] = scan.next();
+    boolean loanerExists;
+    String memberIdLoaner;
+    do {
+      System.out.println("Please state your member ID: ");
+      memberIdLoaner = scan.next().toUpperCase();
+
+      loanerExists = memberValidator.validateMemberId(members, memberIdLoaner);
+
+      if (!loanerExists) {
+        System.out.println("TRY AGAIN, not a valid member ID");
+      } else {
+        answerArray[0] = memberIdLoaner;
+      }
+    } while (!loanerExists);
+
+    boolean ownerExists;
+    String memberIdOwner;
+    do {
+      System.out.println("Please state member ID of the owner of the item: ");
+      memberIdOwner = scan.next().toUpperCase();
+
+      ownerExists = memberValidator.validateMemberId(members, memberIdOwner);
+
+      if (!ownerExists) {
+        System.out.println("TRY AGAIN, not a valid member ID");
+      } else {
+        answerArray[0] = memberIdOwner;
+      }
+    } while (!ownerExists);
+
     answerArray[2] = this.promptGetItemName();
     System.out.println("From what day do you want to loan the item? ");
     answerArray[3] = scan.next();

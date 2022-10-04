@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.InputMismatchException;
+
 /**
  * Responsible for staring the application.
  */
@@ -40,8 +42,9 @@ public class App {
                   stuffLendingSystem.deleteMember(ui.promptMemberId(stuffLendingSystem.getMembers()));
                   break;
                 case 3:
-                  ui.promptEditMember(ui.promptMemberId(stuffLendingSystem.getMembers()),
-                      stuffLendingSystem.getMembers());
+                  stuffLendingSystem.editMember(ui.promptEditMember(ui.promptMemberId(stuffLendingSystem.getMembers()),
+                      stuffLendingSystem.getMembers()));
+
                   break;
                 case 4:
                   ui.showSingleMember(ui.promptMemberId(stuffLendingSystem.getMembers()),
@@ -79,8 +82,9 @@ public class App {
                       ui.promptGetItemName());
                   break;
                 case 3:
-                  ui.promptEditItem(ui.promptMemberId(stuffLendingSystem.getMembers()),
-                      stuffLendingSystem.getMembers());
+                  stuffLendingSystem.editItem(ui.promptEditItem(ui.promptMemberId(stuffLendingSystem.getMembers()),
+                      stuffLendingSystem.getMembers()));
+
                   break;
                 case 4:
                   ui.showSingleItem(ui.promptMemberId(stuffLendingSystem.getMembers()), stuffLendingSystem.getMembers(),
@@ -99,7 +103,8 @@ public class App {
             break;
           case 3:
             ui.showMessage("Current time: " + time.getCounter());
-            boolean contractEstablished = stuffLendingSystem.establishLendingContract(ui.promptLoanAnItem());
+            boolean contractEstablished = stuffLendingSystem
+                .establishLendingContract(ui.promptLoanAnItem(stuffLendingSystem.getMembers()));
             if (!contractEstablished) {
               ui.showMessage("The contract was denied.");
             }
@@ -112,6 +117,8 @@ public class App {
             break;
         }
       } while (optionMainMenu != 4);
+    } catch (InputMismatchException inputMismatchException) {
+      System.out.println("You have to type a number");
     } catch (RuntimeException runtimeError) {
       throw runtimeError;
     } catch (Exception error) {

@@ -12,11 +12,45 @@ import model.Member;
 public class StuffLendingSystem {
   private ArrayList<Member> members = new ArrayList<>();
 
+  /* HARD CODED MEMBERS */
+  Member member1 = new Member("memberOne", "memberOneEmail", "0101", "memid1", 0);
+  Member member2 = new Member("memberTwo", "memberTwoEmail", "0202", "memid2", 0);
+  Member member3 = new Member("memberThree", "memberThreeEmail", "0303", "memid3", 0);
+  Member member4 = new Member("memberFour", "memberOneEmail", "0404", "memid4", 0);
+
+  /* HARD CODED ITEMS */
+  String[] memberOneItemOne = new String[] {"tool", "mem1item1", "item description", "10"};
+  String[] memberTwoItemOne = new String[] {"tool", "mem2item1", "item description", "50"};
+  String[] memberTwoItemTwo = new String[] {"tool", "mem2item2", "item description", "100"};
+  String[] memberThreeItemOne = new String[] {"tool", "mem3item1", "item description", "10"};
+  String[] memberThreeItemTwo = new String[] {"tool", "mem3item2", "item description", "50"};
+  String[] memberThreeItemThree = new String[] {"tool", "mem3item1", "item description", "500"};     
+  String[] memberFourItemOne = new String[] {"tool", "mem4item1", "item description", "10"};
+  String[] memberFourItemTwo = new String[] {"tool", "mem4item2", "item description", "50"};
+  String[] memberFourItemThree = new String[] {"tool", "mem4item1", "item description", "100"};
+  String[] memberFourItemFour = new String[] {"tool", "mem4item2", "item description", "500"};
+
   /**
    * Creates a StuffLendingSystem instance.
    */
   public StuffLendingSystem() {
+    /* ADD HARD CODED MEMBERS */
+    this.addMember(member1);
+    this.addMember(member2);
+    this.addMember(member3);
+    this.addMember(member4);
 
+    /* REGISTER HARD CODED ITEMS */
+    this.registerItemToMember("memid1", memberOneItemOne, 0);
+    this.registerItemToMember("memid2", memberTwoItemOne, 0);
+    this.registerItemToMember("memid2", memberTwoItemTwo, 0);
+    this.registerItemToMember("memid3", memberThreeItemOne, 0);
+    this.registerItemToMember("memid3", memberThreeItemTwo, 0);
+    this.registerItemToMember("memid3", memberThreeItemThree, 0);
+    this.registerItemToMember("memid4", memberFourItemOne, 0);
+    this.registerItemToMember("memid4", memberFourItemTwo, 0);
+    this.registerItemToMember("memid4", memberFourItemThree, 0);
+    this.registerItemToMember("memid4", memberFourItemFour, 0);
   }
 
   /**
@@ -72,6 +106,31 @@ public class StuffLendingSystem {
   }
 
   /**
+   * Edit member.
+   *
+   * @param answerArray - An array of answers.
+   */
+  public void editMember(String[] answerArray) {
+    for (Member member : this.members) {
+      if (member.getId().equals(answerArray[0])) {
+        switch (answerArray[1]) {
+          case "name":
+            member.setName(answerArray[2]);
+            break;
+          case "email":
+            member.setEmail(answerArray[2]);
+            break;
+          case "phone":
+            member.setPhone(answerArray[2]);
+            break;
+          default:
+            break;
+        }
+      }
+    }
+  }
+
+  /**
    * Delete member.
    *
    * @param memberId - The member to delete.
@@ -87,7 +146,7 @@ public class StuffLendingSystem {
   /**
    * Registers an item to a member.
    *
-   * @param memberId    - The member to delete.
+   * @param memberId    - The member to register the item to.
    * @param answerArray - An array of answers.
    * @param dayCreated  - The day an item was created.
    */
@@ -96,6 +155,39 @@ public class StuffLendingSystem {
       if (this.members.get(i).getId().equals(memberId)) {
         this.members.get(i).createItem(answerArray[0], answerArray[1], answerArray[2],
             Integer.parseInt(answerArray[3]), dayCreated, this.members.get(i));
+      }
+    }
+  }
+
+  /**
+   * Edit item.
+   *
+   * @param answerArray - An array of answers.
+   */
+  public void editItem(String[] answerArray) {
+    for (Member member : this.members) {
+      if (member.getId().equals(answerArray[0])) {
+        for (Item item : member.getItems()) {
+          if (item.getName().equals(answerArray[1])) {
+            switch (answerArray[2]) {
+              case "category":
+                item.setCategory(answerArray[3]);
+                break;
+              case "name":
+                item.setName(answerArray[3]);
+                break;
+              case "description":
+                item.setDescription(answerArray[3]);
+                break;
+              case "cost":
+                item.setCostPerDay(Integer.parseInt(answerArray[3]));
+                break;
+              default:
+                break;
+            }
+
+          }
+        }
       }
     }
   }
@@ -148,9 +240,6 @@ public class StuffLendingSystem {
       if (member.getId().equals(deductMemberId)) {
         int costOfItem = item.getCostPerDay() * (Integer.parseInt(endDay)
             - Integer.parseInt(startDay));
-
-        System.out.println("The member to be deducted: " + member.getName());
-        System.out.println("The member to be paid: " + item.getOwner().getName());
 
         member.decrementCredit(costOfItem);
         item.getOwner().incrementCredit(costOfItem);
