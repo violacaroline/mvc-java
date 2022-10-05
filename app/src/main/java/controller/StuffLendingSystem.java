@@ -27,8 +27,9 @@ public class StuffLendingSystem {
   String[] memberThreeItemThree = new String[] {"tool", "mem3item1", "item description", "500"};     
   String[] memberFourItemOne = new String[] {"tool", "mem4item1", "item description", "10"};
   String[] memberFourItemTwo = new String[] {"tool", "mem4item2", "item description", "50"};
-  String[] memberFourItemThree = new String[] {"tool", "mem4item1", "item description", "100"};
-  String[] memberFourItemFour = new String[] {"tool", "mem4item2", "item description", "500"};
+  String[] memberFourItemThree = new String[] {"tool", "mem4item3", "item description", "100"};
+  String[] memberFourItemFour = new String[] {"tool", "mem4item4", "item description", "500"};
+  String[] memberFourItemFive = new String[] {"tool", "mem4item5", "item description", "500"};
 
   /**
    * Creates a StuffLendingSystem instance.
@@ -51,6 +52,7 @@ public class StuffLendingSystem {
     this.registerItemToMember("memid4", memberFourItemTwo, 0);
     this.registerItemToMember("memid4", memberFourItemThree, 0);
     this.registerItemToMember("memid4", memberFourItemFour, 0);
+    this.registerItemToMember("memid4", memberFourItemFive, 0);
   }
 
   /**
