@@ -270,7 +270,7 @@ public class StuffLendingSystem {
           isContractCreated = true;
         } else if (member.getId().equals(memberId)) {
           /* If it is another member Check and transfer credit */
-          if (member.getCredit() > item.getCostPerDay() * (Integer.parseInt(endDay)
+          if (member.getCredit() >= item.getCostPerDay() * (Integer.parseInt(endDay)
               - Integer.parseInt(startDay))) {
             this.transferCredit(memberId, item, endDay, startDay);
             this.createLendingContract(startDay, endDay, item, member);

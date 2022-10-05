@@ -7,7 +7,7 @@ Performed by: Andrea Viola Caroline Åkesson
 
 | Case        | Result      | Note        |
 | ----------- | ----------- | ----------- |
-| Header      | Title       | Title       |
+| 5.1      | ok       | Although, I have more hardcoded members than the example and also needed to delete 1 item and create a lending contract to be in "sync" |
 | Paragraph   | Text        | Text        |
 | Header      | Title       | Title       |
 | Paragraph   | Text        | Text        |
