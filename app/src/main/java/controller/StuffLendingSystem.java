@@ -19,17 +19,28 @@ public class StuffLendingSystem {
   Member member4 = new Member("memberFour", "memberOneEmail", "0404", "MEMID4", 0);
 
   /* HARD CODED ITEMS */
-  String[] memberOneItemOne = new String[] {"tool", "mem1item1", "item description", "10"};
-  String[] memberTwoItemOne = new String[] {"tool", "mem2item1", "item description", "50"};
-  String[] memberTwoItemTwo = new String[] {"tool", "mem2item2", "item description", "100"};
-  String[] memberThreeItemOne = new String[] {"tool", "mem3item1", "item description", "10"};
-  String[] memberThreeItemTwo = new String[] {"tool", "mem3item2", "item description", "50"};
-  String[] memberThreeItemThree = new String[] {"tool", "mem3item1", "item description", "500"};     
-  String[] memberFourItemOne = new String[] {"tool", "mem4item1", "item description", "10"};
-  String[] memberFourItemTwo = new String[] {"tool", "mem4item2", "item description", "50"};
-  String[] memberFourItemThree = new String[] {"tool", "mem4item3", "item description", "100"};
-  String[] memberFourItemFour = new String[] {"tool", "mem4item4", "item description", "500"};
-  String[] memberFourItemFive = new String[] {"tool", "mem4item5", "item description", "500"};
+
+  /* MEMBER ONE ITEMS */
+  String[] memberOneItemOne = new String[] { "tool", "mem1item1", "item description", "10" };
+
+  /* MEMBER TWO ITEMS */
+  String[] memberTwoItemOne = new String[] { "tool", "mem2item1", "item description", "50" };
+  String[] memberTwoItemTwo = new String[] { "tool", "mem2item2", "item description", "100" };
+
+  /* MEMBER THREE ITEMS */
+  String[] memberThreeItemOne = new String[] { "tool", "mem3item1", "item description", "10" };
+  // String[] memberThreeItemTwo = new String[] { "tool", "mem3item2", "item description", "50" };
+  // String[] memberThreeItemThree = new String[] { "tool", "mem3item1", "item description", "500" };
+
+  /* MEMBER FOUR ITEMS */
+  String[] memberFourItemOne = new String[] { "tool", "mem4item1", "item description", "10" };
+  String[] memberFourItemTwo = new String[] { "tool", "mem4item2", "item description", "50" };
+  String[] memberFourItemThree = new String[] { "tool", "mem4item3", "item description", "100" };
+  String[] memberFourItemFour = new String[] { "tool", "mem4item4", "item description", "500" };
+  String[] memberFourItemFive = new String[] { "tool", "mem4item5", "item description", "500" };
+
+  /* HARD CODED LENDING CONTRACT */
+  String[] lendingContractMemberThree = new String[] { "MEMID3", "MEMID4", "mem4item1", "7", "10" };
 
   /**
    * Creates a StuffLendingSystem instance.
@@ -46,13 +57,16 @@ public class StuffLendingSystem {
     this.registerItemToMember("MEMID2", memberTwoItemOne, 0);
     this.registerItemToMember("MEMID2", memberTwoItemTwo, 0);
     this.registerItemToMember("MEMID3", memberThreeItemOne, 0);
-    this.registerItemToMember("MEMID3", memberThreeItemTwo, 0);
-    this.registerItemToMember("MEMID3", memberThreeItemThree, 0);
+    // this.registerItemToMember("MEMID3", memberThreeItemTwo, 0);
+    // this.registerItemToMember("MEMID3", memberThreeItemThree, 0);
     this.registerItemToMember("MEMID4", memberFourItemOne, 0);
     this.registerItemToMember("MEMID4", memberFourItemTwo, 0);
     this.registerItemToMember("MEMID4", memberFourItemThree, 0);
     this.registerItemToMember("MEMID4", memberFourItemFour, 0);
     this.registerItemToMember("MEMID4", memberFourItemFive, 0);
+
+    /* ESTABLISH A LENDING CONTRACT, MEMBER 3 LOANING ITEM MEM4ITEM1 FROM MEMBER 4 */
+    this.establishLendingContract(lendingContractMemberThree);
   }
 
   /**
@@ -261,16 +275,16 @@ public class StuffLendingSystem {
   public boolean checkCreditCreateContract(String memberId, Item item, String endDay, String startDay) {
     boolean isContractCreated = false;
 
-     /* Only create a contract if there is not already one */
-     if (!isItemReserved(item.getLendingContracts(), startDay, endDay)) {
-      
+    /* Only create a contract if there is not already one */
+    if (!isItemReserved(item.getLendingContracts(), startDay, endDay)) {
+
       /* If it is the owning member create contract, don't deduct credit */
       if (memberId.equals(item.getOwner().getId())) {
 
         this.createLendingContract(startDay, endDay, item, item.getOwner());
         isContractCreated = true;
       } else {
-        
+
         /* If it is another member check and transfer credit */
         for (Member member : this.members) {
           if (member.getId().equals(memberId)) {

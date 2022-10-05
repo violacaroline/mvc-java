@@ -111,7 +111,6 @@ public class UserInterface {
     boolean phoneExists;
     do {
       System.out.println("Type members email:");
-      scan.nextLine();
       answerArray[1] = scan.nextLine();
 
       emailExists = memberValidator.validateMemberEmail(members, answerArray[1]);
@@ -123,7 +122,6 @@ public class UserInterface {
 
     do {
       System.out.println("Type members phone:");
-      scan.nextLine();
       answerArray[2] = scan.nextLine();
 
       phoneExists = memberValidator.validateMemberPhone(members, answerArray[2]);
@@ -291,7 +289,7 @@ public class UserInterface {
     for (Member member : members) {
       if (member.getId().equals(memberId)) {
         System.out
-            .println("Name: " + member.getName() + "\nEmail: " + member.getEmail() + "\nID: " + member.getId()
+            .println("MEMBER:\nName: " + member.getName() + "\nEmail: " + member.getEmail() + "\nID: " + member.getId()
                 + "\nAmount of credit: " + member.getCredit() + "\nAmount of items: " + member.getItems().length
                 + "\nCreated day: " + member.getDayCreated());
       }
@@ -305,7 +303,7 @@ public class UserInterface {
    */
   public void showMembersSimpleInfo(Member[] members) {
     for (Member member : members) {
-      System.out.println("Name: " + member.getName() + "\nEmail: " + member.getEmail() + "\nID: " + member.getId()
+      System.out.println("MEMBER:\nName: " + member.getName() + "\nEmail: " + member.getEmail() + "\nID: " + member.getId()
           + "\nAmount of credit: " + member.getCredit()
           + "\nAmount of items: " + member.getItems().length);
     }
@@ -320,7 +318,7 @@ public class UserInterface {
   public void showMembersFullInfo(Member[] members, int currentTime) {
     for (Member member : members) {
       System.out.println(
-          "Name: " + member.getName() + "\nEmail: " + member.getEmail() + "\nPhone: "
+          "MEMBER:\nName: " + member.getName() + "\nEmail: " + member.getEmail() + "\nPhone: "
               + member.getPhone() + "\nID: " + member.getId() + "\nCreated day: "
               + member.getDayCreated() + "\nTotal credit: " + member.getCredit());
       if (member.getItems().length > 0) {
@@ -359,8 +357,9 @@ public class UserInterface {
             if (item.getLendingContracts().length > 0) {
               System.out.println("CONTRACTS:");
               for (LendingContract lendingContract : item.getLendingContracts()) {
-                System.out.println("Start day: " + lendingContract.getStartDay() + "\nEnd day: "
-                    + lendingContract.getEndDay() + "\nItem name: " + item.getName());
+                System.out.println(
+                    "Item name: " + item.getName() + "\nStart day: " + lendingContract.getStartDay() + "\nEnd day: "
+                        + lendingContract.getEndDay());
               }
             }
           }
