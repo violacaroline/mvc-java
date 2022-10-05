@@ -261,20 +261,25 @@ public class StuffLendingSystem {
   public boolean checkCreditCreateContract(String memberId, Item item, String endDay, String startDay) {
     boolean isContractCreated = false;
 
-    /* Only create a contract if there is not already one */
-    if (!isItemReserved(item.getLendingContracts(), startDay, endDay)) {
-      for (Member member : this.members) {
-        if (member.getId().equals(item.getOwner().getId())) {
-          /* If it is the owning member create contract, don't deduct credit */
-          this.createLendingContract(startDay, endDay, item, member);
-          isContractCreated = true;
-        } else if (member.getId().equals(memberId)) {
-          /* If it is another member Check and transfer credit */
-          if (member.getCredit() >= item.getCostPerDay() * (Integer.parseInt(endDay)
-              - Integer.parseInt(startDay))) {
-            this.transferCredit(memberId, item, endDay, startDay);
-            this.createLendingContract(startDay, endDay, item, member);
-            isContractCreated = true;
+     /* Only create a contract if there is not already one */
+     if (!isItemReserved(item.getLendingContracts(), startDay, endDay)) {
+      
+      /* If it is the owning member create contract, don't deduct credit */
+      if (memberId.equals(item.getOwner().getId())) {
+
+        this.createLendingContract(startDay, endDay, item, item.getOwner());
+        isContractCreated = true;
+      } else {
+        
+        /* If it is another member check and transfer credit */
+        for (Member member : this.members) {
+          if (member.getId().equals(memberId)) {
+            if (member.getCredit() >= item.getCostPerDay() * (Integer.parseInt(endDay)
+                - Integer.parseInt(startDay))) {
+              this.transferCredit(memberId, item, endDay, startDay);
+              this.createLendingContract(startDay, endDay, item, member);
+              isContractCreated = true;
+            }
           }
         }
       }
