@@ -42,17 +42,17 @@ public class StuffLendingSystem {
     this.addMember(member4);
 
     /* REGISTER HARD CODED ITEMS */
-    this.registerItemToMember("memid1", memberOneItemOne, 0);
-    this.registerItemToMember("memid2", memberTwoItemOne, 0);
-    this.registerItemToMember("memid2", memberTwoItemTwo, 0);
-    this.registerItemToMember("memid3", memberThreeItemOne, 0);
-    this.registerItemToMember("memid3", memberThreeItemTwo, 0);
-    this.registerItemToMember("memid3", memberThreeItemThree, 0);
-    this.registerItemToMember("memid4", memberFourItemOne, 0);
-    this.registerItemToMember("memid4", memberFourItemTwo, 0);
-    this.registerItemToMember("memid4", memberFourItemThree, 0);
-    this.registerItemToMember("memid4", memberFourItemFour, 0);
-    this.registerItemToMember("memid4", memberFourItemFive, 0);
+    this.registerItemToMember("MEMID1", memberOneItemOne, 0);
+    this.registerItemToMember("MEMID2", memberTwoItemOne, 0);
+    this.registerItemToMember("MEMID2", memberTwoItemTwo, 0);
+    this.registerItemToMember("MEMID3", memberThreeItemOne, 0);
+    this.registerItemToMember("MEMID3", memberThreeItemTwo, 0);
+    this.registerItemToMember("MEMID3", memberThreeItemThree, 0);
+    this.registerItemToMember("MEMID4", memberFourItemOne, 0);
+    this.registerItemToMember("MEMID4", memberFourItemTwo, 0);
+    this.registerItemToMember("MEMID4", memberFourItemThree, 0);
+    this.registerItemToMember("MEMID4", memberFourItemFour, 0);
+    this.registerItemToMember("MEMID4", memberFourItemFive, 0);
   }
 
   /**
