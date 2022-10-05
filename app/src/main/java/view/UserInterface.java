@@ -268,7 +268,7 @@ public class UserInterface {
       if (!ownerExists) {
         System.out.println("TRY AGAIN, not a valid member ID");
       } else {
-        answerArray[0] = memberIdOwner;
+        answerArray[1] = memberIdOwner;
       }
     } while (!ownerExists);
 
