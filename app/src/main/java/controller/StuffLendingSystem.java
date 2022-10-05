@@ -13,10 +13,10 @@ public class StuffLendingSystem {
   private ArrayList<Member> members = new ArrayList<>();
 
   /* HARD CODED MEMBERS */
-  Member member1 = new Member("memberOne", "memberOneEmail", "0101", "memid1", 0);
-  Member member2 = new Member("memberTwo", "memberTwoEmail", "0202", "memid2", 0);
-  Member member3 = new Member("memberThree", "memberThreeEmail", "0303", "memid3", 0);
-  Member member4 = new Member("memberFour", "memberOneEmail", "0404", "memid4", 0);
+  Member member1 = new Member("memberOne", "memberOneEmail", "0101", "MEMID1", 0);
+  Member member2 = new Member("memberTwo", "memberTwoEmail", "0202", "MEMID2", 0);
+  Member member3 = new Member("memberThree", "memberThreeEmail", "0303", "MEMID3", 0);
+  Member member4 = new Member("memberFour", "memberOneEmail", "0404", "MEMID4", 0);
 
   /* HARD CODED ITEMS */
   String[] memberOneItemOne = new String[] {"tool", "mem1item1", "item description", "10"};
