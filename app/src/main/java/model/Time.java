@@ -1,21 +1,16 @@
 package model;
 
-// import java.util.Timer;
-// import java.util.TimerTask;
-
 /**
  * Represents a time counter.
  */
 public class Time {
-  private int dayCounter;
+  private int dayCounter = 0;
 
   /**
    * Instansiates a time object.
-   *
-   * @param dayNumber - The number of days.
    */
-  public Time(int dayNumber) {
-    setCounter(dayNumber);
+  public Time() {
+    setCounter(dayCounter);
   }
 
   /**
@@ -38,28 +33,15 @@ public class Time {
 
   /**
    * Increments the day count.
+   *
+   * @param timeToAdvance - The time to increment.
    */
-  public void incrementDayCounter() {
+  public void incrementDayCounter(int timeToAdvance) {
     int currentDayNumber = this.getCounter();
 
-    currentDayNumber++;
+    currentDayNumber += timeToAdvance;
 
     setCounter(currentDayNumber);
-
-    // int delay = 10000;
-    // int period = 1000;
-
-    // TimerTask timerTask = new TimerTask() {
-    //   @Override
-    //   public void run() {
-    //     setCounter(currentDayNumber + 1);
-    //   }
-    // };
-
-    // Timer timer = new Timer();
-
-    // timer.scheduleAtFixedRate(timerTask, delay, period);
-
     System.out.println();
   }
 }

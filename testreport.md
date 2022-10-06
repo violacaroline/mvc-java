@@ -27,7 +27,7 @@ Performed by: Andrea Viola Caroline Åkesson
 
 | Case        | Result      | Note        |
 | ----------- | ----------- | ----------- |
-| 3.1  | OK/NOT OK | Contract was indeed created, but I have implemented the time in the app such as that it increments while the user is moving around the menus ultimately resulting in that this contract was created for a period in the "past" |
+| 3.1  | OK/NOT OK | Contract was indeed created, but I have implemented the time in the app such as that it increments while the user is moving around the menus ultimately resulting in that this contract was created for a period in the "past" (FIXED THIS SO THAT APPLICATION DENIES CONTRACTS STARTING IN THE PAST)|
 | 3.2 | OK | Application outputs "Contract was denied" |
 | 3.3 & 3.4 | OK | Application outputs "Contract was denied" - Tested vs the hardcoded contract (Item: mem4item1 start: 7 end: 10) with the start day 10 and end day 13 |
 | 3.5 | OK | Application outputs "Contract was denied" - Tested vs the hardcoded contract (Item: mem4item1 start: 7 end: 10) with the start day 7 and end day 12 |

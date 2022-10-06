@@ -23,7 +23,8 @@ public class UserInterface {
     System.out.println("1. See member menu");
     System.out.println("2. See item menu");
     System.out.println("3. Loan an item");
-    System.out.println("4. Quit");
+    System.out.println("4. Advance time");
+    System.out.println("5. Quit");
     System.out.println("Type Option:");
 
     int option = scan.nextInt();
@@ -280,6 +281,18 @@ public class UserInterface {
   }
 
   /**
+   * Prompt advance time.
+   *
+   * @return - The amount of time to advance.
+   */
+  public int promptAdvanceTime() {
+    System.out.println("How many days do you want to advance?");
+    int amountDays = scan.nextInt();
+
+    return amountDays;
+  }
+
+  /**
    * Show single member.
    *
    * @param memberId - The members ID.
@@ -303,7 +316,8 @@ public class UserInterface {
    */
   public void showMembersSimpleInfo(Member[] members) {
     for (Member member : members) {
-      System.out.println("MEMBER:\nName: " + member.getName() + "\nEmail: " + member.getEmail() + "\nID: " + member.getId()
+      System.out.println("MEMBER:\nName: " + member.getName() + "\nEmail: "
+          + member.getEmail() + "\nID: " + member.getId()
           + "\nAmount of credit: " + member.getCredit()
           + "\nAmount of items: " + member.getItems().length);
     }

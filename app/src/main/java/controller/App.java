@@ -3,7 +3,7 @@ package controller;
 import java.util.InputMismatchException;
 
 /**
- * Responsible for staring the application.
+ * Responsible for starting the application.
  */
 public class App {
   /**
@@ -15,9 +15,6 @@ public class App {
     try {
       controller.StuffLendingSystem stuffLendingSystem = new StuffLendingSystem();
       view.UserInterface ui = new view.UserInterface();
-      model.Time time = new model.Time(0);
-
-      time.incrementDayCounter();
 
       int optionMainMenu = 0;
       int optionMemberMenu = 0;
@@ -25,18 +22,17 @@ public class App {
 
       do {
         optionMainMenu = ui.mainMenu();
-        time.incrementDayCounter();
+        stuffLendingSystem.advanceTime(1);
 
         switch (optionMainMenu) {
           case 1:
             do {
               optionMemberMenu = ui.memberMenu();
-              time.incrementDayCounter();
+              stuffLendingSystem.advanceTime(1);
 
               switch (optionMemberMenu) {
                 case 1:
-                  stuffLendingSystem.createMember(ui.promptCreateMember(stuffLendingSystem.getMembers()),
-                      time.getCounter());
+                  stuffLendingSystem.createMember(ui.promptCreateMember(stuffLendingSystem.getMembers()));
                   break;
                 case 2:
                   stuffLendingSystem.deleteMember(ui.promptMemberId(stuffLendingSystem.getMembers()));
@@ -44,7 +40,6 @@ public class App {
                 case 3:
                   stuffLendingSystem.editMember(ui.promptEditMember(ui.promptMemberId(stuffLendingSystem.getMembers()),
                       stuffLendingSystem.getMembers()));
-
                   break;
                 case 4:
                   ui.showSingleMember(ui.promptMemberId(stuffLendingSystem.getMembers()),
@@ -54,7 +49,7 @@ public class App {
                   ui.showMembersSimpleInfo(stuffLendingSystem.getMembers());
                   break;
                 case 6:
-                  ui.showMembersFullInfo(stuffLendingSystem.getMembers(), time.getCounter());
+                  ui.showMembersFullInfo(stuffLendingSystem.getMembers(), stuffLendingSystem.getCurrentDay());
                   break;
                 case 7:
                   ui.showMessage("Going back...");
@@ -68,14 +63,12 @@ public class App {
           case 2:
             do {
               optionItemMenu = ui.itemMenu();
-              time.incrementDayCounter();
+              stuffLendingSystem.advanceTime(1);
 
               switch (optionItemMenu) {
                 case 1:
-                  /* VIEW DEPENDS ON CONTROLLER HERE? FOR TAKING THE MEMBERS AS A PARAMETER? */
                   stuffLendingSystem.registerItemToMember(ui.promptMemberId(stuffLendingSystem.getMembers()),
-                      ui.promptCreateItem(),
-                      time.getCounter());
+                      ui.promptCreateItem());
                   break;
                 case 2:
                   stuffLendingSystem.deleteItemFromMember(ui.promptMemberId(stuffLendingSystem.getMembers()),
@@ -102,7 +95,7 @@ public class App {
             } while (optionItemMenu != 5);
             break;
           case 3:
-            ui.showMessage("Current time: " + time.getCounter());
+            ui.showMessage("Current day: " + stuffLendingSystem.getCurrentDay());
             boolean contractEstablished = stuffLendingSystem
                 .establishLendingContract(ui.promptLoanAnItem(stuffLendingSystem.getMembers()));
             if (!contractEstablished) {
@@ -110,13 +103,16 @@ public class App {
             }
             break;
           case 4:
+            stuffLendingSystem.advanceTime(ui.promptAdvanceTime());
+            break;
+          case 5:
             System.out.println("Quitting...");
             break;
           default:
             System.out.println("Option is invalid");
             break;
         }
-      } while (optionMainMenu != 4);
+      } while (optionMainMenu != 5);
     } catch (InputMismatchException inputMismatchException) {
       System.out.println("You have to type a number");
     } catch (RuntimeException runtimeError) {

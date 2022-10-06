@@ -10,6 +10,7 @@ import model.Member;
  * Represents a stuff lending system.
  */
 public class StuffLendingSystem {
+  model.Time time = new model.Time();
   private ArrayList<Member> members = new ArrayList<>();
 
   /* HARD CODED MEMBERS */
@@ -29,8 +30,10 @@ public class StuffLendingSystem {
 
   /* MEMBER THREE ITEMS */
   String[] memberThreeItemOne = new String[] { "tool", "mem3item1", "item description", "10" };
-  // String[] memberThreeItemTwo = new String[] { "tool", "mem3item2", "item description", "50" };
-  // String[] memberThreeItemThree = new String[] { "tool", "mem3item1", "item description", "500" };
+  // String[] memberThreeItemTwo = new String[] { "tool", "mem3item2", "item
+  // description", "50" };
+  // String[] memberThreeItemThree = new String[] { "tool", "mem3item1", "item
+  // description", "500" };
 
   /* MEMBER FOUR ITEMS */
   String[] memberFourItemOne = new String[] { "tool", "mem4item1", "item description", "10" };
@@ -53,19 +56,21 @@ public class StuffLendingSystem {
     this.addMember(member4);
 
     /* REGISTER HARD CODED ITEMS */
-    this.registerItemToMember("MEMID1", memberOneItemOne, 0);
-    this.registerItemToMember("MEMID2", memberTwoItemOne, 0);
-    this.registerItemToMember("MEMID2", memberTwoItemTwo, 0);
-    this.registerItemToMember("MEMID3", memberThreeItemOne, 0);
-    // this.registerItemToMember("MEMID3", memberThreeItemTwo, 0);
-    // this.registerItemToMember("MEMID3", memberThreeItemThree, 0);
-    this.registerItemToMember("MEMID4", memberFourItemOne, 0);
-    this.registerItemToMember("MEMID4", memberFourItemTwo, 0);
-    this.registerItemToMember("MEMID4", memberFourItemThree, 0);
-    this.registerItemToMember("MEMID4", memberFourItemFour, 0);
-    this.registerItemToMember("MEMID4", memberFourItemFive, 0);
+    this.registerItemToMember("MEMID1", memberOneItemOne);
+    this.registerItemToMember("MEMID2", memberTwoItemOne);
+    this.registerItemToMember("MEMID2", memberTwoItemTwo);
+    this.registerItemToMember("MEMID3", memberThreeItemOne);
+    // this.registerItemToMember("MEMID3", memberThreeItemTwo);
+    // this.registerItemToMember("MEMID3", memberThreeItemThree);
+    this.registerItemToMember("MEMID4", memberFourItemOne);
+    this.registerItemToMember("MEMID4", memberFourItemTwo);
+    this.registerItemToMember("MEMID4", memberFourItemThree);
+    this.registerItemToMember("MEMID4", memberFourItemFour);
+    this.registerItemToMember("MEMID4", memberFourItemFive);
 
-    /* ESTABLISH A LENDING CONTRACT, MEMBER 3 LOANING ITEM MEM4ITEM1 FROM MEMBER 4 */
+    /*
+     * ESTABLISH A LENDING CONTRACT, MEMBER 3 LOANING ITEM MEM4ITEM1 FROM MEMBER 4
+     */
     this.establishLendingContract(lendingContractMemberThree);
   }
 
@@ -95,10 +100,9 @@ public class StuffLendingSystem {
    * Creates a member.
    *
    * @param answerArray - The array of answers.
-   * @param dayCreated  - The current time/day.
    */
-  public void createMember(String[] answerArray, int dayCreated) {
-    Member member = new Member(answerArray[0], answerArray[1], answerArray[2], createMemberId(), dayCreated);
+  public void createMember(String[] answerArray) {
+    Member member = new Member(answerArray[0], answerArray[1], answerArray[2], createMemberId(), time.getCounter());
 
     this.addMember(member);
   }
@@ -164,13 +168,12 @@ public class StuffLendingSystem {
    *
    * @param memberId    - The member to register the item to.
    * @param answerArray - An array of answers.
-   * @param dayCreated  - The day an item was created.
    */
-  public void registerItemToMember(String memberId, String[] answerArray, int dayCreated) {
+  public void registerItemToMember(String memberId, String[] answerArray) {
     for (int i = 0; i < this.members.size(); i++) {
       if (this.members.get(i).getId().equals(memberId)) {
         this.members.get(i).createItem(answerArray[0], answerArray[1], answerArray[2],
-            Integer.parseInt(answerArray[3]), dayCreated, this.members.get(i));
+            Integer.parseInt(answerArray[3]), time.getCounter(), this.members.get(i));
       }
     }
   }
@@ -275,24 +278,28 @@ public class StuffLendingSystem {
   public boolean checkCreditCreateContract(String memberId, Item item, String endDay, String startDay) {
     boolean isContractCreated = false;
 
-    /* Only create a contract if there is not already one */
-    if (!isItemReserved(item.getLendingContracts(), startDay, endDay)) {
+    /* Only create a contract if it's for today or a time period in the future */
+    if (Integer.parseInt(startDay) >= time.getCounter()) {
 
-      /* If it is the owning member create contract, don't deduct credit */
-      if (memberId.equals(item.getOwner().getId())) {
+      /* Only create a contract if there is not already one */
+      if (!isItemReserved(item.getLendingContracts(), startDay, endDay)) {
 
-        this.createLendingContract(startDay, endDay, item, item.getOwner());
-        isContractCreated = true;
-      } else {
+        /* If it is the owning member create contract, don't deduct credit */
+        if (memberId.equals(item.getOwner().getId())) {
 
-        /* If it is another member check and transfer credit */
-        for (Member member : this.members) {
-          if (member.getId().equals(memberId)) {
-            if (member.getCredit() >= item.getCostPerDay() * (Integer.parseInt(endDay)
-                - Integer.parseInt(startDay))) {
-              this.transferCredit(memberId, item, endDay, startDay);
-              this.createLendingContract(startDay, endDay, item, member);
-              isContractCreated = true;
+          this.createLendingContract(startDay, endDay, item, item.getOwner());
+          isContractCreated = true;
+        } else {
+
+          /* If it is another member check and transfer credit */
+          for (Member member : this.members) {
+            if (member.getId().equals(memberId)) {
+              if (member.getCredit() >= item.getCostPerDay() * (Integer.parseInt(endDay)
+                  - Integer.parseInt(startDay))) {
+                this.transferCredit(memberId, item, endDay, startDay);
+                this.createLendingContract(startDay, endDay, item, member);
+                isContractCreated = true;
+              }
             }
           }
         }
@@ -334,5 +341,23 @@ public class StuffLendingSystem {
     }
 
     return isReserved;
+  }
+
+  /**
+   * Checks the time.
+   *
+   * @return - The current day.
+   */
+  public int getCurrentDay() {
+    return time.getCounter();
+  }
+
+  /**
+   * Advances the time.
+   *
+   * @param timeToAdvance - The current day.
+   */
+  public void advanceTime(int timeToAdvance) {
+    time.incrementDayCounter(timeToAdvance);
   }
 }
