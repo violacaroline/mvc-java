@@ -8,64 +8,52 @@ import java.util.Random;
  */
 public class StuffLendingSystem {
   model.Time time = new model.Time();
+  Persistence persistence = new Persistence();
   private ArrayList<Member> members = new ArrayList<>();
-
-  /* HARD CODED MEMBERS */
-  Member member1 = new Member("memberOne", "memberOneEmail", "0101", "MEMID1", 0);
-  Member member2 = new Member("memberTwo", "memberTwoEmail", "0202", "MEMID2", 0);
-  Member member3 = new Member("memberThree", "memberThreeEmail", "0303", "MEMID3", 0);
-  Member member4 = new Member("memberFour", "memberOneEmail", "0404", "MEMID4", 0);
-
-  /* HARD CODED ITEMS */
-
-  /* MEMBER ONE ITEMS */
-  String[] memberOneItemOne = new String[] { "tool", "mem1item1", "item description", "10" };
-
-  /* MEMBER TWO ITEMS */
-  String[] memberTwoItemOne = new String[] { "tool", "mem2item1", "item description", "50" };
-  String[] memberTwoItemTwo = new String[] { "tool", "mem2item2", "item description", "100" };
-
-  /* MEMBER THREE ITEMS */
-  String[] memberThreeItemOne = new String[] { "tool", "mem3item1", "item description", "10" };
-
-  /* MEMBER FOUR ITEMS */
-  String[] memberFourItemOne = new String[] { "tool", "mem4item1", "item description", "10" };
-  String[] memberFourItemTwo = new String[] { "tool", "mem4item2", "item description", "50" };
-  String[] memberFourItemThree = new String[] { "tool", "mem4item3", "item description", "100" };
-  String[] memberFourItemFour = new String[] { "tool", "mem4item4", "item description", "200" };
-  String[] memberFourItemFive = new String[] { "tool", "mem4item5", "item description", "500" };
-
-  /* HARD CODED LENDING CONTRACT */
-  String[] lendingContractMemberThree = new String[] { "MEMID3", "MEMID4", "mem4item1", "7", "10" };
 
   /**
    * Creates a StuffLendingSystem instance.
    */
   public StuffLendingSystem() {
-    /* ADD HARD CODED MEMBERS */
-    this.addMember(member1);
-    this.addMember(member2);
-    this.addMember(member3);
-    this.addMember(member4);
+    this.members = persistence.loadMembers();
+
+    /* HARD CODED ITEMS */
+
+    /* MEMBER ONE ITEMS */
+    String[] memberOneItemOne = new String[] { "tool", "mem1item1", "item description", "10" };
+
+    /* MEMBER TWO ITEMS */
+    String[] memberTwoItemOne = new String[] { "tool", "mem2item1", "item description", "50" };
+    String[] memberTwoItemTwo = new String[] { "tool", "mem2item2", "item description", "100" };
+
+    /* MEMBER THREE ITEMS */
+    String[] memberThreeItemOne = new String[] { "tool", "mem3item1", "item description", "10" };
+
+    /* MEMBER FOUR ITEMS */
+    String[] memberFourItemOne = new String[] { "tool", "mem4item1", "item description", "10" };
+    String[] memberFourItemTwo = new String[] { "tool", "mem4item2", "item description", "50" };
+    String[] memberFourItemThree = new String[] { "tool", "mem4item3", "item description", "100" };
+    String[] memberFourItemFour = new String[] { "tool", "mem4item4", "item description", "200" };
+    String[] memberFourItemFive = new String[] { "tool", "mem4item5", "item description", "500" };
 
     /* REGISTER HARD CODED ITEMS */
     this.registerItemToMember("MEMID1", memberOneItemOne);
-
     this.registerItemToMember("MEMID2", memberTwoItemOne);
     this.registerItemToMember("MEMID2", memberTwoItemTwo);
-
     this.registerItemToMember("MEMID3", memberThreeItemOne);
-    
     this.registerItemToMember("MEMID4", memberFourItemOne);
     this.registerItemToMember("MEMID4", memberFourItemTwo);
     this.registerItemToMember("MEMID4", memberFourItemThree);
     this.registerItemToMember("MEMID4", memberFourItemFour);
     this.registerItemToMember("MEMID4", memberFourItemFive);
 
+    /* HARD CODED LENDING CONTRACT */
+    String[] lendingContractMemberThree = new String[] { "MEMID3", "MEMID4", "mem4item1", "7", "10" };
+
     /*
      * ESTABLISH A LENDING CONTRACT, MEMBER 3 LOANING ITEM MEM4ITEM1 FROM MEMBER 4
      */
-    this.establishLendingContract(lendingContractMemberThree);
+    this.isContractEstablished(lendingContractMemberThree);
   }
 
   /**
@@ -225,7 +213,7 @@ public class StuffLendingSystem {
    *
    * @return - True if a lending contract was successfully established.
    */
-  public boolean establishLendingContract(String[] answerArray) {
+  public boolean isContractEstablished(String[] answerArray) {
     boolean isContractEstablished = false;
 
     for (int i = 0; i < this.members.size(); i++) {

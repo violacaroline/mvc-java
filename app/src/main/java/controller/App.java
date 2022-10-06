@@ -1,7 +1,6 @@
 package controller;
 
 import java.util.InputMismatchException;
-
 import model.StuffLendingSystem;
 
 /**
@@ -99,7 +98,7 @@ public class App {
           case 3:
             ui.showMessage("Current day: " + stuffLendingSystem.getCurrentDay());
             boolean contractEstablished = stuffLendingSystem
-                .establishLendingContract(ui.promptLoanAnItem(stuffLendingSystem.getMembers()));
+                .isContractEstablished(ui.promptLoanAnItem(stuffLendingSystem.getMembers()));
             if (!contractEstablished) {
               ui.showMessage("The contract was denied.");
             }
