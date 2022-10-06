@@ -30,16 +30,12 @@ public class StuffLendingSystem {
 
   /* MEMBER THREE ITEMS */
   String[] memberThreeItemOne = new String[] { "tool", "mem3item1", "item description", "10" };
-  // String[] memberThreeItemTwo = new String[] { "tool", "mem3item2", "item
-  // description", "50" };
-  // String[] memberThreeItemThree = new String[] { "tool", "mem3item1", "item
-  // description", "500" };
 
   /* MEMBER FOUR ITEMS */
   String[] memberFourItemOne = new String[] { "tool", "mem4item1", "item description", "10" };
   String[] memberFourItemTwo = new String[] { "tool", "mem4item2", "item description", "50" };
   String[] memberFourItemThree = new String[] { "tool", "mem4item3", "item description", "100" };
-  String[] memberFourItemFour = new String[] { "tool", "mem4item4", "item description", "500" };
+  String[] memberFourItemFour = new String[] { "tool", "mem4item4", "item description", "200" };
   String[] memberFourItemFive = new String[] { "tool", "mem4item5", "item description", "500" };
 
   /* HARD CODED LENDING CONTRACT */
@@ -57,11 +53,12 @@ public class StuffLendingSystem {
 
     /* REGISTER HARD CODED ITEMS */
     this.registerItemToMember("MEMID1", memberOneItemOne);
+
     this.registerItemToMember("MEMID2", memberTwoItemOne);
     this.registerItemToMember("MEMID2", memberTwoItemTwo);
+
     this.registerItemToMember("MEMID3", memberThreeItemOne);
-    // this.registerItemToMember("MEMID3", memberThreeItemTwo);
-    // this.registerItemToMember("MEMID3", memberThreeItemThree);
+    
     this.registerItemToMember("MEMID4", memberFourItemOne);
     this.registerItemToMember("MEMID4", memberFourItemTwo);
     this.registerItemToMember("MEMID4", memberFourItemThree);
