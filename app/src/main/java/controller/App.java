@@ -2,6 +2,8 @@ package controller;
 
 import java.util.InputMismatchException;
 
+import model.StuffLendingSystem;
+
 /**
  * Responsible for starting the application.
  */
@@ -13,7 +15,7 @@ public class App {
    */
   public static void main(String[] args) {
     try {
-      controller.StuffLendingSystem stuffLendingSystem = new StuffLendingSystem();
+      model.StuffLendingSystem stuffLendingSystem = new StuffLendingSystem();
       view.UserInterface ui = new view.UserInterface();
 
       int optionMainMenu = 0;
