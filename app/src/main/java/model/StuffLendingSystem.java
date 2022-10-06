@@ -1,10 +1,7 @@
-package controller;
+package model;
 
 import java.util.ArrayList;
 import java.util.Random;
-import model.Item;
-import model.LendingContract;
-import model.Member;
 
 /**
  * Represents a stuff lending system.
@@ -235,7 +232,7 @@ public class StuffLendingSystem {
       if (this.members.get(i).getId().equals(answerArray[1])) {
         for (Item item : this.members.get(i).getItems()) {
           if (item.getName().equals(answerArray[2])) {
-            isContractEstablished = checkCreditCreateContract(answerArray[0], item, answerArray[4], answerArray[3]);
+            isContractEstablished = isContractCreated(answerArray[0], item, answerArray[4], answerArray[3]);
           }
         }
       }
@@ -272,7 +269,7 @@ public class StuffLendingSystem {
    *
    * @return - True if contract was created.
    */
-  public boolean checkCreditCreateContract(String memberId, Item item, String endDay, String startDay) {
+  public boolean isContractCreated(String memberId, Item item, String endDay, String startDay) {
     boolean isContractCreated = false;
 
     /* Only create a contract if it's for today or a time period in the future */
