@@ -2,20 +2,21 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Random;
+import model.persistance.StuffSystemPersistence;
 
 /**
  * Represents a stuff lending system.
  */
 public class StuffLendingSystem {
   model.Time time = new model.Time();
-  Persistence persistence = new Persistence();
+  model.persistance.StuffSystemPersistence stuffPersistence = new StuffSystemPersistence();
   private ArrayList<Member> members = new ArrayList<>();
 
   /**
    * Creates a StuffLendingSystem instance.
    */
   public StuffLendingSystem() {
-    this.members = persistence.loadMembers();
+    this.members = stuffPersistence.loadMembers();
 
     /* HARD CODED ITEMS */
 
