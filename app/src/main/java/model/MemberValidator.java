@@ -58,4 +58,24 @@ public class MemberValidator {
 
     return memberExists;
   }
+
+  /**
+   * Validate a members specific item.
+   *
+   * @return - True if the member has an item with such a name.
+   */
+  public boolean validateMemberItem(Member[] members, String memberId, String itemName) {
+    boolean itemExists = false;
+
+    for (Member member : members) {
+      if (member.getId().equals(memberId.toUpperCase())) {
+        for (Item item : member.getItems()) {
+          if (item.getName().equals(itemName)) {
+            itemExists = true;
+          }
+        }
+      }
+    }
+    return itemExists;
+  }
 }

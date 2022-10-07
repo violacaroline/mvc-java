@@ -17,85 +17,89 @@ public class App {
       model.StuffLendingSystem stuffLendingSystem = new StuffLendingSystem();
       view.UserInterface ui = new view.UserInterface();
 
-      int optionMainMenu = 0;
-      int optionMemberMenu = 0;
-      int optionItemMenu = 0;
+      boolean runningMainMenu = true;
+      boolean runningMemberMenu = true;
+      boolean runningItemMenu = true;
 
-      do {
-        optionMainMenu = ui.mainMenu();
+      while (runningMainMenu) {
+        view.UserInterface.MainMenuEvent actionMainMenu = ui.mainMenu();
         stuffLendingSystem.advanceTime(1);
 
-        switch (optionMainMenu) {
-          case 1:
-            do {
-              optionMemberMenu = ui.memberMenu();
+        switch (actionMainMenu) {
+          case SeeMemberMenu:
+            runningMemberMenu = true;
+
+            while (runningMemberMenu) {
+              view.UserInterface.MemberMenuEvent actionMemberMenu = ui.memberMenu();
               stuffLendingSystem.advanceTime(1);
 
-              switch (optionMemberMenu) {
-                case 1:
+              switch (actionMemberMenu) {
+                case CreateMember:
                   stuffLendingSystem.createMember(ui.promptCreateMember(stuffLendingSystem.getMembers()));
                   break;
-                case 2:
+                case DeleteMember:
                   stuffLendingSystem.deleteMember(ui.promptMemberId(stuffLendingSystem.getMembers()));
                   break;
-                case 3:
+                case EditMember:
                   stuffLendingSystem.editMember(ui.promptEditMember(ui.promptMemberId(stuffLendingSystem.getMembers()),
                       stuffLendingSystem.getMembers()));
                   break;
-                case 4:
+                case ViewMember:
                   ui.showSingleMember(ui.promptMemberId(stuffLendingSystem.getMembers()),
                       stuffLendingSystem.getMembers());
                   break;
-                case 5:
+                case SeeAllMembersSimpleList:
                   ui.showMembersSimpleInfo(stuffLendingSystem.getMembers());
                   break;
-                case 6:
+                case SeeAllMembersFullList:
                   ui.showMembersFullInfo(stuffLendingSystem.getMembers(), stuffLendingSystem.getCurrentDay());
                   break;
-                case 7:
+                case GoBack:
+                  runningMemberMenu = false;
                   ui.showMessage("Going back...");
                   break;
                 default:
                   ui.showMessage("Option is invalid");
                   break;
               }
-            } while (optionMemberMenu != 7);
+            }
             break;
-          case 2:
-            do {
-              optionItemMenu = ui.itemMenu();
+          case SeeItemMenu:
+            runningItemMenu = true;
+            while (runningItemMenu) {
+              view.UserInterface.ItemMenuEvent actionItemMenu = ui.itemMenu();
               stuffLendingSystem.advanceTime(1);
 
-              switch (optionItemMenu) {
-                case 1:
+              switch (actionItemMenu) {
+                case CreateItem:
                   stuffLendingSystem.registerItemToMember(ui.promptMemberId(stuffLendingSystem.getMembers()),
                       ui.promptCreateItem());
                   break;
-                case 2:
+                case DeleteItem:
                   stuffLendingSystem.deleteItemFromMember(ui.promptMemberId(stuffLendingSystem.getMembers()),
                       ui.promptGetItemName());
                   break;
-                case 3:
+                case EditItem:
                   stuffLendingSystem.editItem(ui.promptEditItem(ui.promptMemberId(stuffLendingSystem.getMembers()),
                       stuffLendingSystem.getMembers()));
 
                   break;
-                case 4:
+                case ViewItem:
                   ui.showSingleItem(ui.promptMemberId(stuffLendingSystem.getMembers()), stuffLendingSystem.getMembers(),
                       ui.promptGetItemName());
                   break;
-                case 5:
+                case GoBack:
+                  runningItemMenu = false;
                   ui.showMessage("Going back...");
-
                   break;
                 default:
                   ui.showMessage("Option is invalid");
 
                   break;
               }
-            } while (optionItemMenu != 5);
+            }
             break;
-          case 3:
+          case LoanItem:
             ui.showMessage("Current day: " + stuffLendingSystem.getCurrentDay());
             boolean contractEstablished = stuffLendingSystem
                 .isContractEstablished(ui.promptLoanAnItem(stuffLendingSystem.getMembers()));
@@ -103,17 +107,18 @@ public class App {
               ui.showMessage("The contract was denied.");
             }
             break;
-          case 4:
+          case AdvanceTime:
             stuffLendingSystem.advanceTime(ui.promptAdvanceTime());
             break;
-          case 5:
+          case Quit:
+            runningMainMenu = false;
             System.out.println("Quitting...");
             break;
           default:
             System.out.println("Option is invalid");
             break;
         }
-      } while (optionMainMenu != 5);
+      }
     } catch (InputMismatchException inputMismatchException) {
       System.out.println("You have to type a number");
     } catch (RuntimeException runtimeError) {

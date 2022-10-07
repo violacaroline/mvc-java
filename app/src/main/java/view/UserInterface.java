@@ -14,11 +14,50 @@ public class UserInterface {
   MemberValidator memberValidator = new MemberValidator();
 
   /**
+   * Represents the main menu actions.
+   */
+  public static enum MainMenuEvent {
+    SeeMemberMenu,
+    SeeItemMenu,
+    LoanItem,
+    AdvanceTime,
+    Quit,
+    Nothing
+  }
+
+  /**
+   * Represents the main menu actions.
+   */
+  public static enum MemberMenuEvent {
+    CreateMember,
+    DeleteMember,
+    EditMember,
+    ViewMember,
+    SeeAllMembersSimpleList,
+    SeeAllMembersFullList,
+    GoBack,
+    Nothing
+  }
+
+  /**
+   * Represents the main menu actions.
+   */
+  public static enum ItemMenuEvent {
+    CreateItem,
+    DeleteItem,
+    EditItem,
+    ViewItem,
+    GoBack,
+    Nothing
+  }
+
+  /**
    * Display and await main menu options.
    *
    * @return - The chosen option.
    */
-  public int mainMenu() {
+  public MainMenuEvent mainMenu() {
+    System.out.println("\n====== MAIN MENU ======");
     System.out.println("Menu Options:");
     System.out.println("1. See member menu");
     System.out.println("2. See item menu");
@@ -27,9 +66,22 @@ public class UserInterface {
     System.out.println("5. Quit");
     System.out.println("Type Option:");
 
-    int option = scan.nextInt();
+    String choice = scan.nextLine();
 
-    return option;
+    switch (choice) {
+      case "1":
+        return MainMenuEvent.SeeMemberMenu;
+      case "2":
+        return MainMenuEvent.SeeItemMenu;
+      case "3":
+        return MainMenuEvent.LoanItem;
+      case "4":
+        return MainMenuEvent.AdvanceTime;
+      case "5":
+        return MainMenuEvent.Quit;
+      default:
+        return MainMenuEvent.Nothing;
+    }
   }
 
   /**
@@ -37,7 +89,8 @@ public class UserInterface {
    *
    * @return - The chosen option.
    */
-  public int memberMenu() {
+  public MemberMenuEvent memberMenu() {
+    System.out.println("\n====== MEMBER MENU ======");
     System.out.println("Menu Options:");
     System.out.println("1. Create member");
     System.out.println("2. Delete member");
@@ -48,9 +101,26 @@ public class UserInterface {
     System.out.println("7. Go Back");
     System.out.println("Type Option:");
 
-    int option = scan.nextInt();
+    String choice = scan.nextLine();
 
-    return option;
+    switch (choice) {
+      case "1":
+        return MemberMenuEvent.CreateMember;
+      case "2":
+        return MemberMenuEvent.DeleteMember;
+      case "3":
+        return MemberMenuEvent.EditMember;
+      case "4":
+        return MemberMenuEvent.ViewMember;
+      case "5":
+        return MemberMenuEvent.SeeAllMembersSimpleList;
+      case "6":
+        return MemberMenuEvent.SeeAllMembersFullList;
+      case "7":
+        return MemberMenuEvent.GoBack;
+      default:
+        return MemberMenuEvent.Nothing;
+    }
   }
 
   /**
@@ -58,7 +128,8 @@ public class UserInterface {
    *
    * @return - The chosen option.
    */
-  public int itemMenu() {
+  public ItemMenuEvent itemMenu() {
+    System.out.println("\n====== ITEM MENU ======");
     System.out.println("Menu Options:");
     System.out.println("1. Create item");
     System.out.println("2. Delete item");
@@ -67,9 +138,22 @@ public class UserInterface {
     System.out.println("5. Go Back");
     System.out.println("Type Option:");
 
-    int option = scan.nextInt();
+    String choice = scan.nextLine();
 
-    return option;
+    switch (choice) {
+      case "1":
+        return ItemMenuEvent.CreateItem;
+      case "2":
+        return ItemMenuEvent.DeleteItem;
+      case "3":
+        return ItemMenuEvent.EditItem;
+      case "4":
+        return ItemMenuEvent.ViewItem;
+      case "5":
+        return ItemMenuEvent.GoBack;
+      default:
+        return ItemMenuEvent.Nothing;
+    }
   }
 
   /**
@@ -83,7 +167,7 @@ public class UserInterface {
     boolean memberExists = false;
     do {
       System.out.println("Type your member ID:");
-      memberId = scan.next().toUpperCase();
+      memberId = scan.nextLine().toUpperCase();
 
       memberExists = memberValidator.validateMemberId(members, memberId);
 
@@ -105,7 +189,6 @@ public class UserInterface {
     String[] answerArray = new String[3];
 
     System.out.println("Type members name:");
-    scan.nextLine();
     answerArray[0] = scan.nextLine();
 
     boolean emailExists;
@@ -147,23 +230,23 @@ public class UserInterface {
 
     answerArray[0] = memberId;
     System.out.println("What do you want to edit? name / email / phone");
-    answerArray[1] = scan.next().toLowerCase();
+    answerArray[1] = scan.nextLine().toLowerCase();
 
     System.out.println("Type its new value: ");
-    answerArray[2] = scan.next().toLowerCase();
+    answerArray[2] = scan.nextLine().toLowerCase();
 
     if (answerArray[1].equals("email") || answerArray[1].equals("phone")) {
       switch (answerArray[1]) {
         case "email":
           while (memberValidator.validateMemberEmail(members, answerArray[2])) {
             System.out.println("TRY AGAIN, email already exists: ");
-            answerArray[2] = scan.next().toLowerCase();
+            answerArray[2] = scan.nextLine().toLowerCase();
           }
           break;
         case "phone":
           while (memberValidator.validateMemberPhone(members, answerArray[2])) {
             System.out.println("TRY AGAIN, phone already exists: ");
-            answerArray[2] = scan.next().toLowerCase();
+            answerArray[2] = scan.nextLine().toLowerCase();
           }
           break;
 
@@ -184,14 +267,17 @@ public class UserInterface {
     String[] answerArray = new String[4];
 
     System.out.println("Type item category: tool / vehicle / game / toy / sport / other");
-    answerArray[0] = scan.next();
+    answerArray[0] = scan.nextLine();
     System.out.println("Type item name:");
-    answerArray[1] = scan.next();
+    answerArray[1] = scan.nextLine();
     System.out.println("Type item description:");
-    scan.nextLine();
     answerArray[2] = scan.nextLine();
     System.out.println("Type item cost:");
-    answerArray[3] = scan.next();
+    answerArray[3] = scan.nextLine();
+    while (!testInt(answerArray[3])) {
+      System.out.println("Cost has to be a valid number.");
+      answerArray[3] = scan.nextLine();
+    }
 
     return answerArray;
   }
@@ -209,13 +295,13 @@ public class UserInterface {
     answerArray[0] = memberId;
 
     System.out.println("Type name of item: ");
-    answerArray[1] = scan.next().toLowerCase();
+    answerArray[1] = scan.nextLine().toLowerCase();
 
     System.out.println("What do you want to edit? category / name / description / cost");
-    answerArray[2] = scan.next().toLowerCase();
+    answerArray[2] = scan.nextLine().toLowerCase();
 
     System.out.println("Type new value: ");
-    answerArray[3] = scan.next().toLowerCase();
+    answerArray[3] = scan.nextLine().toLowerCase();
 
     return answerArray;
   }
@@ -227,7 +313,7 @@ public class UserInterface {
    */
   public String promptGetItemName() {
     System.out.println("Type items name:");
-    String itemName = scan.next();
+    String itemName = scan.nextLine();
 
     return itemName;
   }
@@ -245,7 +331,7 @@ public class UserInterface {
     String memberIdLoaner;
     do {
       System.out.println("Please state your member ID: ");
-      memberIdLoaner = scan.next().toUpperCase();
+      memberIdLoaner = scan.nextLine().toUpperCase();
 
       loanerExists = memberValidator.validateMemberId(members, memberIdLoaner);
 
@@ -260,7 +346,7 @@ public class UserInterface {
     String memberIdOwner;
     do {
       System.out.println("Please state member ID of the owner of the item: ");
-      memberIdOwner = scan.next().toUpperCase();
+      memberIdOwner = scan.nextLine().toUpperCase();
 
       ownerExists = memberValidator.validateMemberId(members, memberIdOwner);
 
@@ -272,10 +358,25 @@ public class UserInterface {
     } while (!ownerExists);
 
     answerArray[2] = this.promptGetItemName();
+
+    while (!memberValidator.validateMemberItem(members, memberIdOwner, answerArray[2])) {
+      System.out.println("TRY AGAIN, the member does not seem to have an item with such a name available.");
+      answerArray[2] = scan.nextLine();
+    }
+
     System.out.println("From what day do you want to loan the item? ");
-    answerArray[3] = scan.next();
+    answerArray[3] = scan.nextLine();
+    while (!testInt(answerArray[3])) {
+      System.out.println("TRY AGAIN, you have to type a valid number.");
+      answerArray[3] = scan.nextLine();
+    }
+
     System.out.println("To what day do you want to loan the item? ");
-    answerArray[4] = scan.next();
+    answerArray[4] = scan.nextLine();
+    while (!testInt(answerArray[4])) {
+      System.out.println("TRY AGAIN, you have to type a valid number.");
+      answerArray[4] = scan.nextLine();
+    }
 
     return answerArray;
   }
@@ -287,9 +388,32 @@ public class UserInterface {
    */
   public int promptAdvanceTime() {
     System.out.println("How many days do you want to advance?");
-    int amountDays = scan.nextInt();
+    String input = scan.nextLine();
+
+    while (!testInt(input)) {
+      System.out.println("TRY AGAIN, you have to type a valid number.");
+      input = scan.nextLine();
+    }
+
+    int amountDays = Integer.parseInt(input);
 
     return amountDays;
+  }
+
+  /*
+   * Test converting input to integer value.
+   *
+   * @param input - The input to test.
+   * 
+   * @return - True if input is a valid int.
+   */
+  private boolean testInt(String input) {
+    try {
+      Integer.parseInt(input);
+      return true;
+    } catch (NumberFormatException error) {
+      return false;
+    }
   }
 
   /**
@@ -360,25 +484,29 @@ public class UserInterface {
    * @param members  - List of members to iterate.
    */
   public void showSingleItem(String memberId, Member[] members, String itemName) {
-    for (Member member : members) {
-      if (member.getId().equals(memberId)) {
-        for (Item item : member.getItems()) {
-          if (item.getName().equals(itemName)) {
-            System.out
-                .println("Name: " + item.getName() + "\nCategory: " + item.getCategory() + "\nDescription: "
-                    + item.getDescription()
-                    + "\nCost: " + item.getCostPerDay() + "\nCreated day: " + item.getDayCreated());
-            if (item.getLendingContracts().length > 0) {
-              System.out.println("CONTRACTS:");
-              for (LendingContract lendingContract : item.getLendingContracts()) {
-                System.out.println(
-                    "Item name: " + item.getName() + "\nStart day: " + lendingContract.getStartDay() + "\nEnd day: "
-                        + lendingContract.getEndDay());
+    if (memberValidator.validateMemberItem(members, memberId, itemName)) {
+      for (Member member : members) {
+        if (member.getId().equals(memberId)) {
+          for (Item item : member.getItems()) {
+            if (item.getName().equals(itemName)) {
+              System.out
+                  .println("ITEM:\nName: " + item.getName() + "\nCategory: " + item.getCategory() + "\nDescription: "
+                      + item.getDescription()
+                      + "\nCost: " + item.getCostPerDay() + "\nCreated day: " + item.getDayCreated());
+              if (item.getLendingContracts().length > 0) {
+                System.out.println("CONTRACTS:");
+                for (LendingContract lendingContract : item.getLendingContracts()) {
+                  System.out.println(
+                      "Item name: " + item.getName() + "\nStart day: " + lendingContract.getStartDay() + "\nEnd day: "
+                          + lendingContract.getEndDay());
+                }
               }
             }
           }
         }
       }
+    } else {
+      System.out.println("Could not find item.");
     }
   }
 
