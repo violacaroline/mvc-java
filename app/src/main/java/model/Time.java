@@ -10,7 +10,7 @@ public class Time {
    * Instansiates a time object.
    */
   protected Time() {
-    setCounter(dayCounter);
+    setTime(dayCounter);
   }
 
   /**
@@ -18,7 +18,7 @@ public class Time {
    *
    * @return - The day count.
    */
-  protected int getCounter() {
+  protected int getTime() {
     return dayCounter;
   }
 
@@ -27,7 +27,7 @@ public class Time {
    *
    * @param dayNumber - The number of days.
    */
-  protected void setCounter(int dayNumber) {
+  protected void setTime(int dayNumber) {
     this.dayCounter = dayNumber;
   }
 
@@ -37,11 +37,11 @@ public class Time {
    * @param timeToAdvance - The time to increment.
    */
   protected void incrementDayCounter(int timeToAdvance) {
-    int currentDayNumber = this.getCounter();
+    int currentDayNumber = this.getTime();
 
     currentDayNumber += timeToAdvance;
 
-    setCounter(currentDayNumber);
+    setTime(currentDayNumber);
     System.out.println();
   }
 }

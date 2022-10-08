@@ -5,7 +5,7 @@ import java.util.Random;
 import model.persistance.StuffSystemPersistence;
 
 /**
- * Represents a stuff lending system.
+ * Represents a Stuff Lending System.
  */
 public class StuffLendingSystem {
   model.Time time = new model.Time();
@@ -85,7 +85,7 @@ public class StuffLendingSystem {
    * @param answerArray - The array of answers.
    */
   public void createMember(String[] answerArray) {
-    Member member = new Member(answerArray[0], answerArray[1], answerArray[2], createMemberId(), time.getCounter());
+    Member member = new Member(answerArray[0], answerArray[1], answerArray[2], createMemberId(), time.getTime());
 
     this.addMember(member);
   }
@@ -156,7 +156,7 @@ public class StuffLendingSystem {
     for (int i = 0; i < this.members.size(); i++) {
       if (this.members.get(i).getId().equals(memberId)) {
         this.members.get(i).createItem(answerArray[0], answerArray[1], answerArray[2],
-            Integer.parseInt(answerArray[3]), time.getCounter(), this.members.get(i));
+            Integer.parseInt(answerArray[3]), time.getTime(), this.members.get(i));
       }
     }
   }
@@ -262,7 +262,7 @@ public class StuffLendingSystem {
     boolean isContractCreated = false;
 
     /* Only create a contract if it's for today or a time period in the future */
-    if (Integer.parseInt(startDay) >= time.getCounter()) {
+    if (Integer.parseInt(startDay) >= time.getTime()) {
 
       /* Only create a contract if there is not already one */
       if (!isItemReserved(item.getLendingContracts(), startDay, endDay)) {
@@ -332,7 +332,7 @@ public class StuffLendingSystem {
    * @return - The current day.
    */
   public int getCurrentDay() {
-    return time.getCounter();
+    return time.getTime();
   }
 
   /**
