@@ -39,7 +39,7 @@ public class Member {
    *
    * @param name - The members name.
    */
-  public void setName(String name) {
+  protected void setName(String name) {
     if (name == null || name.length() < 2) {
       throw new IllegalArgumentException();
     } else {
@@ -61,7 +61,7 @@ public class Member {
    *
    * @param email - The members email.
    */
-  public void setEmail(String email) {
+  protected void setEmail(String email) {
     this.email = email;
   }
 
@@ -77,7 +77,7 @@ public class Member {
    *
    * @param phone - The members phone number.
    */
-  public void setPhone(String phone) {
+  protected void setPhone(String phone) {
     this.phone = phone;
   }
 
@@ -95,7 +95,7 @@ public class Member {
    *
    * @param id - The members id.
    */
-  public void setId(String id) {
+  protected void setId(String id) {
     this.id = id;
   }
 
@@ -113,7 +113,7 @@ public class Member {
    *
    * @param dayCreated - The member's day created.
    */
-  public void setDayCreated(int dayCreated) {
+  protected void setDayCreated(int dayCreated) {
     this.dayCreated = dayCreated;
   }
 
@@ -131,7 +131,7 @@ public class Member {
    *
    * @param credit - The value to set.
    */
-  public void setCredit(int credit) {
+  protected void setCredit(int credit) {
     this.credit = credit;
   }
 
@@ -140,7 +140,7 @@ public class Member {
    *
    * @param value - The value to increment credit with.
    */
-  public void incrementCredit(int value) {
+  protected void incrementCredit(int value) {
     this.credit = this.getCredit() + value;
   }
 
@@ -149,14 +149,14 @@ public class Member {
    *
    * @param cost - The value to deduct.
    */
-  public void decrementCredit(int cost) {
+  protected void decrementCredit(int cost) {
     this.credit = this.getCredit() - cost;
   }
 
   /**
    * Creates a new item.
    */
-  public void createItem(String category, String name, String description,
+  protected void createItem(String category, String name, String description,
       int costPerDay, int dayCreated, Member owner) {
   
     Item item = new Item(category, name, description, costPerDay, dayCreated, owner);
@@ -170,7 +170,7 @@ public class Member {
    *
    * @param item - The new item.
    */
-  public void addItem(Item item) {
+  protected void addItem(Item item) {
     this.items.add(item);
   }
 
@@ -192,7 +192,7 @@ public class Member {
    *
    * @param itemName - The item to delete.
    */
-  public void deleteitem(String itemName) {
+  protected void deleteitem(String itemName) {
     for (int i = 0; i < this.items.size(); i++) {
       if (this.items.get(i).getName().equals(itemName)) {
         this.items.remove(i);

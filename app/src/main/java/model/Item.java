@@ -17,7 +17,7 @@ public class Item {
   /**
    * Instanciates a new item object.
    */
-  public Item(String category, String name, String description, int costPerDay, int dayCreated, Member owner) {
+  protected Item(String category, String name, String description, int costPerDay, int dayCreated, Member owner) {
     setCategory(category);
     setName(name);
     setDescription(description);
@@ -40,7 +40,7 @@ public class Item {
    *
    * @param category - The items category.
    */
-  public void setCategory(String category) {
+  protected void setCategory(String category) {
     this.category = category;
   }
 
@@ -58,7 +58,7 @@ public class Item {
    *
    * @param name - The items name.
    */
-  public void setName(String name) {
+  protected void setName(String name) {
     this.name = name;
   }
 
@@ -76,7 +76,7 @@ public class Item {
    *
    * @param description - The items description.
    */
-  public void setDescription(String description) {
+  protected void setDescription(String description) {
     this.description = description;
   }
 
@@ -94,7 +94,7 @@ public class Item {
    *
    * @param costPerDay - The items cost per day.
    */
-  public void setCostPerDay(int costPerDay) {
+  protected void setCostPerDay(int costPerDay) {
     this.costPerDay = costPerDay;
   }
 
@@ -112,7 +112,7 @@ public class Item {
    *
    * @param dayCreated - The items day created.
    */
-  public void setDayCreated(int dayCreated) {
+  protected void setDayCreated(int dayCreated) {
     this.dayCreated = dayCreated;
   }
 
@@ -122,10 +122,15 @@ public class Item {
    * @return - The owner.
    */
   public Member getOwner() {
-    // Member deepCopyOwner = new Member(this.owner.getName(), this.owner.getEmail(), this.owner.getPhone(),
-    //     this.owner.getId(), this.owner.getDayCreated());
+    // Member deepCopyOwner = new Member(this.owner.getName(),
+    // this.owner.getEmail(), this.owner.getPhone(),
+    // this.owner.getId(), this.owner.getDayCreated());
     // return deepCopyOwner;
-    
+
+    /*
+     * EXPOSING MUTABLE OBJECT - I WANT TO CHANGE AN ATTRIBUTE ON IT THOUGH e.g
+     * increment credit???
+     */
     return this.owner;
   }
 
@@ -134,11 +139,14 @@ public class Item {
    *
    * @param owner - The owner.
    */
-  public void setOwner(Member owner) {
-    /* this.owner = new Member(owner.getName(), owner.getEmail(), 
-    owner.getPhone(), owner.getId(), owner.getDayCreated()); */
+  protected void setOwner(Member owner) {
+    // this.owner = new Member(owner.getName(), owner.getEmail(),
+    // owner.getPhone(), owner.getId(), owner.getDayCreated());
 
-    /* EXPOSING MUTABLE OBJECT - I WANT TO CHANGE AN ATTRIBUTE ON IT THOUGH??? */
+    /*
+     * EXPOSING MUTABLE OBJECT - I WANT TO CHANGE AN ATTRIBUTE ON IT THOUGH e.g
+     * increment credit???
+     */
     this.owner = owner;
   }
 
@@ -147,7 +155,7 @@ public class Item {
    *
    * @param lendingContract - The lending contract.
    */
-  public void addLendingContract(LendingContract lendingContract) {
+  protected void addLendingContract(LendingContract lendingContract) {
     this.lendingContracts.add(lendingContract);
   }
 

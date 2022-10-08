@@ -233,7 +233,7 @@ public class UserInterface {
     answerArray[1] = scan.nextLine().toLowerCase();
 
     System.out.println("Type its new value: ");
-    answerArray[2] = scan.nextLine().toLowerCase();
+    answerArray[2] = scan.nextLine();
 
     if (answerArray[1].equals("email") || answerArray[1].equals("phone")) {
       switch (answerArray[1]) {

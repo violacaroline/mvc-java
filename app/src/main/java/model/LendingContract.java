@@ -16,7 +16,7 @@ public class LendingContract {
    * @param endDay   - The day TO which it is valid.
    * @param item     - The item that it covers.
    */
-  public LendingContract(int startDay, int endDay, Item item, Member currentlyLentTo) {
+  protected LendingContract(int startDay, int endDay, Item item, Member currentlyLentTo) {
     setStartDay(startDay);
     setEndDay(endDay);
     setItem(item);
@@ -37,7 +37,7 @@ public class LendingContract {
    *
    * @param startDay - The day the contract is valid FROM.
    */
-  public void setStartDay(int startDay) {
+  protected void setStartDay(int startDay) {
     this.startDay = startDay;
   }
 
@@ -55,7 +55,7 @@ public class LendingContract {
    *
    * @param endDay - The day the contract is valid TO.
    */
-  public void setEndDay(int endDay) {
+  protected void setEndDay(int endDay) {
     this.endDay = endDay;
   }
 
@@ -76,7 +76,7 @@ public class LendingContract {
    *
    * @param item - The item.
    */
-  public void setItem(Item item) {
+  protected void setItem(Item item) {
     this.item = new Item(item.getCategory(), item.getName(), item.getDescription(),
         +item.getCostPerDay(), item.getDayCreated(), item.getOwner());
   }
@@ -97,7 +97,7 @@ public class LendingContract {
    *
    * @param currentlyLentTo - The member item is lent to.
    */
-  public void setCurrentlyLentTo(Member currentlyLentTo) {
+  protected void setCurrentlyLentTo(Member currentlyLentTo) {
     this.currentlyLentTo = new Member(currentlyLentTo.getName(), currentlyLentTo.getEmail(),
         currentlyLentTo.getPhone(), currentlyLentTo.getId(), currentlyLentTo.getDayCreated());
   }
