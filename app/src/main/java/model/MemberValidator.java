@@ -5,6 +5,20 @@ package model;
  */
 public class MemberValidator {
   /**
+   * Validate members name.
+   *
+   * @param name - The name to validate.
+   * @return - True if it's a valid name.
+   */
+  public boolean validateName(String name) {
+    boolean validName = false;
+    if (!(name == null || name.length() < 2)) {
+      validName = true;
+    }
+    return validName;
+  }
+  
+  /**
    * Validates email.
    *
    * @param members - The list of members to iterate.

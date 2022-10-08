@@ -188,11 +188,20 @@ public class UserInterface {
   public String[] promptCreateMember(Member[] members) {
     String[] answerArray = new String[3];
 
-    System.out.println("Type members name:");
-    answerArray[0] = scan.nextLine();
+    boolean validName;
+    do {
+      System.out.println("Type members name:");
+      answerArray[0] = scan.nextLine();
+
+      validName = memberValidator.validateName(answerArray[0]);
+
+      if (!validName) {
+        System.out.println("TRY AGAIN, you have to type a name of at least two letters.");
+      }
+
+    } while (!validName);
 
     boolean emailExists;
-    boolean phoneExists;
     do {
       System.out.println("Type members email:");
       answerArray[1] = scan.nextLine();
@@ -204,6 +213,7 @@ public class UserInterface {
       }
     } while (emailExists);
 
+    boolean phoneExists;
     do {
       System.out.println("Type members phone:");
       answerArray[2] = scan.nextLine();

@@ -40,11 +40,7 @@ public class Member {
    * @param name - The members name.
    */
   protected void setName(String name) {
-    if (name == null || name.length() < 2) {
-      throw new IllegalArgumentException();
-    } else {
-      this.name = name;
-    }
+    this.name = name;
   }
 
   /**
