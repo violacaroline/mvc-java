@@ -9,7 +9,7 @@ Performed by: Andrea Viola Caroline Åkesson
 
 | Case        | Result      | Note        |
 | ----------- | ----------- | ----------- |
-| 5.1      | OK | Although, I have more hardcoded members than the example and also needed to delete 1 item to fulfill this requirement |
+| 5.1      | OK | Although, I have more hardcoded members/items than the example. |
 | 1.1   | OK | Although I do not quit the application to proceed with the next duplication tests. Allan is not hard coded. |
 | 1.2 (duplicate email)   | OK | Application prompts to enter email again since it is taken.  |
 | 1.2  (duplicate phone) | OK  | Application prompts to enter phone again since it is taken.  |
