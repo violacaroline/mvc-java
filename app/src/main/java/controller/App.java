@@ -13,10 +13,10 @@ public class App {
    * @param args command line arguments.
    */
   public static void main(String[] args) {
-    try {
-      model.StuffLendingSystem stuffLendingSystem = new StuffLendingSystem();
-      view.UserInterface ui = new view.UserInterface();
+    model.StuffLendingSystem stuffLendingSystem = new StuffLendingSystem();
+    view.UserInterface ui = new view.UserInterface();
 
+    try {
       boolean runningMainMenu = true;
       boolean runningMemberMenu = true;
       boolean runningItemMenu = true;
@@ -112,19 +112,19 @@ public class App {
             break;
           case Quit:
             runningMainMenu = false;
-            System.out.println("Quitting...");
+            ui.showMessage("Quitting...");
             break;
           default:
-            System.out.println("Option is invalid");
+            ui.showMessage("Option is invalid");
             break;
         }
       }
     } catch (InputMismatchException inputMismatchException) {
-      System.out.println("You have to type a number");
+      ui.showMessage("You have to type a number");
     } catch (RuntimeException runtimeError) {
       throw runtimeError;
     } catch (Exception error) {
-      System.out.println("Something went wrong, please restart app.");
+      ui.showMessage("Something went wrong, please restart app.");
     }
   }
 }

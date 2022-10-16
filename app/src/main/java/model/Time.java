@@ -42,6 +42,5 @@ public class Time {
     currentDayNumber += timeToAdvance;
 
     setTime(currentDayNumber);
-    System.out.println();
   }
 }
