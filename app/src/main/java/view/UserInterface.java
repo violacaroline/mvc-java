@@ -14,44 +14,6 @@ public class UserInterface {
   MemberValidator memberValidator = new MemberValidator();
 
   /**
-   * Represents the main menu actions.
-   */
-  public static enum MainMenuEvent {
-    SeeMemberMenu,
-    SeeItemMenu,
-    LoanItem,
-    AdvanceTime,
-    Quit,
-    Nothing
-  }
-
-  /**
-   * Represents the main menu actions.
-   */
-  public static enum MemberMenuEvent {
-    CreateMember,
-    DeleteMember,
-    EditMember,
-    ViewMember,
-    SeeAllMembersSimpleList,
-    SeeAllMembersFullList,
-    GoBack,
-    Nothing
-  }
-
-  /**
-   * Represents the main menu actions.
-   */
-  public static enum ItemMenuEvent {
-    CreateItem,
-    DeleteItem,
-    EditItem,
-    ViewItem,
-    GoBack,
-    Nothing
-  }
-
-  /**
    * Display and await main menu options.
    *
    * @return - The chosen option.
