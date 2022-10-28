@@ -187,7 +187,6 @@ public class StuffLendingSystem {
               default:
                 break;
             }
-
           }
         }
       }
