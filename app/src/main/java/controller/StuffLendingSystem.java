@@ -5,7 +5,6 @@ import model.Item;
 import model.LendingContract;
 import model.Member;
 import model.MemberList;
-import view.MembershipApplication;
 
 /**
  * Represents a Stuff Lending System.
@@ -19,53 +18,59 @@ public class StuffLendingSystem {
    */
   public StuffLendingSystem(MemberList memberList) {
     this.memberList = memberList;
-    /* HARD CODED ITEMS */
 
-    /* MEMBER ONE ITEMS */
-    String[] memberOneItemOne = new String[] { "tool", "mem1item1", "item description", "10" };
+    // /* MEMBER ONE ITEMS */
+    // String[] memberOneItemOne = new String[] { "tool", "mem1item1", "item
+    // description", "10" };
 
-    /* MEMBER TWO ITEMS */
-    String[] memberTwoItemOne = new String[] { "tool", "mem2item1", "item description", "50" };
-    String[] memberTwoItemTwo = new String[] { "tool", "mem2item2", "item description", "100" };
+    // /* MEMBER TWO ITEMS */
+    // String[] memberTwoItemOne = new String[] { "tool", "mem2item1", "item
+    // description", "50" };
+    // String[] memberTwoItemTwo = new String[] { "tool", "mem2item2", "item
+    // description", "100" };
 
-    /* MEMBER THREE ITEMS */
-    String[] memberThreeItemOne = new String[] { "tool", "mem3item1", "item description", "10" };
+    // /* MEMBER THREE ITEMS */
+    // String[] memberThreeItemOne = new String[] { "tool", "mem3item1", "item
+    // description", "10" };
 
-    /* MEMBER FOUR ITEMS */
-    String[] memberFourItemOne = new String[] { "tool", "mem4item1", "item description", "10" };
-    String[] memberFourItemTwo = new String[] { "tool", "mem4item2", "item description", "50" };
-    String[] memberFourItemThree = new String[] { "tool", "mem4item3", "item description", "100" };
-    String[] memberFourItemFour = new String[] { "tool", "mem4item4", "item description", "200" };
-    String[] memberFourItemFive = new String[] { "tool", "mem4item5", "item description", "500" };
+    // /* MEMBER FOUR ITEMS */
+    // String[] memberFourItemOne = new String[] { "tool", "mem4item1", "item
+    // description", "10" };
+    // String[] memberFourItemTwo = new String[] { "tool", "mem4item2", "item
+    // description", "50" };
+    // String[] memberFourItemThree = new String[] { "tool", "mem4item3", "item
+    // description", "100" };
+    // String[] memberFourItemFour = new String[] { "tool", "mem4item4", "item
+    // description", "200" };
+    // String[] memberFourItemFive = new String[] { "tool", "mem4item5", "item
+    // description", "500" };
 
     /* REGISTER HARD CODED ITEMS */
-    this.registerItemToMember("MEMID1", memberOneItemOne);
-    this.registerItemToMember("MEMID2", memberTwoItemOne);
-    this.registerItemToMember("MEMID2", memberTwoItemTwo);
-    this.registerItemToMember("MEMID3", memberThreeItemOne);
-    this.registerItemToMember("MEMID4", memberFourItemOne);
-    this.registerItemToMember("MEMID4", memberFourItemTwo);
-    this.registerItemToMember("MEMID4", memberFourItemThree);
-    this.registerItemToMember("MEMID4", memberFourItemFour);
-    this.registerItemToMember("MEMID4", memberFourItemFive);
-
-    /* HARD CODED LENDING CONTRACT */
-    String[] lendingContractMemberThree = new String[] { "MEMID3", "MEMID4", "mem4item1", "7", "10" };
+    this.registerItemToMember("MEMID1", "tool", "mem1item1", "item description", 10);
+    this.registerItemToMember("MEMID2", "tool", "mem2item1", "item description", 50);
+    this.registerItemToMember("MEMID2", "tool", "mem2item2", "item description", 100);
+    this.registerItemToMember("MEMID3", "tool", "mem3item1", "item description", 10);
+    this.registerItemToMember("MEMID4", "tool", "mem4item1", "item description", 10);
+    this.registerItemToMember("MEMID4", "tool", "mem4item2", "item description", 50);
+    this.registerItemToMember("MEMID4", "tool", "mem4item3", "item description", 100);
+    this.registerItemToMember("MEMID4", "tool", "mem4item4", "item description", 200);
+    this.registerItemToMember("MEMID4", "tool", "mem4item5", "item description", 500);
 
     /*
-     * ESTABLISH A LENDING CONTRACT, MEMBER 3 LOANING ITEM MEM4ITEM1 FROM MEMBER 4
+     * HARD CODED LENDING CONTRACT, MEMBER 3 LOANING ITEM MEM4ITEM1 FROM MEMBER 4
      */
-    this.isContractEstablished(lendingContractMemberThree);
+    this.isContractEstablished("MEMID3", "MEMID4", "mem4item1", 7, 10);
   }
 
   /**
    * Creates a member.
    *
-   * @param membershipApplication - The membership application.
+   * @param name  - The name of the member.
+   * @param email - The email of the member.
+   * @param phone - The phone of the member.
    */
-  public void createMember(MembershipApplication membershipApplication) {
-    Member member = new Member(membershipApplication.getName(), membershipApplication.getEmail(),
-        membershipApplication.getPhone(),
+  public void createMember(String name, String email, String phone) {
+    Member member = new Member(name, email, phone,
         createMemberId(), time.getTime());
 
     memberList.addMember(member);
@@ -130,14 +135,13 @@ public class StuffLendingSystem {
   /**
    * Registers an item to a member.
    *
-   * @param memberId    - The member to register the item to.
-   * @param answerArray - An array of answers.
+   * @param memberId - The member to register the item to.
    */
-  public void registerItemToMember(String memberId, String[] answerArray) {
+  public void registerItemToMember(String memberId, String category, String name, String description, int cost) {
     for (int i = 0; i < this.memberList.getMembers().size(); i++) {
       if (this.memberList.getMembers().get(i).getId().equals(memberId)) {
-        this.memberList.getMembers().get(i).createItem(answerArray[0], answerArray[1], answerArray[2],
-            Integer.parseInt(answerArray[3]), time.getTime(), this.memberList.getMembers().get(i));
+        this.memberList.getMembers().get(i).createItem(category, name, description, cost,
+            time.getTime(), this.memberList.getMembers().get(i));
       }
     }
   }
@@ -190,18 +194,17 @@ public class StuffLendingSystem {
   /**
    * Establishes a new lending contract between two members.
    *
-   * @param answerArray - The array of answers.
-   *
    * @return - True if a lending contract was successfully established.
    */
-  public boolean isContractEstablished(String[] answerArray) {
+  public boolean isContractEstablished(String memberIdLoaner, String memberIdowner, String itemName, int startDay,
+      int endDay) {
     boolean isContractEstablished = false;
 
     for (int i = 0; i < this.memberList.getMembers().size(); i++) {
-      if (this.memberList.getMembers().get(i).getId().equals(answerArray[1])) {
+      if (this.memberList.getMembers().get(i).getId().equals(memberIdowner)) {
         for (Item item : this.memberList.getMembers().get(i).getItems()) {
-          if (item.getName().equals(answerArray[2])) {
-            isContractEstablished = isContractCreated(answerArray[0], item, answerArray[4], answerArray[3]);
+          if (item.getName().equals(itemName)) {
+            isContractEstablished = isContractCreated(memberIdLoaner, item, startDay, endDay);
           }
         }
       }
@@ -217,11 +220,11 @@ public class StuffLendingSystem {
    * @param endDay         - The day when contract ends.
    * @param startDay       - The day when contract starts.
    */
-  public void transferCredit(String deductMemberId, Item item, String endDay, String startDay) {
+  public void transferCredit(String deductMemberId, Item item, int startDay, int endDay) {
     for (Member member : this.memberList.getMembers()) {
       if (member.getId().equals(deductMemberId)) {
-        int costOfItem = item.getCostPerDay() * (Integer.parseInt(endDay)
-            - Integer.parseInt(startDay));
+        int costOfItem = item.getCostPerDay() * (endDay
+            - startDay);
 
         member.decrementCredit(costOfItem);
         item.getOwner().incrementCredit(costOfItem);
@@ -238,14 +241,14 @@ public class StuffLendingSystem {
    *
    * @return - True if contract was created.
    */
-  public boolean isContractCreated(String memberId, Item item, String endDay, String startDay) {
+  public boolean isContractCreated(String memberId, Item item, int endDay, int startDay) {
     boolean isContractCreated = false;
 
     /* Only create a contract if it's for today or a time period in the future */
-    if (Integer.parseInt(startDay) >= time.getTime()) {
+    if (startDay >= time.getTime()) {
 
       /* Only create a contract if there is not already one */
-      if (!isItemReserved(item.getLendingContracts(), startDay, endDay)) {
+      if (!isItemReserved(item.getLendingContracts(), startDay)) {
 
         /* If it is the owning member create contract, don't deduct credit */
         if (memberId.equals(item.getOwner().getId())) {
@@ -257,8 +260,8 @@ public class StuffLendingSystem {
           /* If it is another member check and transfer credit */
           for (Member member : this.memberList.getMembers()) {
             if (member.getId().equals(memberId)) {
-              if (member.getCredit() >= item.getCostPerDay() * (Integer.parseInt(endDay)
-                  - Integer.parseInt(startDay))) {
+              if (member.getCredit() >= item.getCostPerDay() * endDay
+                  - startDay) {
                 this.transferCredit(memberId, item, endDay, startDay);
                 this.createLendingContract(startDay, endDay, item, member);
                 isContractCreated = true;
@@ -279,9 +282,9 @@ public class StuffLendingSystem {
    * @param endDay   - The day when contract ends.
    * @param item     - The item it covers.
    */
-  public void createLendingContract(String startDay, String endDay, Item item, Member currentlyLoaningItem) {
-    LendingContract lendingContract = new LendingContract(Integer.parseInt(startDay),
-        +Integer.parseInt(endDay), item, currentlyLoaningItem);
+  public void createLendingContract(int startDay, int endDay, Item item, Member currentlyLoaningItem) {
+    LendingContract lendingContract = new LendingContract(startDay,
+        +endDay, item, currentlyLoaningItem);
     item.addLendingContract(lendingContract);
   }
 
@@ -290,15 +293,14 @@ public class StuffLendingSystem {
    *
    * @param lendingContracts - The lending contracts to iterate.
    * @param desiredStartDay  - The day FROM when the item would need to be free.
-   * @param desiredEndDay    - The day TO when the item would need to be free.
    * @return - True if item is reserved.
    */
-  public boolean isItemReserved(LendingContract[] lendingContracts, String desiredStartDay, String desiredEndDay) {
+  public boolean isItemReserved(LendingContract[] lendingContracts, int desiredStartDay) {
     boolean isReserved = false;
 
     for (LendingContract lendingContract : lendingContracts) {
-      if (Integer.parseInt(desiredStartDay) >= lendingContract.getStartDay()
-          && Integer.parseInt(desiredStartDay) <= lendingContract.getEndDay()) {
+      if (desiredStartDay >= lendingContract.getStartDay()
+          && desiredStartDay <= lendingContract.getEndDay()) {
         isReserved = true;
       }
     }
