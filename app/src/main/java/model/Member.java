@@ -39,7 +39,7 @@ public class Member {
    *
    * @param name - The members name.
    */
-  protected void setName(String name) {
+  public void setName(String name) {
     this.name = name;
   }
 
@@ -57,7 +57,7 @@ public class Member {
    *
    * @param email - The members email.
    */
-  protected void setEmail(String email) {
+  public void setEmail(String email) {
     this.email = email;
   }
 
@@ -73,7 +73,7 @@ public class Member {
    *
    * @param phone - The members phone number.
    */
-  protected void setPhone(String phone) {
+  public void setPhone(String phone) {
     this.phone = phone;
   }
 
@@ -136,7 +136,7 @@ public class Member {
    *
    * @param value - The value to increment credit with.
    */
-  protected void incrementCredit(int value) {
+  public void incrementCredit(int value) {
     this.credit = this.getCredit() + value;
   }
 
@@ -145,14 +145,14 @@ public class Member {
    *
    * @param cost - The value to deduct.
    */
-  protected void decrementCredit(int cost) {
+  public void decrementCredit(int cost) {
     this.credit = this.getCredit() - cost;
   }
 
   /**
    * Creates a new item.
    */
-  protected void createItem(String category, String name, String description,
+  public void createItem(String category, String name, String description,
       int costPerDay, int dayCreated, Member owner) {
   
     Item item = new Item(category, name, description, costPerDay, dayCreated, owner);
@@ -188,7 +188,7 @@ public class Member {
    *
    * @param itemName - The item to delete.
    */
-  protected void deleteitem(String itemName) {
+  public void deleteitem(String itemName) {
     for (int i = 0; i < this.items.size(); i++) {
       if (this.items.get(i).getName().equals(itemName)) {
         this.items.remove(i);

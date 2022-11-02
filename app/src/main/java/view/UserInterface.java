@@ -147,18 +147,20 @@ public class UserInterface {
    * @param members - List of members to iterate.
    * @return - The array of answers.
    */
-  public String[] promptCreateMember(Member[] members) {
-    String[] answerArray = new String[3];
+  public MembershipApplication promptCreateMember(Member[] members) {
+    MembershipApplication membershipApplication = new MembershipApplication();
 
     boolean validName;
     do {
       System.out.println("Type members name:");
-      answerArray[0] = scan.nextLine();
+      String name = scan.nextLine();
 
-      validName = memberValidator.validateName(answerArray[0]);
+      validName = memberValidator.validateName(name);
 
       if (!validName) {
         System.out.println("TRY AGAIN, you have to type a name of at least two letters.");
+      } else {
+        membershipApplication.addName(name);
       }
 
     } while (!validName);
@@ -166,28 +168,34 @@ public class UserInterface {
     boolean emailExists;
     do {
       System.out.println("Type members email:");
-      answerArray[1] = scan.nextLine();
+      String email = scan.nextLine();
 
-      emailExists = memberValidator.validateMemberEmail(members, answerArray[1]);
+      emailExists = memberValidator.validateMemberEmail(members, email);
 
       if (emailExists) {
         System.out.println("TRY AGAIN, email already taken");
+      } else {
+        membershipApplication.addEmail(email);
       }
+  
     } while (emailExists);
 
     boolean phoneExists;
     do {
       System.out.println("Type members phone:");
-      answerArray[2] = scan.nextLine();
+      String phone = scan.nextLine();
 
-      phoneExists = memberValidator.validateMemberPhone(members, answerArray[2]);
+      phoneExists = memberValidator.validateMemberPhone(members, phone);
 
       if (phoneExists) {
         System.out.println("TRY AGAIN, phone already taken");
+      } else {
+        membershipApplication.addPhone(phone);
       }
+
     } while (phoneExists);
 
-    return answerArray;
+    return membershipApplication;
   }
 
   /**

@@ -1,23 +1,24 @@
-package model;
+package controller;
 
-import java.util.ArrayList;
 import java.util.Random;
-import model.persistance.StuffSystemPersistence;
+import model.Item;
+import model.LendingContract;
+import model.Member;
+import model.MemberList;
+import view.MembershipApplication;
 
 /**
  * Represents a Stuff Lending System.
  */
 public class StuffLendingSystem {
   model.Time time = new model.Time();
-  model.persistance.StuffSystemPersistence stuffPersistence = new StuffSystemPersistence();
-  private ArrayList<Member> members = new ArrayList<>();
+  private MemberList memberList;
 
   /**
    * Creates a StuffLendingSystem instance.
    */
-  public StuffLendingSystem() {
-    this.members = stuffPersistence.loadMembers();
-
+  public StuffLendingSystem(MemberList memberList) {
+    this.memberList = memberList;
     /* HARD CODED ITEMS */
 
     /* MEMBER ONE ITEMS */
@@ -58,36 +59,16 @@ public class StuffLendingSystem {
   }
 
   /**
-   * Gets the members.
-   *
-   * @return - The existing members.
-   */
-  public Member[] getMembers() {
-    Member[] showMembers = new Member[this.members.size()];
-
-    showMembers = this.members.toArray(showMembers);
-
-    return showMembers;
-  }
-
-  /**
-   * Adds new member.
-   *
-   * @param member - The new member.
-   */
-  public void addMember(Member member) {
-    this.members.add(member);
-  }
-
-  /**
    * Creates a member.
    *
-   * @param answerArray - The array of answers.
+   * @param membershipApplication - The membership application.
    */
-  public void createMember(String[] answerArray) {
-    Member member = new Member(answerArray[0], answerArray[1], answerArray[2], createMemberId(), time.getTime());
+  public void createMember(MembershipApplication membershipApplication) {
+    Member member = new Member(membershipApplication.getName(), membershipApplication.getEmail(),
+        membershipApplication.getPhone(),
+        createMemberId(), time.getTime());
 
-    this.addMember(member);
+    memberList.addMember(member);
   }
 
   /**
@@ -114,7 +95,7 @@ public class StuffLendingSystem {
    * @param answerArray - An array of answers.
    */
   public void editMember(String[] answerArray) {
-    for (Member member : this.members) {
+    for (Member member : this.memberList.getMembers()) {
       if (member.getId().equals(answerArray[0])) {
         switch (answerArray[1]) {
           case "name":
@@ -139,9 +120,9 @@ public class StuffLendingSystem {
    * @param memberId - The member to delete.
    */
   public void deleteMember(String memberId) {
-    for (int i = 0; i < this.members.size(); i++) {
-      if (this.members.get(i).getId().equals(memberId)) {
-        this.members.remove(i);
+    for (int i = 0; i < this.memberList.getMembers().size(); i++) {
+      if (this.memberList.getMembers().get(i).getId().equals(memberId)) {
+        this.memberList.getMembers().remove(i);
       }
     }
   }
@@ -153,10 +134,10 @@ public class StuffLendingSystem {
    * @param answerArray - An array of answers.
    */
   public void registerItemToMember(String memberId, String[] answerArray) {
-    for (int i = 0; i < this.members.size(); i++) {
-      if (this.members.get(i).getId().equals(memberId)) {
-        this.members.get(i).createItem(answerArray[0], answerArray[1], answerArray[2],
-            Integer.parseInt(answerArray[3]), time.getTime(), this.members.get(i));
+    for (int i = 0; i < this.memberList.getMembers().size(); i++) {
+      if (this.memberList.getMembers().get(i).getId().equals(memberId)) {
+        this.memberList.getMembers().get(i).createItem(answerArray[0], answerArray[1], answerArray[2],
+            Integer.parseInt(answerArray[3]), time.getTime(), this.memberList.getMembers().get(i));
       }
     }
   }
@@ -167,7 +148,7 @@ public class StuffLendingSystem {
    * @param answerArray - An array of answers.
    */
   public void editItem(String[] answerArray) {
-    for (Member member : this.members) {
+    for (Member member : this.memberList.getMembers()) {
       if (member.getId().equals(answerArray[0])) {
         for (Item item : member.getItems()) {
           if (item.getName().equals(answerArray[1])) {
@@ -199,9 +180,9 @@ public class StuffLendingSystem {
    * @param memberId - The member to delete.
    */
   public void deleteItemFromMember(String memberId, String itemName) {
-    for (int i = 0; i < this.members.size(); i++) {
-      if (this.members.get(i).getId().equals(memberId)) {
-        this.members.get(i).deleteitem(itemName);
+    for (int i = 0; i < this.memberList.getMembers().size(); i++) {
+      if (this.memberList.getMembers().get(i).getId().equals(memberId)) {
+        this.memberList.getMembers().get(i).deleteitem(itemName);
       }
     }
   }
@@ -216,9 +197,9 @@ public class StuffLendingSystem {
   public boolean isContractEstablished(String[] answerArray) {
     boolean isContractEstablished = false;
 
-    for (int i = 0; i < this.members.size(); i++) {
-      if (this.members.get(i).getId().equals(answerArray[1])) {
-        for (Item item : this.members.get(i).getItems()) {
+    for (int i = 0; i < this.memberList.getMembers().size(); i++) {
+      if (this.memberList.getMembers().get(i).getId().equals(answerArray[1])) {
+        for (Item item : this.memberList.getMembers().get(i).getItems()) {
           if (item.getName().equals(answerArray[2])) {
             isContractEstablished = isContractCreated(answerArray[0], item, answerArray[4], answerArray[3]);
           }
@@ -237,7 +218,7 @@ public class StuffLendingSystem {
    * @param startDay       - The day when contract starts.
    */
   public void transferCredit(String deductMemberId, Item item, String endDay, String startDay) {
-    for (Member member : this.members) {
+    for (Member member : this.memberList.getMembers()) {
       if (member.getId().equals(deductMemberId)) {
         int costOfItem = item.getCostPerDay() * (Integer.parseInt(endDay)
             - Integer.parseInt(startDay));
@@ -274,7 +255,7 @@ public class StuffLendingSystem {
         } else {
 
           /* If it is another member check and transfer credit */
-          for (Member member : this.members) {
+          for (Member member : this.memberList.getMembers()) {
             if (member.getId().equals(memberId)) {
               if (member.getCredit() >= item.getCostPerDay() * (Integer.parseInt(endDay)
                   - Integer.parseInt(startDay))) {

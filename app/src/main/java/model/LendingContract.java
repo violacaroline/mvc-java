@@ -16,7 +16,7 @@ public class LendingContract {
    * @param endDay   - The day TO which it is valid.
    * @param item     - The item that it covers.
    */
-  protected LendingContract(int startDay, int endDay, Item item, Member currentlyLentTo) {
+  public LendingContract(int startDay, int endDay, Item item, Member currentlyLentTo) {
     setStartDay(startDay);
     setEndDay(endDay);
     setItem(item);

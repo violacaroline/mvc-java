@@ -17,7 +17,7 @@ public class Item {
   /**
    * Instanciates a new item object.
    */
-  protected Item(String category, String name, String description, int costPerDay, int dayCreated, Member owner) {
+  public Item(String category, String name, String description, int costPerDay, int dayCreated, Member owner) {
     setCategory(category);
     setName(name);
     setDescription(description);
@@ -40,7 +40,7 @@ public class Item {
    *
    * @param category - The items category.
    */
-  protected void setCategory(String category) {
+  public void setCategory(String category) {
     this.category = category;
   }
 
@@ -58,7 +58,7 @@ public class Item {
    *
    * @param name - The items name.
    */
-  protected void setName(String name) {
+  public void setName(String name) {
     this.name = name;
   }
 
@@ -76,7 +76,7 @@ public class Item {
    *
    * @param description - The items description.
    */
-  protected void setDescription(String description) {
+  public void setDescription(String description) {
     this.description = description;
   }
 
@@ -94,7 +94,7 @@ public class Item {
    *
    * @param costPerDay - The items cost per day.
    */
-  protected void setCostPerDay(int costPerDay) {
+  public void setCostPerDay(int costPerDay) {
     this.costPerDay = costPerDay;
   }
 
@@ -155,7 +155,7 @@ public class Item {
    *
    * @param lendingContract - The lending contract.
    */
-  protected void addLendingContract(LendingContract lendingContract) {
+  public void addLendingContract(LendingContract lendingContract) {
     this.lendingContracts.add(lendingContract);
   }
 
