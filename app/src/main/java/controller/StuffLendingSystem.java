@@ -94,30 +94,30 @@ public class StuffLendingSystem {
     return memberId.toString();
   }
 
-  /**
-   * Edit member.
-   *
-   * @param answerArray - An array of answers.
-   */
-  public void editMember(String[] answerArray) {
-    for (Member member : this.memberList.getMembers()) {
-      if (member.getId().equals(answerArray[0])) {
-        switch (answerArray[1]) {
-          case "name":
-            member.setName(answerArray[2]);
-            break;
-          case "email":
-            member.setEmail(answerArray[2]);
-            break;
-          case "phone":
-            member.setPhone(answerArray[2]);
-            break;
-          default:
-            break;
-        }
-      }
-    }
-  }
+  // /**
+  //  * Edit member.
+  //  *
+  //  * @param answerArray - An array of answers.
+  //  */
+  // public void editMember(String[] answerArray) {
+  //   for (Member member : this.memberList.getMembers()) {
+  //     if (member.getId().equals(answerArray[0])) {
+  //       switch (answerArray[1]) {
+  //         case "name":
+  //           member.setName(answerArray[2]);
+  //           break;
+  //         case "email":
+  //           member.setEmail(answerArray[2]);
+  //           break;
+  //         case "phone":
+  //           member.setPhone(answerArray[2]);
+  //           break;
+  //         default:
+  //           break;
+  //       }
+  //     }
+  //   }
+  // }
 
   /**
    * Delete member.
@@ -146,37 +146,37 @@ public class StuffLendingSystem {
     }
   }
 
-  /**
-   * Edit item.
-   *
-   * @param answerArray - An array of answers.
-   */
-  public void editItem(String[] answerArray) {
-    for (Member member : this.memberList.getMembers()) {
-      if (member.getId().equals(answerArray[0])) {
-        for (Item item : member.getItems()) {
-          if (item.getName().equals(answerArray[1])) {
-            switch (answerArray[2]) {
-              case "category":
-                item.setCategory(answerArray[3]);
-                break;
-              case "name":
-                item.setName(answerArray[3]);
-                break;
-              case "description":
-                item.setDescription(answerArray[3]);
-                break;
-              case "cost":
-                item.setCostPerDay(Integer.parseInt(answerArray[3]));
-                break;
-              default:
-                break;
-            }
-          }
-        }
-      }
-    }
-  }
+  // /**
+  //  * Edit item.
+  //  *
+  //  * @param answerArray - An array of answers.
+  //  */
+  // public void editItem(String[] answerArray) {
+  //   for (Member member : this.memberList.getMembers()) {
+  //     if (member.getId().equals(answerArray[0])) {
+  //       for (Item item : member.getItems()) {
+  //         if (item.getName().equals(answerArray[1])) {
+  //           switch (answerArray[2]) {
+  //             case "category":
+  //               item.setCategory(answerArray[3]);
+  //               break;
+  //             case "name":
+  //               item.setName(answerArray[3]);
+  //               break;
+  //             case "description":
+  //               item.setDescription(answerArray[3]);
+  //               break;
+  //             case "cost":
+  //               item.setCostPerDay(Integer.parseInt(answerArray[3]));
+  //               break;
+  //             default:
+  //               break;
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
 
   /**
    * Deletes an item from a member.

@@ -112,7 +112,6 @@ public class ItemView {
       startDay = scan.nextLine();
     }
 
-    // THIS NEEDS TO BE AN INT??
     return startDay;
   }
 
@@ -129,7 +128,6 @@ public class ItemView {
       endDay = scan.nextLine();
     }
 
-    // THIS NEEDS TO BE AN INT??
     return endDay;
   }
 

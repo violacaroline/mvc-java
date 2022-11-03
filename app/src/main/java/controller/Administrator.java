@@ -60,8 +60,8 @@ public class Administrator {
                   stuffLendingSystem.deleteMember(memberView.promptMemberId(this.memberList.showMembers()));
                   break;
                 case EditMember:
-                  MemberEditOption editOption = memberView.promptEditMember();
                   String currentMember = memberView.promptMemberId(this.memberList.showMembers());
+                  MemberEditOption editOption = memberView.promptEditMember();
 
                   switch (editOption) {
                     case Name:
@@ -90,6 +90,9 @@ public class Administrator {
                           member.setPhone(newPhone);
                         }
                       }
+                      break;
+                    case Nothing:
+                      mainView.showMessage(InfoMessage.OptionInvalid);
                       break;
                     default:
                       mainView.showMessage(InfoMessage.OptionInvalid);
@@ -138,9 +141,9 @@ public class Administrator {
                       this.itemView.promptItemName());
                   break;
                 case EditItem:
-                  ItemEditOption editOption = itemView.promptEditItem();
                   String currentMember = memberView.promptMemberId(this.memberList.showMembers());
                   String currenItemName = itemView.promptItemName();
+                  ItemEditOption editOption = itemView.promptEditItem();
 
                   switch (editOption) {
                     case Category:
@@ -194,6 +197,9 @@ public class Administrator {
                           }
                         }
                       }
+                      break;
+                    case Nothing:
+                      mainView.showMessage(InfoMessage.OptionInvalid);
                       break;
                     default:
                       mainView.showMessage(InfoMessage.OptionInvalid);
