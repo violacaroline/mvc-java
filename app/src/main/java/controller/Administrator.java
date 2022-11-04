@@ -1,7 +1,6 @@
 package controller;
 
 import java.util.InputMismatchException;
-import model.MemberList;
 import view.InfoMessage;
 import view.ItemMenuEvent;
 import view.MainMenuEvent;
@@ -14,8 +13,8 @@ public class Administrator {
   view.MainView mainView = new view.MainView();
   view.MemberView memberView = new view.MemberView();
   view.ItemView itemView = new view.ItemView();
-  model.MemberList memberList = new MemberList();
-  controller.StuffLendingSystem stuffLendingSystem = new StuffLendingSystem(memberList);
+  // model.MemberList memberList = new MemberList();
+  controller.StuffLendingSystem stuffLendingSystem = new StuffLendingSystem();
 
   /**
    * Creates an Administrator instance.
@@ -50,20 +49,22 @@ public class Administrator {
                   stuffLendingSystem.createMember();
                   break;
                 case DeleteMember:
-                  stuffLendingSystem.deleteMember(memberView.promptMemberId(this.memberList.showMembers()));
+                  stuffLendingSystem
+                      .deleteMember(memberView.promptMemberId(stuffLendingSystem.memberList.showMembers()));
                   break;
                 case EditMember:
                   stuffLendingSystem.editMember();
                   break;
                 case ViewMember:
-                  this.memberView.showSingleMember(this.memberView.promptMemberId(this.memberList.showMembers()),
-                      this.memberList.showMembers());
+                  this.memberView.showSingleMember(
+                      this.memberView.promptMemberId(stuffLendingSystem.memberList.showMembers()),
+                      stuffLendingSystem.memberList.showMembers());
                   break;
                 case SeeAllMembersSimpleList:
-                  this.memberView.showMembersSimpleInfo(this.memberList.showMembers());
+                  this.memberView.showMembersSimpleInfo(stuffLendingSystem.memberList.showMembers());
                   break;
                 case SeeAllMembersFullList:
-                  this.memberView.showMembersFullInfo(this.memberList.showMembers(),
+                  this.memberView.showMembersFullInfo(stuffLendingSystem.memberList.showMembers(),
                       stuffLendingSystem.getCurrentDay());
                   break;
                 case GoBack:
@@ -84,7 +85,7 @@ public class Administrator {
 
               switch (actionItemMenu) {
                 case CreateItem:
-                  String memberId = memberView.promptMemberId(this.memberList.showMembers());
+                  String memberId = memberView.promptMemberId(stuffLendingSystem.memberList.showMembers());
                   String itemCategory = itemView.promptItemCategory();
                   String itemName = itemView.promptItemName();
                   String itemDescription = itemView.promptItemDescription();
@@ -93,15 +94,17 @@ public class Administrator {
                   stuffLendingSystem.registerItemToMember(memberId, itemCategory, itemName, itemDescription, itemCost);
                   break;
                 case DeleteItem:
-                  stuffLendingSystem.deleteItemFromMember(this.memberView.promptMemberId(this.memberList.showMembers()),
+                  stuffLendingSystem.deleteItemFromMember(
+                      this.memberView.promptMemberId(stuffLendingSystem.memberList.showMembers()),
                       this.itemView.promptItemName());
                   break;
                 case EditItem:
                   stuffLendingSystem.editItem();
                   break;
                 case ViewItem:
-                  this.itemView.showSingleItem(this.memberView.promptMemberId(this.memberList.showMembers()),
-                      this.memberList.showMembers(),
+                  this.itemView.showSingleItem(
+                      this.memberView.promptMemberId(stuffLendingSystem.memberList.showMembers()),
+                      stuffLendingSystem.memberList.showMembers(),
                       this.itemView.promptItemName());
                   break;
                 case GoBack:
@@ -116,21 +119,6 @@ public class Administrator {
             break;
           case LoanItem:
             stuffLendingSystem.loanItem();
-            // // this.mainView.showTime(this.time);
-            // String loaningMember =
-            // memberView.promptMemberId(this.memberList.showMembers());
-            // String owningMember =
-            // memberView.promptMemberId(this.memberList.showMembers());
-            // String itemToLoanName = itemView.promptItemName();
-            // int startDay = Integer.parseInt(itemView.promptStartDayLendingPeriod());
-            // int endDay = Integer.parseInt(itemView.promptEndDayLendingPeriod());
-
-            // boolean contractEstablished = stuffLendingSystem
-            // .isContractEstablished(loaningMember, owningMember, itemToLoanName, startDay,
-            // endDay);
-            // if (!contractEstablished) {
-            // this.mainView.showMessage(InfoMessage.ContractDenied);
-            // }
             break;
           case AdvanceTime:
             stuffLendingSystem.advanceTime(this.mainView.promptAdvanceTime());

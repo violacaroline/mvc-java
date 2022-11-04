@@ -69,7 +69,7 @@ public class ItemView {
     String cost = scan.nextLine();
 
     while (!isValidInt(cost)) {
-      System.out.println("Cost has to be a valid number.");
+      System.out.println("Cost has to be a valid number: ");
       cost = scan.nextLine();
     }
 

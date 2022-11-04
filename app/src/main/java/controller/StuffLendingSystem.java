@@ -17,13 +17,12 @@ public class StuffLendingSystem {
   view.MainView mainView = new view.MainView();
   view.MemberView memberView = new view.MemberView();
   view.ItemView itemView = new view.ItemView();
-  private MemberList memberList;
+  model.MemberList memberList = new MemberList();
 
   /**
    * Creates a StuffLendingSystem instance.
    */
-  public StuffLendingSystem(MemberList memberList) {
-    this.memberList = memberList;
+  public StuffLendingSystem() {
 
     /* REGISTER HARD CODED ITEMS */
     this.registerItemToMember("MEMID1", "tool", "mem1item1", "item description", 10);
@@ -146,12 +145,13 @@ public class StuffLendingSystem {
     }
   }
 
+  /*
+   * IF I TAKE MEMBERID, ITEMNAME AND EDITOPTION AS PARAMETER
+   * I COULD MOVE THIS CLASS TO MODEL - HOWEVER IT WOULD BE DEPENDENT
+   * ON VIEW SINCE EDITOPTION IS THERE? */
+
   /**
    * Edit item.
-   *
-   * IF I TAKE MEMBERID, ITEMNAME AND EDITOPTION AS PARAMETER 
-   * I COULD MOVE THIS CLASS TO MODEL - HOWEVER IT WOULD BE DEPENDENT
-   * ON VIEW SINCE EDITOPTION IS THERE? 
    */
   public void editItem() {
     String currentMember = memberView.promptMemberId(this.memberList.showMembers());
