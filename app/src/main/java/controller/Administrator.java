@@ -1,14 +1,10 @@
 package controller;
 
 import java.util.InputMismatchException;
-import model.Item;
-import model.Member;
 import model.MemberList;
 import view.InfoMessage;
-import view.ItemEditOption;
 import view.ItemMenuEvent;
 import view.MainMenuEvent;
-import view.MemberEditOption;
 import view.MemberMenuEvent;
 
 /**
@@ -31,7 +27,7 @@ public class Administrator {
   /**
    * Runs stuff lending system program.
    */
-  public void runProgram() {
+  public void startSystem() {
     try {
       boolean runningMainMenu = true;
       boolean runningMemberMenu = true;
@@ -51,53 +47,13 @@ public class Administrator {
 
               switch (actionMemberMenu) {
                 case CreateMember:
-                  String name = memberView.promptName();
-                  String email = memberView.promptEmail(this.memberList.showMembers());
-                  String phone = memberView.promptPhone(this.memberList.showMembers());
-                  stuffLendingSystem.createMember(name, email, phone);
+                  stuffLendingSystem.createMember();
                   break;
                 case DeleteMember:
                   stuffLendingSystem.deleteMember(memberView.promptMemberId(this.memberList.showMembers()));
                   break;
                 case EditMember:
-                  String currentMember = memberView.promptMemberId(this.memberList.showMembers());
-                  MemberEditOption editOption = memberView.promptEditMember();
-
-                  switch (editOption) {
-                    case Name:
-                      for (Member member : this.memberList.getMembers()) {
-                        if (member.getId().equals(currentMember)) {
-                          String newName = memberView.promptName();
-
-                          member.setName(newName);
-                        }
-                      }
-                      break;
-                    case Email:
-                      for (Member member : this.memberList.getMembers()) {
-                        if (member.getId().equals(currentMember)) {
-                          String newEmail = memberView.promptEmail(this.memberList.showMembers());
-
-                          member.setEmail(newEmail);
-                        }
-                      }
-                      break;
-                    case Phone:
-                      for (Member member : this.memberList.getMembers()) {
-                        if (member.getId().equals(currentMember)) {
-                          String newPhone = memberView.promptPhone(this.memberList.showMembers());
-
-                          member.setPhone(newPhone);
-                        }
-                      }
-                      break;
-                    case Nothing:
-                      mainView.showMessage(InfoMessage.OptionInvalid);
-                      break;
-                    default:
-                      mainView.showMessage(InfoMessage.OptionInvalid);
-                      break;
-                  }
+                  stuffLendingSystem.editMember();
                   break;
                 case ViewMember:
                   this.memberView.showSingleMember(this.memberView.promptMemberId(this.memberList.showMembers()),
@@ -128,83 +84,20 @@ public class Administrator {
 
               switch (actionItemMenu) {
                 case CreateItem:
+                  String memberId = memberView.promptMemberId(this.memberList.showMembers());
                   String itemCategory = itemView.promptItemCategory();
                   String itemName = itemView.promptItemName();
                   String itemDescription = itemView.promptItemDescription();
                   int itemCost = itemView.promptItemCost();
 
-                  stuffLendingSystem.registerItemToMember(this.memberView.promptMemberId(this.memberList.showMembers()),
-                      itemCategory, itemName, itemDescription, itemCost);
+                  stuffLendingSystem.registerItemToMember(memberId, itemCategory, itemName, itemDescription, itemCost);
                   break;
                 case DeleteItem:
                   stuffLendingSystem.deleteItemFromMember(this.memberView.promptMemberId(this.memberList.showMembers()),
                       this.itemView.promptItemName());
                   break;
                 case EditItem:
-                  String currentMember = memberView.promptMemberId(this.memberList.showMembers());
-                  String currenItemName = itemView.promptItemName();
-                  ItemEditOption editOption = itemView.promptEditItem();
-
-                  switch (editOption) {
-                    case Category:
-                      for (Member member : this.memberList.getMembers()) {
-                        if (member.getId().equals(currentMember)) {
-                          for (Item item : member.getItems()) {
-                            if (currenItemName.equals(item.getName())) {
-                              String newCategory = itemView.promptItemCategory();
-
-                              item.setName(newCategory);
-                            }
-                          }
-                        }
-                      }
-                      break;
-                    case Name:
-                      for (Member member : this.memberList.getMembers()) {
-                        if (member.getId().equals(currentMember)) {
-                          for (Item item : member.getItems()) {
-                            if (currenItemName.equals(item.getName())) {
-                              String newName = itemView.promptItemName();
-
-                              item.setName(newName);
-                            }
-                          }
-                        }
-                      }
-                      break;
-                    case Description:
-                      for (Member member : this.memberList.getMembers()) {
-                        if (member.getId().equals(currentMember)) {
-                          for (Item item : member.getItems()) {
-                            if (currenItemName.equals(item.getName())) {
-                              String newDescription = itemView.promptItemDescription();
-
-                              item.setDescription(newDescription);
-                            }
-                          }
-                        }
-                      }
-                      break;
-                    case Cost:
-                      for (Member member : this.memberList.getMembers()) {
-                        if (member.getId().equals(currentMember)) {
-                          for (Item item : member.getItems()) {
-                            if (currenItemName.equals(item.getName())) {
-                              int newCost = itemView.promptItemCost();
-
-                              item.setCostPerDay(newCost);
-                            }
-                          }
-                        }
-                      }
-                      break;
-                    case Nothing:
-                      mainView.showMessage(InfoMessage.OptionInvalid);
-                      break;
-                    default:
-                      mainView.showMessage(InfoMessage.OptionInvalid);
-                      break;
-                  }
+                  stuffLendingSystem.editItem();
                   break;
                 case ViewItem:
                   this.itemView.showSingleItem(this.memberView.promptMemberId(this.memberList.showMembers()),
@@ -222,18 +115,22 @@ public class Administrator {
             }
             break;
           case LoanItem:
-            this.mainView.showMessage(InfoMessage.CurrentDay);
-            String loaningMember = memberView.promptMemberId(this.memberList.showMembers());
-            String owningMember = memberView.promptMemberId(this.memberList.showMembers());
-            String itemToLoanName = itemView.promptItemName();
-            int startDay = Integer.parseInt(itemView.promptStartDayLendingPeriod());
-            int endDay = Integer.parseInt(itemView.promptEndDayLendingPeriod());
+            stuffLendingSystem.loanItem();
+            // // this.mainView.showTime(this.time);
+            // String loaningMember =
+            // memberView.promptMemberId(this.memberList.showMembers());
+            // String owningMember =
+            // memberView.promptMemberId(this.memberList.showMembers());
+            // String itemToLoanName = itemView.promptItemName();
+            // int startDay = Integer.parseInt(itemView.promptStartDayLendingPeriod());
+            // int endDay = Integer.parseInt(itemView.promptEndDayLendingPeriod());
 
-            boolean contractEstablished = stuffLendingSystem
-                .isContractEstablished(loaningMember, owningMember, itemToLoanName, startDay, endDay);
-            if (!contractEstablished) {
-              this.mainView.showMessage(InfoMessage.ContractDenied);
-            }
+            // boolean contractEstablished = stuffLendingSystem
+            // .isContractEstablished(loaningMember, owningMember, itemToLoanName, startDay,
+            // endDay);
+            // if (!contractEstablished) {
+            // this.mainView.showMessage(InfoMessage.ContractDenied);
+            // }
             break;
           case AdvanceTime:
             stuffLendingSystem.advanceTime(this.mainView.promptAdvanceTime());

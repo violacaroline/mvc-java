@@ -13,6 +13,6 @@ public class App {
 
     Administrator admin = new Administrator();
 
-    admin.runProgram();
+    admin.startSystem();
   }
 }

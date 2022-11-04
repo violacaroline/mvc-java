@@ -100,6 +100,29 @@ public class MemberView {
   }
 
   /**
+   * Asks user for a member ID.
+   *
+   * @param members - List of members to iterate.
+   * @return - The member's id.
+   */
+  public String promptOwnersMemberId(Member[] members) {
+    String memberId;
+    boolean memberExists = false;
+    do {
+      System.out.println("Type the member ID of owner of the item: ");
+      memberId = scan.nextLine().toUpperCase();
+
+      memberExists = memberValidator.validateMemberId(members, memberId);
+
+      if (!memberExists) {
+        System.out.println("TRY AGAIN, not a valid member ID");
+      }
+    } while (!memberExists);
+
+    return memberId;
+  }
+
+  /**
    * Asks a member what to edit.
    */
   public MemberEditOption promptEditMember() {

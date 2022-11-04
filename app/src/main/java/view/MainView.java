@@ -525,7 +525,7 @@ public class MainView {
    *
    * @param time - The current time to display.
    */
-  public void displayTime(Time time) {
+  public void showTime(Time time) {
     System.out.println("Current day: " + time.getTime());
   }
 }

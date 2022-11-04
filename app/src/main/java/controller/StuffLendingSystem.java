@@ -5,12 +5,18 @@ import model.Item;
 import model.LendingContract;
 import model.Member;
 import model.MemberList;
+import view.InfoMessage;
+import view.ItemEditOption;
+import view.MemberEditOption;
 
 /**
  * Represents a Stuff Lending System.
  */
 public class StuffLendingSystem {
   model.Time time = new model.Time();
+  view.MainView mainView = new view.MainView();
+  view.MemberView memberView = new view.MemberView();
+  view.ItemView itemView = new view.ItemView();
   private MemberList memberList;
 
   /**
@@ -18,32 +24,6 @@ public class StuffLendingSystem {
    */
   public StuffLendingSystem(MemberList memberList) {
     this.memberList = memberList;
-
-    // /* MEMBER ONE ITEMS */
-    // String[] memberOneItemOne = new String[] { "tool", "mem1item1", "item
-    // description", "10" };
-
-    // /* MEMBER TWO ITEMS */
-    // String[] memberTwoItemOne = new String[] { "tool", "mem2item1", "item
-    // description", "50" };
-    // String[] memberTwoItemTwo = new String[] { "tool", "mem2item2", "item
-    // description", "100" };
-
-    // /* MEMBER THREE ITEMS */
-    // String[] memberThreeItemOne = new String[] { "tool", "mem3item1", "item
-    // description", "10" };
-
-    // /* MEMBER FOUR ITEMS */
-    // String[] memberFourItemOne = new String[] { "tool", "mem4item1", "item
-    // description", "10" };
-    // String[] memberFourItemTwo = new String[] { "tool", "mem4item2", "item
-    // description", "50" };
-    // String[] memberFourItemThree = new String[] { "tool", "mem4item3", "item
-    // description", "100" };
-    // String[] memberFourItemFour = new String[] { "tool", "mem4item4", "item
-    // description", "200" };
-    // String[] memberFourItemFive = new String[] { "tool", "mem4item5", "item
-    // description", "500" };
 
     /* REGISTER HARD CODED ITEMS */
     this.registerItemToMember("MEMID1", "tool", "mem1item1", "item description", 10);
@@ -64,12 +44,11 @@ public class StuffLendingSystem {
 
   /**
    * Creates a member.
-   *
-   * @param name  - The name of the member.
-   * @param email - The email of the member.
-   * @param phone - The phone of the member.
    */
-  public void createMember(String name, String email, String phone) {
+  public void createMember() {
+    String name = memberView.promptName();
+    String email = memberView.promptEmail(this.memberList.showMembers());
+    String phone = memberView.promptPhone(this.memberList.showMembers());
     Member member = new Member(name, email, phone,
         createMemberId(), time.getTime());
 
@@ -94,30 +73,49 @@ public class StuffLendingSystem {
     return memberId.toString();
   }
 
-  // /**
-  //  * Edit member.
-  //  *
-  //  * @param answerArray - An array of answers.
-  //  */
-  // public void editMember(String[] answerArray) {
-  //   for (Member member : this.memberList.getMembers()) {
-  //     if (member.getId().equals(answerArray[0])) {
-  //       switch (answerArray[1]) {
-  //         case "name":
-  //           member.setName(answerArray[2]);
-  //           break;
-  //         case "email":
-  //           member.setEmail(answerArray[2]);
-  //           break;
-  //         case "phone":
-  //           member.setPhone(answerArray[2]);
-  //           break;
-  //         default:
-  //           break;
-  //       }
-  //     }
-  //   }
-  // }
+  /**
+   * Edit member.
+   */
+  public void editMember() {
+    String currentMember = memberView.promptMemberId(this.memberList.showMembers());
+    MemberEditOption editOption = memberView.promptEditMember();
+
+    switch (editOption) {
+      case Name:
+        for (Member member : this.memberList.getMembers()) {
+          if (member.getId().equals(currentMember)) {
+            String newName = memberView.promptName();
+
+            member.setName(newName);
+          }
+        }
+        break;
+      case Email:
+        for (Member member : this.memberList.getMembers()) {
+          if (member.getId().equals(currentMember)) {
+            String newEmail = memberView.promptEmail(this.memberList.showMembers());
+
+            member.setEmail(newEmail);
+          }
+        }
+        break;
+      case Phone:
+        for (Member member : this.memberList.getMembers()) {
+          if (member.getId().equals(currentMember)) {
+            String newPhone = memberView.promptPhone(this.memberList.showMembers());
+
+            member.setPhone(newPhone);
+          }
+        }
+        break;
+      case Nothing:
+        mainView.showMessage(InfoMessage.OptionInvalid);
+        break;
+      default:
+        mainView.showMessage(InfoMessage.OptionInvalid);
+        break;
+    }
+  }
 
   /**
    * Delete member.
@@ -137,46 +135,86 @@ public class StuffLendingSystem {
    *
    * @param memberId - The member to register the item to.
    */
-  public void registerItemToMember(String memberId, String category, String name, String description, int cost) {
+  public void registerItemToMember(String memberId, String itemCategory,
+      String itemName, String itemDescription, int itemCost) {
+
     for (int i = 0; i < this.memberList.getMembers().size(); i++) {
       if (this.memberList.getMembers().get(i).getId().equals(memberId)) {
-        this.memberList.getMembers().get(i).createItem(category, name, description, cost,
+        this.memberList.getMembers().get(i).createItem(itemCategory, itemName, itemDescription, itemCost,
             time.getTime(), this.memberList.getMembers().get(i));
       }
     }
   }
 
-  // /**
-  //  * Edit item.
-  //  *
-  //  * @param answerArray - An array of answers.
-  //  */
-  // public void editItem(String[] answerArray) {
-  //   for (Member member : this.memberList.getMembers()) {
-  //     if (member.getId().equals(answerArray[0])) {
-  //       for (Item item : member.getItems()) {
-  //         if (item.getName().equals(answerArray[1])) {
-  //           switch (answerArray[2]) {
-  //             case "category":
-  //               item.setCategory(answerArray[3]);
-  //               break;
-  //             case "name":
-  //               item.setName(answerArray[3]);
-  //               break;
-  //             case "description":
-  //               item.setDescription(answerArray[3]);
-  //               break;
-  //             case "cost":
-  //               item.setCostPerDay(Integer.parseInt(answerArray[3]));
-  //               break;
-  //             default:
-  //               break;
-  //           }
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
+  /**
+   * Edit item.
+   */
+  public void editItem() {
+    String currentMember = memberView.promptMemberId(this.memberList.showMembers());
+    String currenItemName = itemView.promptItemName();
+    ItemEditOption editOption = itemView.promptEditItem();
+
+    switch (editOption) {
+      case Category:
+        for (Member member : this.memberList.getMembers()) {
+          if (member.getId().equals(currentMember)) {
+            for (Item item : member.getItems()) {
+              if (currenItemName.equals(item.getName())) {
+                String newCategory = itemView.promptItemCategory();
+
+                item.setName(newCategory);
+              }
+            }
+          }
+        }
+        break;
+      case Name:
+        for (Member member : this.memberList.getMembers()) {
+          if (member.getId().equals(currentMember)) {
+            for (Item item : member.getItems()) {
+              if (currenItemName.equals(item.getName())) {
+                String newName = itemView.promptItemName();
+
+                item.setName(newName);
+              }
+            }
+          }
+        }
+        break;
+      case Description:
+        for (Member member : this.memberList.getMembers()) {
+          if (member.getId().equals(currentMember)) {
+            for (Item item : member.getItems()) {
+              if (currenItemName.equals(item.getName())) {
+                String newDescription = itemView.promptItemDescription();
+
+                item.setDescription(newDescription);
+              }
+            }
+          }
+        }
+        break;
+      case Cost:
+        for (Member member : this.memberList.getMembers()) {
+          if (member.getId().equals(currentMember)) {
+            for (Item item : member.getItems()) {
+              if (currenItemName.equals(item.getName())) {
+                int newCost = itemView.promptItemCost();
+
+                item.setCostPerDay(newCost);
+              }
+            }
+          }
+        }
+        break;
+      case Nothing:
+        mainView.showMessage(InfoMessage.OptionInvalid);
+        break;
+      default:
+        mainView.showMessage(InfoMessage.OptionInvalid);
+        break;
+    }
+  }
 
   /**
    * Deletes an item from a member.
@@ -188,6 +226,24 @@ public class StuffLendingSystem {
       if (this.memberList.getMembers().get(i).getId().equals(memberId)) {
         this.memberList.getMembers().get(i).deleteitem(itemName);
       }
+    }
+  }
+
+  /**
+   * Loan an item.
+   */
+  public void loanItem() {
+    this.mainView.showTime(this.time);
+    String loaningMember = memberView.promptMemberId(this.memberList.showMembers());
+    String owningMember = memberView.promptOwnersMemberId(this.memberList.showMembers());
+    String itemToLoanName = itemView.promptItemName();
+    int startDay = Integer.parseInt(itemView.promptStartDayLendingPeriod());
+    int endDay = Integer.parseInt(itemView.promptEndDayLendingPeriod());
+
+    boolean contractEstablished = this
+        .isContractEstablished(loaningMember, owningMember, itemToLoanName, startDay, endDay);
+    if (!contractEstablished) {
+      this.mainView.showMessage(InfoMessage.ContractDenied);
     }
   }
 
@@ -241,7 +297,7 @@ public class StuffLendingSystem {
    *
    * @return - True if contract was created.
    */
-  public boolean isContractCreated(String memberId, Item item, int endDay, int startDay) {
+  public boolean isContractCreated(String memberId, Item item, int startDay, int endDay) {
     boolean isContractCreated = false;
 
     /* Only create a contract if it's for today or a time period in the future */
@@ -260,9 +316,8 @@ public class StuffLendingSystem {
           /* If it is another member check and transfer credit */
           for (Member member : this.memberList.getMembers()) {
             if (member.getId().equals(memberId)) {
-              if (member.getCredit() >= item.getCostPerDay() * endDay
-                  - startDay) {
-                this.transferCredit(memberId, item, endDay, startDay);
+              if (member.getCredit() >= item.getCostPerDay() * (endDay - startDay)) {
+                this.transferCredit(memberId, item, startDay, endDay);
                 this.createLendingContract(startDay, endDay, item, member);
                 isContractCreated = true;
               }
@@ -283,8 +338,7 @@ public class StuffLendingSystem {
    * @param item     - The item it covers.
    */
   public void createLendingContract(int startDay, int endDay, Item item, Member currentlyLoaningItem) {
-    LendingContract lendingContract = new LendingContract(startDay,
-        +endDay, item, currentlyLoaningItem);
+    LendingContract lendingContract = new LendingContract(startDay, endDay, item, currentlyLoaningItem);
     item.addLendingContract(lendingContract);
   }
 
@@ -314,7 +368,7 @@ public class StuffLendingSystem {
    * @return - The current day.
    */
   public int getCurrentDay() {
-    return time.getTime();
+    return this.time.getTime();
   }
 
   /**
