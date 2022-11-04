@@ -148,6 +148,10 @@ public class StuffLendingSystem {
 
   /**
    * Edit item.
+   *
+   * IF I TAKE MEMBERID, ITEMNAME AND EDITOPTION AS PARAMETER 
+   * I COULD MOVE THIS CLASS TO MODEL - HOWEVER IT WOULD BE DEPENDENT
+   * ON VIEW SINCE EDITOPTION IS THERE? 
    */
   public void editItem() {
     String currentMember = memberView.promptMemberId(this.memberList.showMembers());

@@ -44,5 +44,4 @@ public class MemberList {
   public void addMember(Member member) {
     this.members.add(member);
   }
-
 }
