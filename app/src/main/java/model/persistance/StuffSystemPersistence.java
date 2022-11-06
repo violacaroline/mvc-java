@@ -24,7 +24,7 @@ public class StuffSystemPersistence implements PersistenceInterface {
   }
 
   /**
-   * Load som members.
+   * Load some members.
    *
    * @return - A list of members.
    */

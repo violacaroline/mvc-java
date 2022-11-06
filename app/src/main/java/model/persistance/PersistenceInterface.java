@@ -11,7 +11,7 @@ public interface PersistenceInterface {
   public void load();
 
   /*
-   * Saves some members.
+   * Saves some data.
    */
   public void save();
 }

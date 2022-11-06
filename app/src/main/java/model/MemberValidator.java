@@ -1,7 +1,7 @@
 package model;
 
 /**
- * Validating member information - email/phone.
+ * Validating member information - name/email/phone.
  */
 public class MemberValidator {
   /**

@@ -13,15 +13,7 @@ public class Administrator {
   view.MainView mainView = new view.MainView();
   view.MemberView memberView = new view.MemberView();
   view.ItemView itemView = new view.ItemView();
-  // model.MemberList memberList = new MemberList();
   controller.StuffLendingSystem stuffLendingSystem = new StuffLendingSystem();
-
-  /**
-   * Creates an Administrator instance.
-   */
-  public Administrator() {
-
-  }
 
   /**
    * Runs stuff lending system program.

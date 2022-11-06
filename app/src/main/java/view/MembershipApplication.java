@@ -1,7 +1,7 @@
 package view;
 
 /**
- * Represents a membership application.
+ * Represents a membership application. REMOVE THIS CLASS?? USEFUL WAY OF TRANSPORTING DATA TO MODEL??
  */
 public class MembershipApplication {
   private String name;
