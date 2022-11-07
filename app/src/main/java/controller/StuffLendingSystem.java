@@ -45,6 +45,9 @@ public class StuffLendingSystem {
    * Creates a member.
    */
   public void createMember() {
+    /* THE SIMPLE VARIABLES AND THE CALLING TO THE VIEW TO PROMPT USER FEELS LIKE A CONTROLLER JOB */
+    /* BUT TO MAKE THIS CLASS BELONG TO MODEL I HAVE TO SEPARATE THAT CONCERN FROM THE CREATING AND ADDING OF MEMBER? */
+    /* MEMBERSHIP APPLICATION??? */
     String name = memberView.promptName();
     String email = memberView.promptEmail(this.memberList.showMembers());
     String phone = memberView.promptPhone(this.memberList.showMembers());
