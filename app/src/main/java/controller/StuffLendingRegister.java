@@ -1,11 +1,11 @@
 package controller;
 
 import model.Item;
-import model.ItemEditOption;
 import model.Member;
-import model.MemberEditOption;
 import model.StuffLendingSystem;
 import view.InfoMessage;
+import view.ItemEditOption;
+import view.MemberEditOption;
 
 /**
  * Represents a Stuff Lending register.

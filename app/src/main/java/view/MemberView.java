@@ -4,7 +4,6 @@ import java.util.Scanner;
 import model.Item;
 import model.LendingContract;
 import model.Member;
-import model.MemberEditOption;
 import model.MemberValidator;
 
 /**
@@ -27,7 +26,7 @@ public class MemberView {
       validName = memberValidator.validateName(name);
 
       if (!validName) {
-        System.out.println("TRY AGAIN, you have to type a name of at least two letters.");
+        System.out.println("TRY AGAIN, you need to type a name of at least two letters.");
       }
 
     } while (!validName);

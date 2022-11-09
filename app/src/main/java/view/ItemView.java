@@ -2,7 +2,6 @@ package view;
 
 import java.util.Scanner;
 import model.Item;
-import model.ItemEditOption;
 import model.LendingContract;
 import model.Member;
 import model.MemberValidator;

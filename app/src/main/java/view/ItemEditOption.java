@@ -1,4 +1,4 @@
-package model;
+package view;
 
 /**
  * Represents the possible information to edit on an item.
