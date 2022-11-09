@@ -23,7 +23,7 @@ public class Administrator {
       boolean runningItemMenu = true;
 
       while (runningMainMenu) {
-        MainMenuEvent actionMainMenu = this.mainView.mainMenu();
+        MainMenuEvent actionMainMenu = mainView.mainMenu();
         stuffLendingRegister.advanceTime(1);
 
         switch (actionMainMenu) {
@@ -31,7 +31,7 @@ public class Administrator {
             runningMemberMenu = true;
 
             while (runningMemberMenu) {
-              MemberMenuEvent actionMemberMenu = this.mainView.memberMenu();
+              MemberMenuEvent actionMemberMenu = mainView.memberMenu();
               stuffLendingRegister.advanceTime(1);
 
               switch (actionMemberMenu) {
@@ -56,10 +56,10 @@ public class Administrator {
                   break;
                 case GoBack:
                   runningMemberMenu = false;
-                  this.mainView.showMessage(InfoMessage.GoingBack);
+                  mainView.showMessage(InfoMessage.GoingBack);
                   break;
                 default:
-                  this.mainView.showMessage(InfoMessage.OptionInvalid);
+                  mainView.showMessage(InfoMessage.OptionInvalid);
                   break;
               }
             }
@@ -67,7 +67,7 @@ public class Administrator {
           case SeeItemMenu:
             runningItemMenu = true;
             while (runningItemMenu) {
-              ItemMenuEvent actionItemMenu = this.mainView.itemMenu();
+              ItemMenuEvent actionItemMenu = mainView.itemMenu();
               stuffLendingRegister.advanceTime(1);
 
               switch (actionItemMenu) {
@@ -85,10 +85,10 @@ public class Administrator {
                   break;
                 case GoBack:
                   runningItemMenu = false;
-                  this.mainView.showMessage(InfoMessage.GoingBack);
+                  mainView.showMessage(InfoMessage.GoingBack);
                   break;
                 default:
-                  this.mainView.showMessage(InfoMessage.OptionInvalid);
+                  mainView.showMessage(InfoMessage.OptionInvalid);
                   break;
               }
             }
@@ -97,24 +97,24 @@ public class Administrator {
             stuffLendingRegister.loanItem();
             break;
           case AdvanceTime:
-            stuffLendingRegister.advanceTime(this.mainView.promptAdvanceTime());
+            stuffLendingRegister.advanceTime(mainView.promptAdvanceTime());
             break;
           case Quit:
             runningMainMenu = false;
-            this.mainView.showMessage(InfoMessage.Quitting);
+            mainView.showMessage(InfoMessage.Quitting);
             break;
           default:
-            this.mainView.showMessage(InfoMessage.OptionInvalid);
+            mainView.showMessage(InfoMessage.OptionInvalid);
             break;
         }
       }
 
     } catch (InputMismatchException inputMismatchException) {
-      this.mainView.showMessage(InfoMessage.TypeNumber);
+      mainView.showMessage(InfoMessage.TypeNumber);
     } catch (RuntimeException runtimeError) {
       throw runtimeError;
     } catch (Exception error) {
-      this.mainView.showMessage(InfoMessage.Error);
+      mainView.showMessage(InfoMessage.Error);
     }
   }
 }

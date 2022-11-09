@@ -84,7 +84,7 @@ public class StuffLendingRegister {
    * View a single member.
    */
   public void viewMember() {
-    this.memberView.showSingleMember(this.memberView.promptMemberId(stuffLendingSystem.showMembers()),
+    memberView.showSingleMember(memberView.promptMemberId(stuffLendingSystem.showMembers()),
         stuffLendingSystem.showMembers());
   }
 
@@ -92,14 +92,14 @@ public class StuffLendingRegister {
    * View all members SIMPLE.
    */
   public void viewAllMembersSimple() {
-    this.memberView.showMembersSimpleInfo(stuffLendingSystem.showMembers());
+    memberView.showMembersSimpleInfo(stuffLendingSystem.showMembers());
   }
 
   /**
    * View all members FULL.
    */
   public void viewAllMembersFull() {
-    this.memberView.showMembersFullInfo(stuffLendingSystem.showMembers(),
+    memberView.showMembersFullInfo(stuffLendingSystem.showMembers(),
         stuffLendingSystem.getCurrentDay());
   }
 
@@ -120,10 +120,10 @@ public class StuffLendingRegister {
    * View an item.
    */
   public void viewItem() {
-    this.itemView.showSingleItem(
-        this.memberView.promptMemberId(stuffLendingSystem.showMembers()),
+    itemView.showSingleItem(
+        memberView.promptMemberId(stuffLendingSystem.showMembers()),
         stuffLendingSystem.showMembers(),
-        this.itemView.promptItemName());
+        itemView.promptItemName());
   }
 
   /**
@@ -210,7 +210,7 @@ public class StuffLendingRegister {
    * Calls model to loan an item.
    */
   public void loanItem() {
-    this.mainView.showTime(stuffLendingSystem.getCurrentDay());
+    mainView.showTime(stuffLendingSystem.getCurrentDay());
     String loaningMember = memberView.promptMemberId(stuffLendingSystem.showMembers());
     String owningMember = memberView.promptOwnersMemberId(stuffLendingSystem.showMembers());
     String itemToLoanName = itemView.promptItemName();
@@ -221,9 +221,9 @@ public class StuffLendingRegister {
         endDay);
 
     if (!contractEstablished) {
-      this.mainView.showMessage(InfoMessage.ContractDenied);
+      mainView.showMessage(InfoMessage.ContractDenied);
     } else {
-      this.mainView.showMessage(InfoMessage.ContractEstablished);
+      mainView.showMessage(InfoMessage.ContractEstablished);
     }
   }
 
