@@ -222,6 +222,8 @@ public class StuffLendingRegister {
 
     if (!contractEstablished) {
       this.mainView.showMessage(InfoMessage.ContractDenied);
+    } else {
+      this.mainView.showMessage(InfoMessage.ContractEstablished);
     }
   }
 
