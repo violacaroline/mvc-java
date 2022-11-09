@@ -1,7 +1,7 @@
 package controller;
 
 import java.util.InputMismatchException;
-import model.StuffLendingSystem;
+// import model.StuffLendingSystem;
 import view.InfoMessage;
 import view.ItemMenuEvent;
 import view.MainMenuEvent;
@@ -12,9 +12,9 @@ import view.MemberMenuEvent;
  */
 public class Administrator {
   view.MainView mainView = new view.MainView();
-  view.MemberView memberView = new view.MemberView();
-  view.ItemView itemView = new view.ItemView();
-  model.StuffLendingSystem stuffLendingSystem = new StuffLendingSystem();
+  // view.MemberView memberView = new view.MemberView();
+  // view.ItemView itemView = new view.ItemView();
+  // model.StuffLendingSystem stuffLendingSystem = new StuffLendingSystem();
   controller.StuffLendingRegister stuffLendingRegister = new StuffLendingRegister();
 
   /**
@@ -28,7 +28,7 @@ public class Administrator {
 
       while (runningMainMenu) {
         MainMenuEvent actionMainMenu = this.mainView.mainMenu();
-        stuffLendingSystem.advanceTime(1);
+        stuffLendingRegister.advanceTime(1);
 
         switch (actionMainMenu) {
           case SeeMemberMenu:
@@ -36,7 +36,7 @@ public class Administrator {
 
             while (runningMemberMenu) {
               MemberMenuEvent actionMemberMenu = this.mainView.memberMenu();
-              stuffLendingSystem.advanceTime(1);
+              stuffLendingRegister.advanceTime(1);
 
               switch (actionMemberMenu) {
                 case CreateMember:
@@ -49,16 +49,14 @@ public class Administrator {
                   stuffLendingRegister.editMember();
                   break;
                 case ViewMember:
-                  this.memberView.showSingleMember(
-                      this.memberView.promptMemberId(stuffLendingSystem.showMembers()),
-                      stuffLendingSystem.showMembers());
+                  stuffLendingRegister.viewMember();
+
                   break;
                 case SeeAllMembersSimpleList:
-                  this.memberView.showMembersSimpleInfo(stuffLendingSystem.showMembers());
+                  stuffLendingRegister.viewAllMembersSimple();
                   break;
                 case SeeAllMembersFullList:
-                  this.memberView.showMembersFullInfo(stuffLendingSystem.showMembers(),
-                      stuffLendingSystem.getCurrentDay());
+                  stuffLendingRegister.viewAllMembersFull();
                   break;
                 case GoBack:
                   runningMemberMenu = false;
@@ -74,7 +72,7 @@ public class Administrator {
             runningItemMenu = true;
             while (runningItemMenu) {
               ItemMenuEvent actionItemMenu = this.mainView.itemMenu();
-              stuffLendingSystem.advanceTime(1);
+              stuffLendingRegister.advanceTime(1);
 
               switch (actionItemMenu) {
                 case CreateItem:
@@ -87,10 +85,7 @@ public class Administrator {
                   stuffLendingRegister.editItem();
                   break;
                 case ViewItem:
-                  this.itemView.showSingleItem(
-                      this.memberView.promptMemberId(stuffLendingSystem.showMembers()),
-                      stuffLendingSystem.showMembers(),
-                      this.itemView.promptItemName());
+                  stuffLendingRegister.viewItem();
                   break;
                 case GoBack:
                   runningItemMenu = false;
@@ -106,7 +101,7 @@ public class Administrator {
             stuffLendingRegister.loanItem();
             break;
           case AdvanceTime:
-            stuffLendingSystem.advanceTime(this.mainView.promptAdvanceTime());
+            stuffLendingRegister.advanceTime(this.mainView.promptAdvanceTime());
             break;
           case Quit:
             runningMainMenu = false;

@@ -63,7 +63,7 @@ public class StuffLendingSystem {
     Member member = new Member(name, email, phone,
         createMemberId(), this.time.getTime());
 
-    memberList.addMember(member);
+    this.memberList.addMember(member);
   }
 
   /**

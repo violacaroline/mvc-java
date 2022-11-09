@@ -83,8 +83,24 @@ public class StuffLendingRegister {
   /**
    * View a single member.
    */
-  public void viewMember(String memberId) {
-    this.memberView.showSingleMember(memberId, stuffLendingSystem.showMembers());
+  public void viewMember() {
+    this.memberView.showSingleMember(this.memberView.promptMemberId(stuffLendingSystem.showMembers()),
+        stuffLendingSystem.showMembers());
+  }
+
+  /**
+   * View all members SIMPLE.
+   */
+  public void viewAllMembersSimple() {
+    this.memberView.showMembersSimpleInfo(stuffLendingSystem.showMembers());
+  }
+
+  /**
+   * View all members FULL.
+   */
+  public void viewAllMembersFull() {
+    this.memberView.showMembersFullInfo(stuffLendingSystem.showMembers(),
+        stuffLendingSystem.getCurrentDay());
   }
 
   /**
@@ -98,6 +114,16 @@ public class StuffLendingRegister {
     int itemCost = itemView.promptItemCost();
 
     stuffLendingSystem.registerItemToMember(memberId, itemCategory, itemName, itemDescription, itemCost);
+  }
+
+  /**
+   * View an item.
+   */
+  public void viewItem() {
+    this.itemView.showSingleItem(
+        this.memberView.promptMemberId(stuffLendingSystem.showMembers()),
+        stuffLendingSystem.showMembers(),
+        this.itemView.promptItemName());
   }
 
   /**
@@ -197,5 +223,23 @@ public class StuffLendingRegister {
     if (!contractEstablished) {
       this.mainView.showMessage(InfoMessage.ContractDenied);
     }
+  }
+
+  /**
+   * Checks the time.
+   *
+   * @return - The current day.
+   */
+  public int getCurrentDay() {
+    return stuffLendingSystem.getCurrentDay();
+  }
+
+  /**
+   * Advances the time.
+   *
+   * @param timeToAdvance - The current day.
+   */
+  public void advanceTime(int timeToAdvance) {
+    stuffLendingSystem.advanceTime(timeToAdvance);
   }
 }
