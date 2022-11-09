@@ -1,23 +1,14 @@
-package controller;
+package model;
 
+import java.util.ArrayList;
 import java.util.Random;
-import model.Item;
-import model.LendingContract;
-import model.Member;
-import model.MemberList;
-import view.InfoMessage;
-import view.ItemEditOption;
-import view.MemberEditOption;
 
 /**
  * Represents a Stuff Lending System.
  */
 public class StuffLendingSystem {
-  model.Time time = new model.Time();
-  view.MainView mainView = new view.MainView();
-  view.MemberView memberView = new view.MemberView();
-  view.ItemView itemView = new view.ItemView();
   model.MemberList memberList = new MemberList();
+  model.Time time = new model.Time();
 
   /**
    * Creates a StuffLendingSystem instance.
@@ -42,19 +33,35 @@ public class StuffLendingSystem {
   }
 
   /**
-   * Creates a member.
+   * Gets a copy of the list of members.
+   *
+   * @return - The copied list.
    */
-  public void createMember() {
-    /* THE SIMPLE VARIABLES AND THE CALLING TO THE VIEW TO PROMPT USER FEELS LIKE A CONTROLLER JOB */
-    /* BUT TO MAKE THIS CLASS BELONG TO MODEL I HAVE TO SEPARATE THAT CONCERN FROM THE CREATING AND ADDING OF MEMBER? */
-    /* MAKE YET ANOTHER CONTROLLER THAT HAS THIS STUFFLENDING SYSTEM AS AN INSTANCE - I AM ALREADY DOING THIS IN ADMINISTRATOR THOUGH?! */
-    /* FEEL LIKE I WILL BE ADDING AN OVERHEAD OF CLASSES JUST TO MAINTAIN MVC?? */
-    /* MEMBERSHIP APPLICATION??? */
-    String name = memberView.promptName();
-    String email = memberView.promptEmail(this.memberList.showMembers());
-    String phone = memberView.promptPhone(this.memberList.showMembers());
+  public Member[] showMembers() {
+    Member[] showMembers = new Member[this.memberList.getMembers().size()];
+
+    showMembers = this.memberList.getMembers().toArray(showMembers);
+
+    return showMembers;
+  }
+
+  /**
+   * Get members.
+   */
+  public ArrayList<Member> getMemberList() {
+    return this.memberList.getMembers();
+  }
+
+  /**
+   * Creates a member.
+   *
+   * @param name  - The name of the member.
+   * @param email - The email of the member.
+   * @param phone - The phone number of the member.
+   */
+  public void createMember(String name, String email, String phone) {
     Member member = new Member(name, email, phone,
-        createMemberId(), time.getTime());
+        createMemberId(), this.time.getTime());
 
     memberList.addMember(member);
   }
@@ -75,50 +82,6 @@ public class StuffLendingSystem {
       memberId.append(alphaNumericString.charAt(index));
     }
     return memberId.toString();
-  }
-
-  /**
-   * Edit member.
-   */
-  public void editMember() {
-    String currentMember = memberView.promptMemberId(this.memberList.showMembers());
-    MemberEditOption editOption = memberView.promptEditMember();
-
-    switch (editOption) {
-      case Name:
-        for (Member member : this.memberList.getMembers()) {
-          if (member.getId().equals(currentMember)) {
-            String newName = memberView.promptName();
-
-            member.setName(newName);
-          }
-        }
-        break;
-      case Email:
-        for (Member member : this.memberList.getMembers()) {
-          if (member.getId().equals(currentMember)) {
-            String newEmail = memberView.promptEmail(this.memberList.showMembers());
-
-            member.setEmail(newEmail);
-          }
-        }
-        break;
-      case Phone:
-        for (Member member : this.memberList.getMembers()) {
-          if (member.getId().equals(currentMember)) {
-            String newPhone = memberView.promptPhone(this.memberList.showMembers());
-
-            member.setPhone(newPhone);
-          }
-        }
-        break;
-      case Nothing:
-        mainView.showMessage(InfoMessage.OptionInvalid);
-        break;
-      default:
-        mainView.showMessage(InfoMessage.OptionInvalid);
-        break;
-    }
   }
 
   /**
@@ -145,83 +108,8 @@ public class StuffLendingSystem {
     for (int i = 0; i < this.memberList.getMembers().size(); i++) {
       if (this.memberList.getMembers().get(i).getId().equals(memberId)) {
         this.memberList.getMembers().get(i).createItem(itemCategory, itemName, itemDescription, itemCost,
-            time.getTime(), this.memberList.getMembers().get(i));
+            this.time.getTime(), this.memberList.getMembers().get(i));
       }
-    }
-  }
-
-  /*
-   * IF I TAKE MEMBERID, ITEMNAME AND EDITOPTION AS PARAMETER
-   * I COULD MOVE THIS CLASS TO MODEL - HOWEVER IT WOULD BE DEPENDENT
-   * ON VIEW SINCE EDITOPTION IS THERE? Should */
-
-  /**
-   * Edit item.
-   */
-  public void editItem() {
-    String currentMember = memberView.promptMemberId(this.memberList.showMembers());
-    String currenItemName = itemView.promptItemName();
-    ItemEditOption editOption = itemView.promptEditItem();
-
-    switch (editOption) {
-      case Category:
-        for (Member member : this.memberList.getMembers()) {
-          if (member.getId().equals(currentMember)) {
-            for (Item item : member.getItems()) {
-              if (currenItemName.equals(item.getName())) {
-                String newCategory = itemView.promptItemCategory();
-
-                item.setName(newCategory);
-              }
-            }
-          }
-        }
-        break;
-      case Name:
-        for (Member member : this.memberList.getMembers()) {
-          if (member.getId().equals(currentMember)) {
-            for (Item item : member.getItems()) {
-              if (currenItemName.equals(item.getName())) {
-                String newName = itemView.promptItemName();
-
-                item.setName(newName);
-              }
-            }
-          }
-        }
-        break;
-      case Description:
-        for (Member member : this.memberList.getMembers()) {
-          if (member.getId().equals(currentMember)) {
-            for (Item item : member.getItems()) {
-              if (currenItemName.equals(item.getName())) {
-                String newDescription = itemView.promptItemDescription();
-
-                item.setDescription(newDescription);
-              }
-            }
-          }
-        }
-        break;
-      case Cost:
-        for (Member member : this.memberList.getMembers()) {
-          if (member.getId().equals(currentMember)) {
-            for (Item item : member.getItems()) {
-              if (currenItemName.equals(item.getName())) {
-                int newCost = itemView.promptItemCost();
-
-                item.setCostPerDay(newCost);
-              }
-            }
-          }
-        }
-        break;
-      case Nothing:
-        mainView.showMessage(InfoMessage.OptionInvalid);
-        break;
-      default:
-        mainView.showMessage(InfoMessage.OptionInvalid);
-        break;
     }
   }
 
@@ -241,19 +129,15 @@ public class StuffLendingSystem {
   /**
    * Loan an item.
    */
-  public void loanItem() {
-    this.mainView.showTime(this.time);
-    String loaningMember = memberView.promptMemberId(this.memberList.showMembers());
-    String owningMember = memberView.promptOwnersMemberId(this.memberList.showMembers());
-    String itemToLoanName = itemView.promptItemName();
-    int startDay = Integer.parseInt(itemView.promptStartDayLendingPeriod());
-    int endDay = Integer.parseInt(itemView.promptEndDayLendingPeriod());
+  public void loanItem(String loaningMember, String owningMember, String itemToLoanName, int startDay, int endDay) {
 
-    boolean contractEstablished = this
-        .isContractEstablished(loaningMember, owningMember, itemToLoanName, startDay, endDay);
-    if (!contractEstablished) {
-      this.mainView.showMessage(InfoMessage.ContractDenied);
-    }
+    this.isContractEstablished(loaningMember, owningMember, itemToLoanName, startDay, endDay);
+    // boolean contractEstablished = this
+    // .isContractEstablished(loaningMember, owningMember, itemToLoanName, startDay,
+    // endDay);
+    // if (!contractEstablished) {
+    // this.mainView.showMessage(InfoMessage.ContractDenied);
+    // } FIX THIS
   }
 
   /**
@@ -269,7 +153,7 @@ public class StuffLendingSystem {
       if (this.memberList.getMembers().get(i).getId().equals(memberIdowner)) {
         for (Item item : this.memberList.getMembers().get(i).getItems()) {
           if (item.getName().equals(itemName)) {
-            isContractEstablished = isContractCreated(memberIdLoaner, item, startDay, endDay);
+            isContractEstablished = isContractCreated(memberIdLoaner, item, startDay, endDay, this.time.getTime());
           }
         }
       }
@@ -306,11 +190,11 @@ public class StuffLendingSystem {
    *
    * @return - True if contract was created.
    */
-  public boolean isContractCreated(String memberId, Item item, int startDay, int endDay) {
+  public boolean isContractCreated(String memberId, Item item, int startDay, int endDay, int currentTime) {
     boolean isContractCreated = false;
 
     /* Only create a contract if it's for today or a time period in the future */
-    if (startDay >= time.getTime()) {
+    if (startDay >= currentTime) {
 
       /* Only create a contract if there is not already one */
       if (!isItemReserved(item.getLendingContracts(), startDay)) {

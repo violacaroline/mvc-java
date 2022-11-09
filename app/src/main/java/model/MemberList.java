@@ -15,19 +15,6 @@ public class MemberList {
   }
 
   /**
-   * Shows the members without exposing the private list.
-   *
-   * @return - The existing members.
-   */
-  public Member[] showMembers() {
-    Member[] showMembers = new Member[this.members.size()];
-
-    showMembers = this.members.toArray(showMembers);
-
-    return showMembers;
-  }
-
-  /**
    * Gets the members.
    *
    * @return - The existing members.

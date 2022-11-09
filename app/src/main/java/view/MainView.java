@@ -1,7 +1,6 @@
 package view;
 
 import java.util.Scanner;
-import model.Time;
 
 /**
  * Class representing a user interface.
@@ -186,7 +185,7 @@ public class MainView {
    *
    * @param time - The current time to display.
    */
-  public void showTime(Time time) {
-    System.out.println("Current day: " + time.getTime());
+  public void showTime(int time) {
+    System.out.println("Current day: " + time);
   }
 }

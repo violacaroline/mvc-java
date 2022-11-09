@@ -4,6 +4,7 @@ import java.util.Scanner;
 import model.Item;
 import model.LendingContract;
 import model.Member;
+import model.MemberEditOption;
 import model.MemberValidator;
 
 /**
