@@ -1,7 +1,6 @@
 package controller;
 
 import java.util.InputMismatchException;
-// import model.StuffLendingSystem;
 import view.InfoMessage;
 import view.ItemMenuEvent;
 import view.MainMenuEvent;
@@ -12,9 +11,6 @@ import view.MemberMenuEvent;
  */
 public class Administrator {
   view.MainView mainView = new view.MainView();
-  // view.MemberView memberView = new view.MemberView();
-  // view.ItemView itemView = new view.ItemView();
-  // model.StuffLendingSystem stuffLendingSystem = new StuffLendingSystem();
   controller.StuffLendingRegister stuffLendingRegister = new StuffLendingRegister();
 
   /**
