@@ -146,7 +146,7 @@ public class MainView {
       return false;
     }
   }
- 
+
   /**
    * Shows a message by printing it to the console.
    *
@@ -162,6 +162,9 @@ public class MainView {
         break;
       case OptionInvalid:
         System.out.println("Option is invalid");
+        break;
+      case ContractEstablished:
+        System.out.println("The contract was successfully created.");
         break;
       case ContractDenied:
         System.out.println("The contract was denied.");

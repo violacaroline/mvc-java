@@ -129,9 +129,9 @@ public class StuffLendingSystem {
   /**
    * Loan an item.
    */
-  public void loanItem(String loaningMember, String owningMember, String itemToLoanName, int startDay, int endDay) {
+  public boolean loanItem(String loaningMember, String owningMember, String itemToLoanName, int startDay, int endDay) {
 
-    this.isContractEstablished(loaningMember, owningMember, itemToLoanName, startDay, endDay);
+    return this.isContractEstablished(loaningMember, owningMember, itemToLoanName, startDay, endDay);
     // boolean contractEstablished = this
     // .isContractEstablished(loaningMember, owningMember, itemToLoanName, startDay,
     // endDay);

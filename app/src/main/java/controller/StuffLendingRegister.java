@@ -191,6 +191,11 @@ public class StuffLendingRegister {
     int startDay = Integer.parseInt(itemView.promptStartDayLendingPeriod());
     int endDay = Integer.parseInt(itemView.promptEndDayLendingPeriod());
 
-    stuffLendingSystem.loanItem(loaningMember, owningMember, itemToLoanName, startDay, endDay);
+    boolean contractEstablished = stuffLendingSystem.loanItem(loaningMember, owningMember, itemToLoanName, startDay,
+        endDay);
+
+    if (!contractEstablished) {
+      this.mainView.showMessage(InfoMessage.ContractDenied);
+    }
   }
 }

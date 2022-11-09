@@ -7,6 +7,7 @@ public enum InfoMessage {
   GoingBack,
   Quitting,
   OptionInvalid,
+  ContractEstablished,
   ContractDenied,
   CurrentDay,
   TypeNumber,
