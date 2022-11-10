@@ -17,7 +17,7 @@ public class StuffLendingRegister {
   model.StuffLendingSystem stuffLendingSystem = new StuffLendingSystem();
 
   /**
-   * Calls model to create member.
+   * Creates a new member.
    */
   public void createMember() {
     String name = memberView.promptName();
@@ -28,16 +28,20 @@ public class StuffLendingRegister {
   }
 
   /**
-   * Calls model to edit member.
+   * Edits an already existing member.
+   * IS IT BAD TO MANIPULATE DATA IN THE MODEL LIKE THIS FROM THE CONTROLLER?
+   * I WANT TO DO THIS IN MODEL REALLY?
+   * RETURNING THE MEMBEREDITOPTION ENUM FROM VIEW COUNTS AS READONLY?
+   * WONT WORK THOUGH BECAUSE OF THE CALL TO VIEW INSIDE SWITCH?
    */
   public void editMember() {
-    String currentMember = memberView.promptMemberId(stuffLendingSystem.showMembers());
+    String memberId = memberView.promptMemberId(stuffLendingSystem.showMembers());
     MemberEditOption editOption = memberView.promptEditMember();
 
     switch (editOption) {
       case Name:
         for (Member member : stuffLendingSystem.getMemberList()) {
-          if (member.getId().equals(currentMember)) {
+          if (member.getId().equals(memberId)) {
             String newName = memberView.promptName();
 
             member.setName(newName);
@@ -46,7 +50,7 @@ public class StuffLendingRegister {
         break;
       case Email:
         for (Member member : stuffLendingSystem.getMemberList()) {
-          if (member.getId().equals(currentMember)) {
+          if (member.getId().equals(memberId)) {
             String newEmail = memberView.promptEmail(stuffLendingSystem.showMembers());
 
             member.setEmail(newEmail);
@@ -55,7 +59,7 @@ public class StuffLendingRegister {
         break;
       case Phone:
         for (Member member : stuffLendingSystem.getMemberList()) {
-          if (member.getId().equals(currentMember)) {
+          if (member.getId().equals(memberId)) {
             String newPhone = memberView.promptPhone(stuffLendingSystem.showMembers());
 
             member.setPhone(newPhone);
@@ -72,7 +76,7 @@ public class StuffLendingRegister {
   }
 
   /**
-   * Calls model to delete a member.
+   * Deletes a member.
    */
   public void deleteMember() {
     String memberId = memberView.promptMemberId(stuffLendingSystem.showMembers());
@@ -104,7 +108,7 @@ public class StuffLendingRegister {
   }
 
   /**
-   * Calls model to register an item.
+   * Registers a new item to a specific member.
    */
   public void registerItemToMember() {
     String memberId = memberView.promptMemberId(stuffLendingSystem.showMembers());
@@ -117,7 +121,7 @@ public class StuffLendingRegister {
   }
 
   /**
-   * View an item.
+   * Views an item.
    */
   public void viewItem() {
     itemView.showSingleItem(
@@ -197,7 +201,7 @@ public class StuffLendingRegister {
   }
 
   /**
-   * Calls model to delete an item.
+   * Deletes an item from a member.
    */
   public void deleteItemFromMember() {
     String memberId = memberView.promptMemberId(stuffLendingSystem.showMembers());
@@ -207,7 +211,7 @@ public class StuffLendingRegister {
   }
 
   /**
-   * Calls model to loan an item.
+   * Loans an item, calls view to display successful/unsuccessful message.
    */
   public void loanItem() {
     mainView.showTime(stuffLendingSystem.getCurrentDay());
