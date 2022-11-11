@@ -61,7 +61,7 @@ public class StuffLendingSystem {
    */
   public void createMember(String name, String email, String phone) {
     Member member = new Member(name, email, phone,
-        createMemberId(), this.time.getTime());
+        this.createMemberId(), this.time.getTime());
 
     this.memberList.addMember(member);
   }
@@ -130,14 +130,7 @@ public class StuffLendingSystem {
    * Loan an item.
    */
   public boolean loanItem(String loaningMember, String owningMember, String itemToLoanName, int startDay, int endDay) {
-
     return this.isContractEstablished(loaningMember, owningMember, itemToLoanName, startDay, endDay);
-    // boolean contractEstablished = this
-    // .isContractEstablished(loaningMember, owningMember, itemToLoanName, startDay,
-    // endDay);
-    // if (!contractEstablished) {
-    // this.mainView.showMessage(InfoMessage.ContractDenied);
-    // } FIX THIS
   }
 
   /**
