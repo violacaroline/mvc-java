@@ -30,17 +30,16 @@ public class StuffLendingRegister {
   /**
    * Edits an already existing member.
    * IS IT BAD TO MANIPULATE DATA IN THE MODEL LIKE THIS FROM THE CONTROLLER?
-   * I WANT TO DO THIS IN MODEL REALLY?
+   * THIS SHOULD BE DONE IN MODEL REALLY?
    * RETURNING THE MEMBEREDITOPTION ENUM FROM VIEW COUNTS AS READONLY?
    * WONT WORK THOUGH BECAUSE OF THE CALL TO VIEW INSIDE SWITCH?
-   *
    * "Many are exposing methods to the controller and view that 
    * can be used to change objects in ways that should not be possible"
    * I ASSUME THIS IS IN THE RISKZONE SINCE IM USING THE SETTERS IN THE 
    * CONTROLLER TO EDIT A MEMBER?
-   *
    * IF I HAVE A METHOD THAT RETURNS SOMETHING AS A PARAMTER - HOW DO I DISPLAY THAT IN A SEQUENCE DIAGRAM?
    * THAT METHOD CALL GETS DRAWN BEFORE THE METHOD CALL THAT ITS A PARAMETER TO?
+   * Should the last member be connected to the view in the object diagram?
    */
   public void editMember() {
     String memberId = memberView.promptMemberId(stuffLendingSystem.showMembers());
