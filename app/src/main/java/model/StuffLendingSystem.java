@@ -87,7 +87,7 @@ public class StuffLendingSystem {
   /**
    * Delete member.
    *
-   * @param memberId - The member to delete.
+   * @param memberId - The id of the member to delete.
    */
   public void deleteMember(String memberId) {
     for (int i = 0; i < this.memberList.getMembers().size(); i++) {
@@ -99,8 +99,6 @@ public class StuffLendingSystem {
 
   /**
    * Registers an item to a member.
-   *
-   * @param memberId - The member to register the item to.
    */
   public void registerItemToMember(String memberId, String itemCategory,
       String itemName, String itemDescription, int itemCost) {
@@ -156,25 +154,6 @@ public class StuffLendingSystem {
   }
 
   /**
-   * Deduct member's credit.
-   *
-   * @param deductMemberId - The ID of the member to deduct.
-   * @param endDay         - The day when contract ends.
-   * @param startDay       - The day when contract starts.
-   */
-  public void transferCredit(String deductMemberId, Item item, int startDay, int endDay) {
-    for (Member member : this.memberList.getMembers()) {
-      if (member.getId().equals(deductMemberId)) {
-        int costOfItem = item.getCostPerDay() * (endDay
-            - startDay);
-
-        member.decrementCredit(costOfItem);
-        item.getOwner().incrementCredit(costOfItem);
-      }
-    }
-  }
-
-  /**
    * Check member's credit, create contract if sufficient funds.
    *
    * @param memberId - The member to check.
@@ -214,6 +193,25 @@ public class StuffLendingSystem {
     }
 
     return isContractCreated;
+  }
+
+  /**
+   * Deduct member's credit.
+   *
+   * @param deductMemberId - The ID of the member to deduct.
+   * @param endDay         - The day when contract ends.
+   * @param startDay       - The day when contract starts.
+   */
+  public void transferCredit(String deductMemberId, Item item, int startDay, int endDay) {
+    for (Member member : this.memberList.getMembers()) {
+      if (member.getId().equals(deductMemberId)) {
+        int costOfItem = item.getCostPerDay() * (endDay
+            - startDay);
+
+        member.decrementCredit(costOfItem);
+        item.getOwner().incrementCredit(costOfItem);
+      }
+    }
   }
 
   /**

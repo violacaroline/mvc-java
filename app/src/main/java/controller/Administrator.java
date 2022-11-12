@@ -46,7 +46,6 @@ public class Administrator {
                   break;
                 case ViewMember:
                   stuffLendingRegister.viewMember();
-
                   break;
                 case SeeAllMembersSimpleList:
                   stuffLendingRegister.viewAllMembersSimple();
