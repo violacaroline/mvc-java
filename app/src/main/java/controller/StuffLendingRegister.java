@@ -31,7 +31,7 @@ public class StuffLendingRegister {
    * Edits an already existing member.
    * IS IT BAD TO MANIPULATE DATA IN THE MODEL LIKE THIS FROM THE CONTROLLER?
    * THIS SHOULD BE DONE IN MODEL REALLY?
-   * RETURNING THE MEMBEREDITOPTION ENUM FROM VIEW COUNTS AS READONLY?
+   * RETURNING THE MEMBEREDITOPTION ENUM FROM VIEW COUNTS AS READONLY (IF I move it inside model)?
    * WONT WORK THOUGH BECAUSE OF THE CALL TO VIEW INSIDE SWITCH?
    * "Many are exposing methods to the controller and view that 
    * can be used to change objects in ways that should not be possible"
