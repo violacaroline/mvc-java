@@ -1,7 +1,7 @@
 # Stuff Lending System Test Report
 
-Version # (git commit hash/link)
-Date: 2022.10.05
+Version #9eb1c80236b427270bba5524a362eef132cc3ea6 (git commit hash/link)
+Date: 2022.11.11
 Environment: Windows, Java version 17.0.1. 
 Performed by: Andrea Viola Caroline Åkesson
 
