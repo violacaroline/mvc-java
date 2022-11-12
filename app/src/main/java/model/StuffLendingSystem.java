@@ -190,7 +190,7 @@ public class StuffLendingSystem {
     if (startDay >= currentTime) {
 
       /* Only create a contract if there is not already one */
-      if (!isItemReserved(item.getLendingContracts(), startDay)) {
+      if (!isItemReserved(item.getLendingContracts(), startDay, endDay)) {
 
         /* If it is the owning member create contract, don't deduct credit */
         if (memberId.equals(item.getOwner().getId())) {
@@ -235,12 +235,14 @@ public class StuffLendingSystem {
    * @param desiredStartDay  - The day FROM when the item would need to be free.
    * @return - True if item is reserved.
    */
-  public boolean isItemReserved(LendingContract[] lendingContracts, int desiredStartDay) {
+  public boolean isItemReserved(LendingContract[] lendingContracts, int desiredStartDay, int desiredEndDay) {
     boolean isReserved = false;
 
     for (LendingContract lendingContract : lendingContracts) {
-      if (desiredStartDay >= lendingContract.getStartDay()
-          && desiredStartDay <= lendingContract.getEndDay()) {
+      if ((desiredStartDay >= lendingContract.getStartDay()
+          && desiredStartDay <= lendingContract.getEndDay())
+          || (lendingContract.getStartDay() >= desiredStartDay && lendingContract.getEndDay() <= desiredEndDay)
+          || (desiredEndDay >= lendingContract.getStartDay() && desiredEndDay <= lendingContract.getEndDay())) {
         isReserved = true;
       }
     }
