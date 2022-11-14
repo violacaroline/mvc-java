@@ -27,6 +27,19 @@ public class Item {
   }
 
   /**
+   * Get immutable item.
+   *
+   * @return - An immutable version of item.
+   */
+  public ItemImmutable getImmutableItem() {
+    ArrayList<LendingContractImmutable> immutableLendingContracts = new ArrayList<>();
+    for (LendingContract lendingContract : this.lendingContracts) {
+      immutableLendingContracts.add(lendingContract.getImmutableLendingContract());
+    }
+    return new ItemImmutable(category, name, description, costPerDay, dayCreated, owner, immutableLendingContracts);
+  }
+
+  /**
    * Gets items category.
    *
    * @return - The items category.
@@ -160,15 +173,33 @@ public class Item {
   }
 
   /**
-   * Get lending contracts.
+   * Shows a list of lending contracts.
    *
-   * @return - The lending contracts.
+   * @return - The list of immutable lending contracts.
    */
-  public LendingContract[] getLendingContracts() {
-    LendingContract[] showLendingContracts = new LendingContract[this.lendingContracts.size()];
+  public ArrayList<LendingContractImmutable> showLendingContracts() {
+    // Member[] showMembers = new Member[this.memberList.getMembers().size()];
 
-    showLendingContracts = this.lendingContracts.toArray(showLendingContracts);
+    // showMembers = this.memberList.getMembers().toArray(showMembers);
 
-    return showLendingContracts;
+    // return showMembers;
+    ArrayList<LendingContractImmutable> immutableLendingContracts = new ArrayList<>();
+    for (LendingContract lendingContract : this.lendingContracts) {
+      immutableLendingContracts.add(lendingContract.getImmutableLendingContract());
+    }
+    return immutableLendingContracts;
   }
+
+  // /**
+  //  * Get lending contracts.
+  //  *
+  //  * @return - The lending contracts.
+  //  */
+  // public LendingContract[] getLendingContracts() {
+  //   LendingContract[] showLendingContracts = new LendingContract[this.lendingContracts.size()];
+
+  //   showLendingContracts = this.lendingContracts.toArray(showLendingContracts);
+
+  //   return showLendingContracts;
+  // }
 }

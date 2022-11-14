@@ -1,9 +1,10 @@
 package view;
 
+import java.util.ArrayList;
 import java.util.Scanner;
-import model.Item;
-import model.LendingContract;
-import model.Member;
+import model.ItemImmutable;
+import model.LendingContractImmutable;
+import model.MemberImmutable;
 import model.MemberValidator;
 
 /**
@@ -37,7 +38,7 @@ public class MemberView {
   /**
    * Asks user for a members email.
    */
-  public String promptEmail(Member[] members) {
+  public String promptEmail(ArrayList<MemberImmutable> members) {
     String email = "";
     boolean emailExists;
     do {
@@ -58,7 +59,7 @@ public class MemberView {
   /**
    * Asks user for a members phone.
    */
-  public String promptPhone(Member[] members) {
+  public String promptPhone(ArrayList<MemberImmutable> members) {
     String phone = "";
     boolean phoneExists;
     do {
@@ -82,7 +83,7 @@ public class MemberView {
    * @param members - List of members to iterate.
    * @return - The member's id.
    */
-  public String promptMemberId(Member[] members) {
+  public String promptMemberId(ArrayList<MemberImmutable> members) {
     String memberId;
     boolean memberExists = false;
     do {
@@ -105,7 +106,7 @@ public class MemberView {
    * @param members - List of members to iterate.
    * @return - The member's id.
    */
-  public String promptOwnersMemberId(Member[] members) {
+  public String promptOwnersMemberId(ArrayList<MemberImmutable> members) {
     String memberId;
     boolean memberExists = false;
     do {
@@ -147,12 +148,12 @@ public class MemberView {
    * @param memberId - The members ID.
    * @param members  - List of members to iterate.
    */
-  public void showSingleMember(String memberId, Member[] members) {
-    for (Member member : members) {
+  public void showSingleMember(String memberId, ArrayList<MemberImmutable> members) {
+    for (MemberImmutable member : members) {
       if (member.getId().equals(memberId)) {
         System.out
             .println("MEMBER:\nName: " + member.getName() + "\nEmail: " + member.getEmail() + "\nID: " + member.getId()
-                + "\nAmount of credit: " + member.getCredit() + "\nAmount of items: " + member.getItems().length
+                + "\nAmount of credit: " + member.getCredit() + "\nAmount of items: " + member.showItems().size()
                 + "\nCreated day: " + member.getDayCreated());
       }
     }
@@ -163,12 +164,12 @@ public class MemberView {
    *
    * @param members - List of members to iterate.
    */
-  public void showMembersSimpleInfo(Member[] members) {
-    for (Member member : members) {
+  public void showMembersSimpleInfo(ArrayList<MemberImmutable> members) {
+    for (MemberImmutable member : members) {
       System.out.println("MEMBER:\nName: " + member.getName() + "\nEmail: "
           + member.getEmail() + "\nID: " + member.getId()
           + "\nAmount of credit: " + member.getCredit()
-          + "\nAmount of items: " + member.getItems().length);
+          + "\nAmount of items: " + member.showItems().size());
     }
   }
 
@@ -178,19 +179,19 @@ public class MemberView {
    * @param members     - List of members to iterate.
    * @param currentTime - The current time.
    */
-  public void showMembersFullInfo(Member[] members, int currentTime) {
-    for (Member member : members) {
+  public void showMembersFullInfo(ArrayList<MemberImmutable> members, int currentTime) {
+    for (MemberImmutable member : members) {
       System.out.println(
           "MEMBER:\nName: " + member.getName() + "\nEmail: " + member.getEmail() + "\nPhone: "
               + member.getPhone() + "\nID: " + member.getId() + "\nCreated day: "
               + member.getDayCreated() + "\nTotal credit: " + member.getCredit());
-      if (member.getItems().length > 0) {
+      if (member.showItems().size() > 0) {
         System.out.println("ITEMS: ");
-        for (Item item : member.getItems()) {
+        for (ItemImmutable item : member.showItems()) {
           System.out.println("Name: " + item.getName() + "\nDescription: " + item.getDescription()
               + "\nCategory: " + item.getCategory() + "\nCost per day: "
               + item.getCostPerDay() + "\nCreated day: " + item.getDayCreated());
-          for (LendingContract lendingContract : item.getLendingContracts()) {
+          for (LendingContractImmutable lendingContract : item.showLendingContracts()) {
             if (currentTime >= lendingContract.getStartDay() && currentTime <= lendingContract.getEndDay()) {
               System.out.println("Currently lent to: " + lendingContract.getCurrentlyLentTo().getName()
                   + "\nFrom day: " + lendingContract.getStartDay() + "\nTo day: " + lendingContract.getEndDay());

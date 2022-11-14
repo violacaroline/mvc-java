@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 /**
  * Validating member information - name/email/phone.
  */
@@ -25,10 +27,10 @@ public class MemberValidator {
    * @param email - The new email to validate.
    * @return - True if email already exist.
    */
-  public boolean validateMemberEmail(Member[] members, String email) {
+  public boolean validateMemberEmail(ArrayList<MemberImmutable> members, String email) {
     boolean emailAlreadyExists = false;
 
-    for (Member member : members) {
+    for (MemberImmutable member : members) {
       if (member.getEmail().equals(email)) {
         emailAlreadyExists = true;
       }
@@ -44,10 +46,10 @@ public class MemberValidator {
    * @param phone - The new phone number to validate.
    * @return - True if phone number already exist.
    */
-  public boolean validateMemberPhone(Member[] members, String phone) {
+  public boolean validateMemberPhone(ArrayList<MemberImmutable> members, String phone) {
     boolean phoneAlreadyExists = false;
 
-    for (Member member : members) {
+    for (MemberImmutable member : members) {
       if (member.getPhone().equals(phone)) {
         phoneAlreadyExists = true;
       }
@@ -61,10 +63,10 @@ public class MemberValidator {
    *
    * @return - True if member ID exists.
    */
-  public boolean validateMemberId(Member[] members, String memberId) {
+  public boolean validateMemberId(ArrayList<MemberImmutable> members, String memberId) {
     boolean memberExists = false;
 
-    for (Member member : members) {
+    for (MemberImmutable member : members) {
       if (member.getId().equals(memberId.toUpperCase())) {
         memberExists = true;
       }
@@ -78,12 +80,12 @@ public class MemberValidator {
    *
    * @return - True if the member has an item with such a name.
    */
-  public boolean validateMemberItem(Member[] members, String memberId, String itemName) {
+  public boolean validateMemberItem(ArrayList<MemberImmutable> members, String memberId, String itemName) {
     boolean itemExists = false;
 
-    for (Member member : members) {
+    for (MemberImmutable member : members) {
       if (member.getId().equals(memberId.toUpperCase())) {
-        for (Item item : member.getItems()) {
+        for (ItemImmutable item : member.showItems()) {
           if (item.getName().equals(itemName)) {
             itemExists = true;
           }

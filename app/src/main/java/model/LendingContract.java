@@ -24,6 +24,15 @@ public class LendingContract {
   }
 
   /**
+   * Get immutable lending contract.
+   *
+   * @return - An immutable version of a lending contract.
+   */
+  public LendingContractImmutable getImmutableLendingContract() {
+    return new LendingContractImmutable(startDay, endDay, item, currentlyLentTo);
+  }
+
+  /**
    * Gets the lending contract's starting day.
    *
    * @return - The day the contract is valid FROM..

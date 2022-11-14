@@ -37,12 +37,12 @@ public class StuffLendingSystem {
    *
    * @return - The copied list.
    */
-  public Member[] showMembers() {
-    Member[] showMembers = new Member[this.memberList.getMembers().size()];
-
-    showMembers = this.memberList.getMembers().toArray(showMembers);
-
-    return showMembers;
+  public ArrayList<MemberImmutable> showMemberList() {
+    ArrayList<MemberImmutable> immutableMembers = new ArrayList<>();
+    for (Member member : this.memberList.getMembers()) {
+      immutableMembers.add(member.getImmutableMember());
+    }
+    return immutableMembers;
   }
 
   /**
@@ -85,6 +85,49 @@ public class StuffLendingSystem {
   }
 
   /**
+   * Edit members name.
+   *
+   * @param memberId - The member ID.
+   * @param newName  - The new name.
+   */
+  public void editMemberName(String memberId, String newName) {
+    for (Member member : this.getMemberList()) {
+      if (member.getId().equals(memberId)) {
+        member.setName(newName);
+      }
+    }
+  }
+
+  /**
+   * Edit member email.
+   *
+   * @param memberId - The member ID.
+   * @param newEmail - The new email.
+   */
+  public void editMemberEmail(String memberId, String newEmail) {
+    for (Member member : this.getMemberList()) {
+      if (member.getId().equals(memberId)) {
+        member.setEmail(newEmail);
+      }
+    }
+  }
+
+  /**
+   * Edit member phone.
+   *
+   * @param memberId - The new member ID.
+   * @param newPhone - The new phone.
+   */
+  public void editMemberPhone(String memberId, String newPhone) {
+    for (Member member : this.getMemberList()) {
+      if (member.getId().equals(memberId)) {
+
+        member.setPhone(newPhone);
+      }
+    }
+  }
+
+  /**
    * Delete member.
    *
    * @param memberId - The id of the member to delete.
@@ -107,6 +150,86 @@ public class StuffLendingSystem {
       if (this.memberList.getMembers().get(i).getId().equals(memberId)) {
         this.memberList.getMembers().get(i).createItem(itemCategory, itemName, itemDescription, itemCost,
             this.time.getTime(), this.memberList.getMembers().get(i));
+      }
+    }
+  }
+
+  /**
+   * Edit item category.
+   *
+   * @param memberId    - The member ID-
+   * @param itemName    - The items name.
+   * @param newCategory - The new category.
+   */
+  public void editItemCategory(String memberId, String itemName, String newCategory) {
+    for (Member member : this.getMemberList()) {
+      if (member.getId().equals(memberId)) {
+        for (Item item : member.getItems()) {
+          if (itemName.equals(item.getName())) {
+
+            item.setCategory(newCategory);
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * Edit item name.
+   *
+   * @param memberId - The member ID.
+   * @param itemName - The items name.
+   * @param newName  - The new name.
+   */
+  public void editItemName(String memberId, String itemName, String newName) {
+    for (Member member : this.getMemberList()) {
+      if (member.getId().equals(memberId)) {
+        for (Item item : member.getItems()) {
+          if (itemName.equals(item.getName())) {
+
+            item.setName(newName);
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * Edit item description.
+   *
+   * @param memberId       - The members ID.
+   * @param itemName       - The items name.
+   * @param newDescription - The new description.
+   */
+  public void editItemDescription(String memberId, String itemName, String newDescription) {
+    for (Member member : this.getMemberList()) {
+      if (member.getId().equals(memberId)) {
+        for (Item item : member.getItems()) {
+          if (itemName.equals(item.getName())) {
+
+            item.setDescription(newDescription);
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * Edit item cost.
+   *
+   * @param memberId - The member ID.
+   * @param itemName - The item name.
+   * @param newCost  - The new cost.
+   */
+  public void editItemCost(String memberId, String itemName, int newCost) {
+    for (Member member : this.getMemberList()) {
+      if (member.getId().equals(memberId)) {
+        for (Item item : member.getItems()) {
+          if (itemName.equals(item.getName())) {
+
+            item.setCostPerDay(newCost);
+          }
+        }
       }
     }
   }
@@ -169,7 +292,7 @@ public class StuffLendingSystem {
     if (startDay >= currentTime) {
 
       /* Only create a contract if there is not already one */
-      if (!isItemReserved(item.getLendingContracts(), startDay, endDay)) {
+      if (!isItemReserved(item.showLendingContracts(), startDay, endDay)) {
 
         /* If it is the owning member create contract, don't deduct credit */
         if (memberId.equals(item.getOwner().getId())) {
@@ -233,10 +356,11 @@ public class StuffLendingSystem {
    * @param desiredStartDay  - The day FROM when the item would need to be free.
    * @return - True if item is reserved.
    */
-  public boolean isItemReserved(LendingContract[] lendingContracts, int desiredStartDay, int desiredEndDay) {
+  public boolean isItemReserved(ArrayList<LendingContractImmutable> lendingContracts,
+      int desiredStartDay, int desiredEndDay) {
     boolean isReserved = false;
 
-    for (LendingContract lendingContract : lendingContracts) {
+    for (LendingContractImmutable lendingContract : lendingContracts) {
       if ((desiredStartDay >= lendingContract.getStartDay()
           && desiredStartDay <= lendingContract.getEndDay())
           || (lendingContract.getStartDay() >= desiredStartDay && lendingContract.getEndDay() <= desiredEndDay)

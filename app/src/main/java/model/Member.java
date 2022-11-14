@@ -26,6 +26,15 @@ public class Member {
   }
 
   /**
+   * Get immutable member.
+   *
+   * @return - An immutable version of member.
+   */
+  public MemberImmutable getImmutableMember() {
+    return new MemberImmutable(name, email, phone, id, dayCreated, credit, items);
+  }
+
+  /**
    * Gets members name.
    *
    * @return - The members name.

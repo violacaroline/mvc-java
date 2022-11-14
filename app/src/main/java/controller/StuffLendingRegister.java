@@ -1,7 +1,5 @@
 package controller;
 
-import model.Item;
-import model.Member;
 import model.StuffLendingSystem;
 import view.InfoMessage;
 import view.ItemEditOption;
@@ -21,8 +19,8 @@ public class StuffLendingRegister {
    */
   public void createMember() {
     String name = memberView.promptName();
-    String email = memberView.promptEmail(stuffLendingSystem.showMembers());
-    String phone = memberView.promptPhone(stuffLendingSystem.showMembers());
+    String email = memberView.promptEmail(stuffLendingSystem.showMemberList());
+    String phone = memberView.promptPhone(stuffLendingSystem.showMemberList());
 
     stuffLendingSystem.createMember(name, email, phone);
   }
@@ -37,41 +35,24 @@ public class StuffLendingRegister {
    * can be used to change objects in ways that should not be possible"
    * I ASSUME THIS IS IN THE RISKZONE SINCE IM USING THE SETTERS IN THE 
    * CONTROLLER TO EDIT A MEMBER?
-   * IF I HAVE A METHOD THAT RETURNS SOMETHING AS A PARAMTER - HOW DO I DISPLAY THAT IN A SEQUENCE DIAGRAM?
-   * THAT METHOD CALL GETS DRAWN BEFORE THE METHOD CALL THAT ITS A PARAMETER TO?
-   * Should the last member be connected to the view in the object diagram?
    */
   public void editMember() {
-    String memberId = memberView.promptMemberId(stuffLendingSystem.showMembers());
+    String memberId = memberView.promptMemberId(stuffLendingSystem.showMemberList());
     MemberEditOption editOption = memberView.promptEditMember();
 
+    /* updateName, updateEmail, updatePhone i model */
     switch (editOption) {
       case Name:
-        for (Member member : stuffLendingSystem.getMemberList()) {
-          if (member.getId().equals(memberId)) {
-            String newName = memberView.promptName();
-
-            member.setName(newName);
-          }
-        }
+        String newName = memberView.promptName();
+        stuffLendingSystem.editMemberName(memberId, newName);
         break;
       case Email:
-        for (Member member : stuffLendingSystem.getMemberList()) {
-          if (member.getId().equals(memberId)) {
-            String newEmail = memberView.promptEmail(stuffLendingSystem.showMembers());
-
-            member.setEmail(newEmail);
-          }
-        }
+        String newEmail = memberView.promptEmail(stuffLendingSystem.showMemberList());
+        stuffLendingSystem.editMemberEmail(memberId, newEmail);
         break;
       case Phone:
-        for (Member member : stuffLendingSystem.getMemberList()) {
-          if (member.getId().equals(memberId)) {
-            String newPhone = memberView.promptPhone(stuffLendingSystem.showMembers());
-
-            member.setPhone(newPhone);
-          }
-        }
+        String newPhone = memberView.promptPhone(stuffLendingSystem.showMemberList());
+        stuffLendingSystem.editMemberPhone(memberId, newPhone);
         break;
       case Nothing:
         mainView.showMessage(InfoMessage.OptionInvalid);
@@ -86,7 +67,7 @@ public class StuffLendingRegister {
    * Deletes a member.
    */
   public void deleteMember() {
-    String memberId = memberView.promptMemberId(stuffLendingSystem.showMembers());
+    String memberId = memberView.promptMemberId(stuffLendingSystem.showMemberList());
 
     stuffLendingSystem.deleteMember(memberId);
   }
@@ -95,22 +76,22 @@ public class StuffLendingRegister {
    * View a single member.
    */
   public void viewMember() {
-    memberView.showSingleMember(memberView.promptMemberId(stuffLendingSystem.showMembers()),
-        stuffLendingSystem.showMembers());
+    memberView.showSingleMember(memberView.promptMemberId(stuffLendingSystem.showMemberList()),
+        stuffLendingSystem.showMemberList());
   }
 
   /**
    * View all members SIMPLE.
    */
   public void viewAllMembersSimple() {
-    memberView.showMembersSimpleInfo(stuffLendingSystem.showMembers());
+    memberView.showMembersSimpleInfo(stuffLendingSystem.showMemberList());
   }
 
   /**
    * View all members FULL.
    */
   public void viewAllMembersFull() {
-    memberView.showMembersFullInfo(stuffLendingSystem.showMembers(),
+    memberView.showMembersFullInfo(stuffLendingSystem.showMemberList(),
         stuffLendingSystem.getCurrentDay());
   }
 
@@ -118,7 +99,7 @@ public class StuffLendingRegister {
    * Registers a new item to a specific member.
    */
   public void registerItemToMember() {
-    String memberId = memberView.promptMemberId(stuffLendingSystem.showMembers());
+    String memberId = memberView.promptMemberId(stuffLendingSystem.showMemberList());
     String itemCategory = itemView.promptItemCategory();
     String itemName = itemView.promptItemName();
     String itemDescription = itemView.promptItemDescription();
@@ -132,8 +113,8 @@ public class StuffLendingRegister {
    */
   public void viewItem() {
     itemView.showSingleItem(
-        memberView.promptMemberId(stuffLendingSystem.showMembers()),
-        stuffLendingSystem.showMembers(),
+        memberView.promptMemberId(stuffLendingSystem.showMemberList()),
+        stuffLendingSystem.showMemberList(),
         itemView.promptItemName());
   }
 
@@ -141,62 +122,26 @@ public class StuffLendingRegister {
    * Edits an item.
    */
   public void editItem() {
-    String currentMember = memberView.promptMemberId(stuffLendingSystem.showMembers());
-    String currenItemName = itemView.promptItemName();
+    String memberId = memberView.promptMemberId(stuffLendingSystem.showMemberList());
+    String itemName = itemView.promptItemName();
     ItemEditOption editOption = itemView.promptEditItem();
 
     switch (editOption) {
       case Category:
-        for (Member member : stuffLendingSystem.getMemberList()) {
-          if (member.getId().equals(currentMember)) {
-            for (Item item : member.getItems()) {
-              if (currenItemName.equals(item.getName())) {
-                String newCategory = itemView.promptItemCategory();
-
-                item.setCategory(newCategory);
-              }
-            }
-          }
-        }
+        String newCategory = itemView.promptItemCategory();
+        stuffLendingSystem.editItemCategory(memberId, itemName, newCategory);
         break;
       case Name:
-        for (Member member : stuffLendingSystem.getMemberList()) {
-          if (member.getId().equals(currentMember)) {
-            for (Item item : member.getItems()) {
-              if (currenItemName.equals(item.getName())) {
-                String newName = itemView.promptItemName();
-
-                item.setName(newName);
-              }
-            }
-          }
-        }
+        String newName = itemView.promptItemName();
+        stuffLendingSystem.editItemName(memberId, itemName, newName);
         break;
       case Description:
-        for (Member member : stuffLendingSystem.getMemberList()) {
-          if (member.getId().equals(currentMember)) {
-            for (Item item : member.getItems()) {
-              if (currenItemName.equals(item.getName())) {
-                String newDescription = itemView.promptItemDescription();
-
-                item.setDescription(newDescription);
-              }
-            }
-          }
-        }
+        String newDescription = itemView.promptItemDescription();
+        stuffLendingSystem.editItemDescription(memberId, itemName, newDescription);
         break;
       case Cost:
-        for (Member member : stuffLendingSystem.getMemberList()) {
-          if (member.getId().equals(currentMember)) {
-            for (Item item : member.getItems()) {
-              if (currenItemName.equals(item.getName())) {
-                int newCost = itemView.promptItemCost();
-
-                item.setCostPerDay(newCost);
-              }
-            }
-          }
-        }
+        int newCost = itemView.promptItemCost();
+        stuffLendingSystem.editItemCost(memberId, itemName, newCost);
         break;
       case Nothing:
         mainView.showMessage(InfoMessage.OptionInvalid);
@@ -211,7 +156,7 @@ public class StuffLendingRegister {
    * Deletes an item from a member.
    */
   public void deleteItemFromMember() {
-    String memberId = memberView.promptMemberId(stuffLendingSystem.showMembers());
+    String memberId = memberView.promptMemberId(stuffLendingSystem.showMemberList());
     String itemName = itemView.promptItemName();
 
     stuffLendingSystem.deleteItemFromMember(memberId, itemName);
@@ -222,8 +167,8 @@ public class StuffLendingRegister {
    */
   public void loanItem() {
     mainView.showTime(stuffLendingSystem.getCurrentDay());
-    String loaningMember = memberView.promptMemberId(stuffLendingSystem.showMembers());
-    String owningMember = memberView.promptOwnersMemberId(stuffLendingSystem.showMembers());
+    String loaningMember = memberView.promptMemberId(stuffLendingSystem.showMemberList());
+    String owningMember = memberView.promptOwnersMemberId(stuffLendingSystem.showMemberList());
     String itemToLoanName = itemView.promptItemName();
     int startDay = Integer.parseInt(itemView.promptStartDayLendingPeriod());
     int endDay = Integer.parseInt(itemView.promptEndDayLendingPeriod());

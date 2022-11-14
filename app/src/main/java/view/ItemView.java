@@ -1,9 +1,10 @@
 package view;
 
+import java.util.ArrayList;
 import java.util.Scanner;
-import model.Item;
-import model.LendingContract;
-import model.Member;
+import model.ItemImmutable;
+import model.LendingContractImmutable;
+import model.MemberImmutable;
 import model.MemberValidator;
 
 /**
@@ -172,7 +173,7 @@ public class ItemView {
    * @param memberIdOwner - The id to find.
    * @param itemName      - The name to validate.
    */
-  public boolean isValidItemName(Member[] members, String memberIdOwner, String itemName) {
+  public boolean isValidItemName(ArrayList<MemberImmutable> members, String memberIdOwner, String itemName) {
     boolean isValidItemName = false;
 
     while (!memberValidator.validateMemberItem(members, memberIdOwner, itemName)) {
@@ -192,19 +193,19 @@ public class ItemView {
    * @param memberId - The ID of the member owning the item.
    * @param members  - List of members to iterate.
    */
-  public void showSingleItem(String memberId, Member[] members, String itemName) {
+  public void showSingleItem(String memberId, ArrayList<MemberImmutable> members, String itemName) {
     if (memberValidator.validateMemberItem(members, memberId, itemName)) {
-      for (Member member : members) {
+      for (MemberImmutable member : members) {
         if (member.getId().equals(memberId)) {
-          for (Item item : member.getItems()) {
+          for (ItemImmutable item : member.showItems()) {
             if (item.getName().equals(itemName)) {
               System.out
                   .println("ITEM:\nName: " + item.getName() + "\nCategory: " + item.getCategory() + "\nDescription: "
                       + item.getDescription()
                       + "\nCost: " + item.getCostPerDay() + "\nCreated day: " + item.getDayCreated());
-              if (item.getLendingContracts().length > 0) {
+              if (item.showLendingContracts().size() > 0) {
                 System.out.println("CONTRACTS:");
-                for (LendingContract lendingContract : item.getLendingContracts()) {
+                for (LendingContractImmutable lendingContract : item.showLendingContracts()) {
                   System.out.println(
                       "Item name: " + item.getName() + "\nStart day: " + lendingContract.getStartDay() + "\nEnd day: "
                           + lendingContract.getEndDay());
