@@ -82,7 +82,9 @@ public class ItemImmutable {
    * @return - The owner.
    */
   public Member getOwner() {
-    return this.owner;
+    Member deepCopyOwner = new Member(this.owner.getName(), this.owner.getEmail(), this.owner.getPhone(),
+        this.owner.getId(), this.owner.getDayCreated());
+    return deepCopyOwner;
   }
 
   /**
