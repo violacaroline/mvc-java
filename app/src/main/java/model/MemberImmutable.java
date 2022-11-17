@@ -25,7 +25,6 @@ public class MemberImmutable {
     this.id = id;
     this.dayCreated = dayCreated;
     this.credit = credit;
-    // ArrayList<ItemImmutable> immutableItems = new ArrayList<>();
     for (Item item : items) {
       this.immutableItems.add(item.getImmutableItem());
     }
@@ -89,8 +88,8 @@ public class MemberImmutable {
    * @return - The list of copied items.
    */
   public ArrayList<ItemImmutable> showItems() {
-    ArrayList<ItemImmutable> deepCopyImmutableItems = new ArrayList<>();
-    deepCopyImmutableItems.addAll(this.immutableItems);
-    return deepCopyImmutableItems;
+    ArrayList<ItemImmutable> copyImmutableItems = new ArrayList<>();
+    copyImmutableItems.addAll(this.immutableItems);
+    return copyImmutableItems;
   }
 }

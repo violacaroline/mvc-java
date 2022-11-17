@@ -178,28 +178,10 @@ public class Item {
    * @return - The list of immutable lending contracts.
    */
   public ArrayList<LendingContractImmutable> showLendingContracts() {
-    // Member[] showMembers = new Member[this.memberList.getMembers().size()];
-
-    // showMembers = this.memberList.getMembers().toArray(showMembers);
-
-    // return showMembers;
     ArrayList<LendingContractImmutable> immutableLendingContracts = new ArrayList<>();
     for (LendingContract lendingContract : this.lendingContracts) {
       immutableLendingContracts.add(lendingContract.getImmutableLendingContract());
     }
     return immutableLendingContracts;
   }
-
-  // /**
-  //  * Get lending contracts.
-  //  *
-  //  * @return - The lending contracts.
-  //  */
-  // public LendingContract[] getLendingContracts() {
-  //   LendingContract[] showLendingContracts = new LendingContract[this.lendingContracts.size()];
-
-  //   showLendingContracts = this.lendingContracts.toArray(showLendingContracts);
-
-  //   return showLendingContracts;
-  // }
 }
