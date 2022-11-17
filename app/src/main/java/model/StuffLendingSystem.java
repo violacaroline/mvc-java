@@ -48,7 +48,7 @@ public class StuffLendingSystem {
   /**
    * Get members.
    */
-  public ArrayList<Member> getMemberList() {
+  private ArrayList<Member> getMemberList() {
     return this.memberList.getMembers();
   }
 
