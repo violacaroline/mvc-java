@@ -387,6 +387,6 @@ public class StuffLendingSystem {
    * @param timeToAdvance - The current day.
    */
   public void advanceTime(int timeToAdvance) {
-    time.incrementDayCounter(timeToAdvance);
+    this.time.incrementDayCounter(timeToAdvance);
   }
 }
